@@ -44,6 +44,7 @@ const Record: FC<Props> = (props) => {
     amount: 0,
     note: ''
   });
+  type keys = keyof typeof record;
   const [output, setOutput] = React.useState<string>('');
   const onChange = (value: Partial<typeof record>) => {
     setRecord({
@@ -52,7 +53,10 @@ const Record: FC<Props> = (props) => {
     });
   };
   const onSubmit = () => {
-
+    const StorageRecordName = 'recordTable';
+    const recordTable = JSON.parse(localStorage.getItem(StorageRecordName) || '[]');
+    recordTable.push(record);
+    localStorage.setItem(StorageRecordName, JSON.stringify(recordTable));
   };
   return (
     <Cover className={props.className}>
