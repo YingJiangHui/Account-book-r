@@ -5,24 +5,18 @@ import Close from 'component/recordComponent/Close';
 import Pad from '../component/recordComponent/Pad';
 import Output from '../component/recordComponent/Output';
 import Tags from '../component/recordComponent/Tags';
-import Notes from '../component/recordComponent/Notes';
+import Note from '../component/recordComponent/Note';
 import SelectInfo from '../component/recordComponent/SelectInfo';
+import OpenNotePanel from '../component/recordComponent/OpenNotePanel';
+import Cover from 'component/Cover';
 
 const Options = styled.div`
   padding: 16px;
 `;
 
-const Cover = styled.div`
-  &.moveTo{
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;left: 0;
-    background: rgba(0,0,0,.05);
-  }
-`;
+
 const RecordStyle = styled.div`
-  z-index: 9;
+  z-index: 1;
   width: 100vw;
   transition: .3s;
   top:100%;
@@ -43,11 +37,12 @@ type Props = {
 }
 
 const Record: FC<Props> = (props) => {
+  const [visibleNote, setVisibleNote] = React.useState(false);
   const [record, setRecord] = React.useState({
     category: '-',
-    tags: '',
+    tagIndex: 0,
     amount: 0,
-    note: ''
+    note: '123'
   });
   const [output, setOutput] = React.useState<string>('');
   const onChange = (value: Partial<typeof record>) => {
@@ -58,16 +53,19 @@ const Record: FC<Props> = (props) => {
   };
   return (
     <Cover className={props.className}>
+      {record.category}|{record.tagIndex}|{record.amount}|{record.note}
       <RecordStyle className={props.className}>
         <Options>
           <Close onClick={props.onChange}/>
-          <SelectInfo/>
+          <SelectInfo value={record.category} onChange={(value) => onChange({category: value})}/>
           <Output onChange={(value: number) => {
             setOutput('');
             onChange({amount: value});
           }} value={output}/>
-          <Tags/>
-          <Notes/>
+          <Tags onChange={(value) => onChange({tagIndex: value})}/>
+          <OpenNotePanel onClick={() => {setVisibleNote(true);}}></OpenNotePanel>
+          <Note onChange={(value) => onChange({note: value})} onChangeClass={() => setVisibleNote(false)}
+                value={record.note} className={visibleNote ? 'moveTo' : 'moveOut'}/>
         </Options>
         <Pad onChange={(value: string) => setOutput(value)}/>
       </RecordStyle>

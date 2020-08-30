@@ -10,11 +10,14 @@ margin-top: 20px;
     border: none;
   }
 `;
-const Notes: FC = () => {
+type Props={
+  onClick:()=>void
+}
+const OpenNotePanel: FC<Props> = (props) => {
   return (
     <Wrapper>
-      <button>添加备注</button>
+      <button onClick={props.onClick}>添加备注</button>
     </Wrapper>
   );
 };
-export default Notes;
+export default OpenNotePanel;

@@ -3,6 +3,7 @@ import Icon from 'component/Icon';
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
+import {incomeTagsList} from 'TagList';
 
 const Wrapper = styled.section`
   .view{
@@ -43,32 +44,20 @@ const Wrapper = styled.section`
   }
   }
 `;
-type TagItem = {
-  icon: string,
-  text: string,
+
+
+
+type Props={
+  onChange:(value:number)=>void
 }
-const incomeTagsList: TagItem[] = [
-  {icon: 'clothes', text: '服装美容'},
-  {icon: 'fun', text: '娱乐'},
-  {icon: 'learn', text: '学习'},
-  {icon: 'medical', text: '医疗'},
-  {icon: 'shopping', text: '购物'},
-  {icon: 'sport', text: '运动健身'},
-
-  {icon: 'salary', text: '薪水'},
-  {icon: 'transfer', text: '转账'},
-];
-const disburseTagsList: TagItem[] = [
-  {icon: 'salary', text: '薪水'},
-  {icon: 'transfer', text: '转账'},
-];
-
-
-const Tags: FC = () => {
+const Tags: FC<Props> = (props) => {
   const [index,setIndex] = useState(0);
   const toggle=(i:number)=>{
     setIndex(i)
   }
+  React.useEffect(()=>{
+    props.onChange(index)
+  },[index])
   return (
     <Wrapper>
       <div className="view">

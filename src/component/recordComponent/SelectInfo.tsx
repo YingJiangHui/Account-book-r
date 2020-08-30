@@ -31,16 +31,23 @@ const Wrapper = styled.section`
   }
 `;
 
-
-const SelectInfo:FC=()=>{
+type Props={
+  onChange:(value:string)=>void,
+  value:string
+}
+const SelectInfo:FC<Props>=(props)=>{
   const categoryMap = {'-':'支出','+':'收入'};
   type keys = keyof typeof categoryMap;
   const [categoryList,SetCategoryList] = React.useState<keys[]>(['-','+'])
-  const [selectedItem,setSelectedItem] = React.useState('-')
+  const [selectedItem,setSelectedItem] = React.useState(props.value)
+  const onChange=(tag:string)=>{
+    setSelectedItem(tag as keys)
+    props.onChange(tag);
+  }
   return(
     <Wrapper>
       <ol>
-        {categoryList.map(el=><li key={el} className={selectedItem===el?'selected':''} onClick={()=>setSelectedItem(el)}>{categoryMap[el]}</li>)}
+        {categoryList.map(el=><li key={el} className={selectedItem===el?'selected':''} onClick={()=>onChange(el)}>{categoryMap[el]}</li>)}
       </ol>
       <input type="date"/>
     </Wrapper>

@@ -18,7 +18,7 @@ function getAdditionalModulePaths(options = {}) {
   // TypeScript treats an empty string as `.`.
   if (baseUrl == null) {
     // If there's no baseUrl set we respect NODE_PATH
-    // Note that NODE_PATH is deprecated and will be removed
+    // OpenNotePanel that NODE_PATH is deprecated and will be removed
     // in the next major release of create-react-app.
 
     const nodePath = process.env.NODE_PATH || '';

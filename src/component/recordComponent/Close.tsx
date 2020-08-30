@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React, {FC} from 'react';
 import Icon from 'component/Icon';
+import theme from 'theme';
 
 const Wrapper = styled.button`
   background: #fff;
@@ -8,7 +9,7 @@ const Wrapper = styled.button`
   .icon{
   width: 17px;
   height: 17px;
-  fill:#b2b2b2;
+  fill:${theme.tingeFontColor};
   }
 `;
 type Props={

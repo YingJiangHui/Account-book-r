@@ -145,7 +145,7 @@ module.exports = function(webpackEnv) {
       // When you save a file, the client will either apply hot updates (in case
       // of CSS changes), or refresh the page (in case of JS changes). When you
       // make a syntax error, this client will display a syntax error overlay.
-      // Note: instead of the default WebpackDevServer client, we use a custom one
+      // OpenNotePanel: instead of the default WebpackDevServer client, we use a custom one
       // to bring better experience for Create React App users. You can replace
       // the line below with these two lines if you prefer the stock client:
       // require.resolve('webpack-dev-server/client') + '?/',

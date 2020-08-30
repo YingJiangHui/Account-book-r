@@ -49,7 +49,7 @@ module.exports = function(proxy, allowedHost) {
     // In `index.html`, you can get URL of `public` folder with %PUBLIC_URL%:
     // <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
     // In JavaScript code, you can access it with `process.env.PUBLIC_URL`.
-    // Note that we only recommend to use `public` folder as an escape hatch
+    // OpenNotePanel that we only recommend to use `public` folder as an escape hatch
     // for files like `favicon.ico`, `manifest.json`, and libraries that are
     // for some reason broken when imported through webpack. If you just want to
     // use an image, put it in `src` and `import` it from JavaScript instead.
@@ -60,7 +60,7 @@ module.exports = function(proxy, allowedHost) {
     // Enable hot reloading server. It will provide WDS_SOCKET_PATH endpoint
     // for the WebpackDevServer client so it can learn when the files were
     // updated. The WebpackDevServer client is included as an entry point
-    // in the webpack development configuration. Note that only changes
+    // in the webpack development configuration. OpenNotePanel that only changes
     // to CSS are currently hot reloaded. JS changes will refresh the browser.
     hot: true,
     // Use 'ws' instead of 'sockjs-node' on server since we're using native

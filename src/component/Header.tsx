@@ -7,7 +7,7 @@ const HeaderStyle = styled.header`
   display: flex;
   justify-content: center;
   background: ${theme.themeColor};
-  color: ${theme.fontColor};
+  color: ${theme.defaultFontColor};
   font-weight: 200;
   font-size: 17px;
 `;
