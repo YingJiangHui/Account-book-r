@@ -30,13 +30,37 @@ const Wrapper = styled.section`
     }
   }
 `;
-const Pad:FC=()=>{
+type Props = {
+  onChange: (value: string) => void
+}
+
+
+const Pad: FC<Props> = (props) => {
+  const onClick = (e: React.MouseEvent) => {
+    const input = (e.target as HTMLButtonElement).textContent;
+    if (input === null||input===undefined) return;
+    props.onChange(input);
+    console.log('fuck')
+  };
+
+
+  let timer:number;
+  const onTouchStart=()=>{
+    timer = setTimeout(()=>{
+      props.onChange('clear');
+    },1000)
+  }
+  const onTouchEnd=(e:React.TouchEvent)=>{
+      props.onChange('removeOnly');
+    clearTimeout(timer)
+  }
+
   return (
-    <Wrapper className='clearFix'>
+    <Wrapper className='clearFix' onClick={onClick}>
       <button>1</button>
       <button>2</button>
       <button>3</button>
-      <button className='del'><Icon name='delete'/></button>
+      <button className='del' onClick={(e)=>{e.stopPropagation()}} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}><Icon name='delete'/></button>
       <button>4</button>
       <button>5</button>
       <button>6</button>
@@ -48,6 +72,6 @@ const Pad:FC=()=>{
       <button>.</button>
     </Wrapper>
 
-  )
-}
-export default Pad
+  );
+};
+export default Pad;

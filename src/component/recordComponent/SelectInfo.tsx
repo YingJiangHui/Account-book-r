@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {FC} from 'react';
 import React from 'react';
-
+import theme from 'theme'
 const Wrapper = styled.section`
   display: flex;
   justify-content: space-between;
@@ -16,6 +16,11 @@ const Wrapper = styled.section`
       display: inline-block;
       padding: 5px 10px;
       margin-right:10px ;
+      &.selected{
+        background: ${theme.tingeColor};
+        color: ${theme.themeColor};
+        box-shadow: 0 0 2px ${theme.themeColor};
+      }
     }
   }
   input[type=date]{
@@ -28,11 +33,14 @@ const Wrapper = styled.section`
 
 
 const SelectInfo:FC=()=>{
+  const categoryMap = {'-':'支出','+':'收入'};
+  type keys = keyof typeof categoryMap;
+  const [categoryList,SetCategoryList] = React.useState<keys[]>(['-','+'])
+  const [selectedItem,setSelectedItem] = React.useState('-')
   return(
     <Wrapper>
       <ol>
-        <li>支出</li>
-        <li>收入</li>
+        {categoryList.map(el=><li key={el} className={selectedItem===el?'selected':''} onClick={()=>setSelectedItem(el)}>{categoryMap[el]}</li>)}
       </ol>
       <input type="date"/>
     </Wrapper>

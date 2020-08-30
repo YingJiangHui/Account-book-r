@@ -11,10 +11,12 @@ const Wrapper = styled.button`
   fill:#b2b2b2;
   }
 `;
-
-const Close:FC= () => {
+type Props={
+  onClick:()=>void
+}
+const Close:FC<Props> =(props) => {
   return (
-    <Wrapper>
+    <Wrapper onClick={props.onClick}>
       <Icon name='close'/>
     </Wrapper>
   );

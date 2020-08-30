@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styled from 'styled-components';
 import 'index.scss';
 import Close from 'component/recordComponent/Close';
@@ -37,18 +37,39 @@ const RecordStyle = styled.div`
       transform: translateY(100%);
   }
 `;
-const Record = (props: any) => {
+type Props = {
+  className: string,
+  onChange: () => void
+}
+
+const Record: FC<Props> = (props) => {
+  const [record, setRecord] = React.useState({
+    category: '-',
+    tags: '',
+    amount: 0,
+    note: ''
+  });
+  const [output, setOutput] = React.useState<string>('');
+  const onChange = (value: Partial<typeof record>) => {
+    setRecord({
+      ...record,
+      ...value
+    });
+  };
   return (
     <Cover className={props.className}>
       <RecordStyle className={props.className}>
         <Options>
-          <Close/>
+          <Close onClick={props.onChange}/>
           <SelectInfo/>
-          <Output/>
+          <Output onChange={(value: number) => {
+            setOutput('');
+            onChange({amount: value});
+          }} value={output}/>
           <Tags/>
           <Notes/>
         </Options>
-        <Pad/>
+        <Pad onChange={(value: string) => setOutput(value)}/>
       </RecordStyle>
     </Cover>
   );

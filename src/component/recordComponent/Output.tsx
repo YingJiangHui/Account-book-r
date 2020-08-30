@@ -18,12 +18,59 @@ const Wrapper = styled.section`
       font-size: 36px;
     }
 `;
-const Output:FC=()=>{
-  return(
+type Props = {
+  value: string,
+  onChange:(value:number)=>void
+}
+const Output: FC<Props> = (props) => {
+  const [output, _setOutput] = React.useState('0');
+  const setOutput = (value: string) => {
+    if(output.length<16){
+      _setOutput(value);
+    }
+  };
+  React.useEffect(() => {
+    switch (props.value) {
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        if (output === '0') {
+          setOutput(props.value);
+        } else {
+          setOutput(output + props.value);
+        }
+        break;
+      case '.':
+        if (output.indexOf('.') === -1) {
+          setOutput(output + props.value);
+        }
+        break;
+      case 'removeOnly':
+        setOutput(output.slice(0, -1)||'0');
+        break;
+      case 'clear':
+        setOutput('0');
+        break;
+      case '确定':
+        //TODO
+        break;
+    }
+    props.onChange(parseFloat(output));
+
+  }, [props.value]);
+
+  return (
     <Wrapper>
       <span>￥</span>
-      <div className='output'>12312</div>
+      <div className='output'>{output}</div>
     </Wrapper>
-  )
-}
-export default Output
+  );
+};
+export default Output;
