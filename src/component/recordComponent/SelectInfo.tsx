@@ -16,10 +16,15 @@ const Wrapper = styled.section`
       display: inline-block;
       padding: 5px 10px;
       margin-right:10px ;
-      &.selected{
+      &.selectedBase{
         background: ${theme.tingeColor};
         color: ${theme.themeColor};
         box-shadow: 0 0 2px ${theme.themeColor};
+      }
+      &.selectedSpecial{
+        background: ${theme.special.tingeColorOpacity};
+        color: ${theme.special.themeColor};
+        box-shadow: 0 0 2px ${theme.special.themeColor};
       }
     }
   }
@@ -37,6 +42,7 @@ type Props={
 }
 const SelectInfo:FC<Props>=(props)=>{
   const categoryMap = {'-':'支出','+':'收入'};
+  const categoryStyle = {'-':'selectedBase','+':'selectedSpecial'};
   type keys = keyof typeof categoryMap;
   const [categoryList,SetCategoryList] = React.useState<keys[]>(['-','+'])
   const [selectedItem,setSelectedItem] = React.useState(props.value)
@@ -47,7 +53,7 @@ const SelectInfo:FC<Props>=(props)=>{
   return(
     <Wrapper>
       <ol>
-        {categoryList.map(el=><li key={el} className={selectedItem===el?'selected':''} onClick={()=>onChange(el)}>{categoryMap[el]}</li>)}
+        {categoryList.map(el=><li key={el} className={selectedItem===el?categoryStyle[el]:''} onClick={()=>onChange(el)}>{categoryMap[el]}</li>)}
       </ol>
       <input type="date"/>
     </Wrapper>

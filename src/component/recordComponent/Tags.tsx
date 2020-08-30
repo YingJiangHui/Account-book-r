@@ -3,7 +3,7 @@ import Icon from 'component/Icon';
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
-import {incomeTagsList} from 'TagList';
+import {disburseTagsList, incomeTagsList} from 'TagList';
 
 const Wrapper = styled.section`
   .view{
@@ -21,6 +21,13 @@ const Wrapper = styled.section`
         .icon{
           fill:#fff;
           background: ${theme.themeColor};
+        }
+      }
+       &.selectedSpecial{
+        color: ${theme.special.themeColor};
+        .icon{
+          fill:#fff;
+          background: ${theme.special.themeColor};
         }
       }
       height: inherit;
@@ -48,7 +55,8 @@ const Wrapper = styled.section`
 
 
 type Props={
-  onChange:(value:number)=>void
+  onChange:(value:number)=>void,
+  category:string
 }
 const Tags: FC<Props> = (props) => {
   const [index,setIndex] = useState(0);
@@ -62,7 +70,7 @@ const Tags: FC<Props> = (props) => {
     <Wrapper>
       <div className="view">
         <ol>
-          {incomeTagsList.map((item:TagItem,i:number)=><li onClick={()=>toggle(i)} className={index===i?'selected':''} key={item.icon}><Icon name={item.icon}/> {item.text}</li>)}
+          {(props.category==='-'?incomeTagsList:disburseTagsList).map((item:TagItem,i:number)=><li onClick={()=>toggle(i)} className={index===i?(props.category==='-'?'selected':'selectedSpecial'):''} key={item.icon}><Icon name={item.icon}/> {item.text}</li>)}
         </ol>
       </div>
     </Wrapper>

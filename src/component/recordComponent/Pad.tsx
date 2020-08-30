@@ -31,7 +31,8 @@ const Wrapper = styled.section`
   }
 `;
 type Props = {
-  onChange: (value: string) => void
+  onChange: (value: string) => void,
+  category:string
 }
 
 

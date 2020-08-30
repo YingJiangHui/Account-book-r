@@ -62,12 +62,12 @@ const Record: FC<Props> = (props) => {
             setOutput('');
             onChange({amount: value});
           }} value={output}/>
-          <Tags onChange={(value) => onChange({tagIndex: value})}/>
+          <Tags category={record.category} onChange={(value) => onChange({tagIndex: value})}/>
           <OpenNotePanel onClick={() => {setVisibleNote(true);}}></OpenNotePanel>
           <Note onChange={(value) => onChange({note: value})} onChangeClass={() => setVisibleNote(false)}
                 value={record.note} className={visibleNote ? 'moveTo' : 'moveOut'}/>
         </Options>
-        <Pad onChange={(value: string) => setOutput(value)}/>
+        <Pad category={record.category} onChange={(value: string) => setOutput(value)}/>
       </RecordStyle>
     </Cover>
   );
