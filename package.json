@@ -90,6 +90,8 @@
     ]
   },
   "devDependencies": {
+    "@types/styled-components": "^5.1.2",
+    "styled-components": "^5.1.1",
     "svg-sprite-loader": "^5.0.0",
     "svgo-loader": "^2.2.1"
   },
