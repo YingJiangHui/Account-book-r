@@ -50,7 +50,7 @@ const Wrapper = styled.section`
   }
   >.notes{
     margin-top: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     >li{            
       background:#f1f1f1;
       color: #a9a9a9;
@@ -80,6 +80,11 @@ const Note: FC<Props> = (props) => {
     props.onChange(refInput.current?.value||'');
     props.onChangeClass()
   }
+  React.useEffect(()=>{
+    if(props.className==='moveTo'){
+      refInput.current?.focus()
+    }
+  },[props.className])
   return (
     <Cover className={props.className}>
       <Wrapper className={props.className}>

@@ -38,7 +38,7 @@ const Wrapper = styled.section`
 
 type Props={
   onChange:(value:string)=>void,
-  value:string
+  value:string,
 }
 const SelectInfo:FC<Props>=(props)=>{
   const categoryMap = {'-':'支出','+':'收入'};

@@ -16,14 +16,14 @@ const Wrapper = styled.section`
     display: flex;
     margin-left: -6px;
     >li{
-      &.selected{
+      &.base-selected{
         color: ${theme.themeColor};
         .icon{
           fill:#fff;
           background: ${theme.themeColor};
         }
       }
-       &.selectedSpecial{
+       &.special-selected{
         color: ${theme.special.themeColor};
         .icon{
           fill:#fff;
@@ -56,7 +56,8 @@ const Wrapper = styled.section`
 
 type Props={
   onChange:(value:number)=>void,
-  category:string
+  category:string,
+  className:string,
 }
 const Tags: FC<Props> = (props) => {
   const [index,setIndex] = useState(0);
@@ -64,13 +65,16 @@ const Tags: FC<Props> = (props) => {
     setIndex(i)
   }
   React.useEffect(()=>{
+    setIndex(0)
+  },[props.category])
+  React.useEffect(()=>{
     props.onChange(index)
   },[index])
   return (
     <Wrapper>
       <div className="view">
         <ol>
-          {(props.category==='-'?incomeTagsList:disburseTagsList).map((item:TagItem,i:number)=><li onClick={()=>toggle(i)} className={index===i?(props.category==='-'?'selected':'selectedSpecial'):''} key={item.icon}><Icon name={item.icon}/> {item.text}</li>)}
+          {(props.category==='-'?incomeTagsList:disburseTagsList).map((item:TagItem,i:number)=><li onClick={()=>toggle(i)} className={index===i?props.className+'-selected':''} key={item.icon}><Icon name={item.icon}/> {item.text}</li>)}
         </ol>
       </div>
     </Wrapper>

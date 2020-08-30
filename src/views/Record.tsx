@@ -42,7 +42,7 @@ const Record: FC<Props> = (props) => {
     category: '-',
     tagIndex: 0,
     amount: 0,
-    note: '123'
+    note: ''
   });
   const [output, setOutput] = React.useState<string>('');
   const onChange = (value: Partial<typeof record>) => {
@@ -53,21 +53,23 @@ const Record: FC<Props> = (props) => {
   };
   return (
     <Cover className={props.className}>
-      {record.category}|{record.tagIndex}|{record.amount}|{record.note}
       <RecordStyle className={props.className}>
         <Options>
           <Close onClick={props.onChange}/>
-          <SelectInfo value={record.category} onChange={(value) => onChange({category: value})}/>
+          <SelectInfo  value={record.category} onChange={(value) => onChange({category: value})}/>
+
           <Output onChange={(value: number) => {
             setOutput('');
             onChange({amount: value});
           }} value={output}/>
-          <Tags category={record.category} onChange={(value) => onChange({tagIndex: value})}/>
+          <Tags className={record.category==='+'?'special':'base'} category={record.category} onChange={(value) => onChange({tagIndex: value})}/>
           <OpenNotePanel onClick={() => {setVisibleNote(true);}}></OpenNotePanel>
+
           <Note onChange={(value) => onChange({note: value})} onChangeClass={() => setVisibleNote(false)}
                 value={record.note} className={visibleNote ? 'moveTo' : 'moveOut'}/>
         </Options>
-        <Pad category={record.category} onChange={(value: string) => setOutput(value)}/>
+        <Pad className={record.category === '+' ? 'special' : 'base'} category={record.category}
+             onChange={(value: string) => setOutput(value)}/>
       </RecordStyle>
     </Cover>
   );

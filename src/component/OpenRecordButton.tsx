@@ -16,8 +16,8 @@ const RecordButton = styled.div`
    align-items: center;
   .icon{
     fill:${theme.themeColor};
-      width: 20px;
-      height: 20px;
+      width: 25px;
+      height: 25px;
 
   }
 `;
