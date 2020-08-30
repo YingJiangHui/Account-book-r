@@ -91,9 +91,11 @@
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.2",
+    "@types/webpack-env": "^1.15.2",
     "styled-components": "^5.1.1",
     "svg-sprite-loader": "^5.0.0",
-    "svgo-loader": "^2.2.1"
+    "svgo-loader": "^2.2.1",
+    "webpack-env": "^0.8.0"
   },
   "jest": {
     "roots": [
