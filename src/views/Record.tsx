@@ -51,25 +51,49 @@ const Record: FC<Props> = (props) => {
       ...value
     });
   };
+  const onSubmit = () => {
+
+  };
   return (
     <Cover className={props.className}>
       <RecordStyle className={props.className}>
+
         <Options>
           <Close onClick={props.onChange}/>
-          <SelectInfo  value={record.category} onChange={(value) => onChange({category: value})}/>
+          <SelectInfo
+            value={record.category}
+            onChange={(value) => onChange({category: value})}
+          />
 
-          <Output onChange={(value: number) => {
-            setOutput('');
-            onChange({amount: value});
-          }} value={output}/>
-          <Tags className={record.category==='+'?'special':'base'} category={record.category} onChange={(value) => onChange({tagIndex: value})}/>
-          <OpenNotePanel onClick={() => {setVisibleNote(true);}}></OpenNotePanel>
+          <Output
+            onSubmit={onSubmit}
+            onChange={(value: number) => {
+              setOutput('');
+              onChange({amount: value});
+            }} value={output}/>
 
-          <Note onChange={(value) => onChange({note: value})} onChangeClass={() => setVisibleNote(false)}
-                value={record.note} className={visibleNote ? 'moveTo' : 'moveOut'}/>
+          <Tags
+            className={record.category === '+' ? 'special' : 'base'}
+            category={record.category}
+            onChange={(value) => onChange({tagIndex: value})}
+          />
+
+          <OpenNotePanel
+            onClick={() => {setVisibleNote(true);}}
+          />
+
+          <Note onChange={(value) => onChange({note: value})}
+                onChangeClass={() => setVisibleNote(false)}
+                value={record.note}
+                className={visibleNote ? 'moveTo' : 'moveOut'}
+          />
         </Options>
-        <Pad className={record.category === '+' ? 'special' : 'base'} category={record.category}
-             onChange={(value: string) => setOutput(value)}/>
+
+        <Pad
+          className={record.category === '+' ? 'special' : 'base'}
+          category={record.category}
+          onChange={(value: string) => setOutput(value)}
+        />
       </RecordStyle>
     </Cover>
   );

@@ -20,7 +20,8 @@ const Wrapper = styled.section`
 `;
 type Props = {
   value: string,
-  onChange:(value:number)=>void
+  onChange:(value:number)=>void,
+  onSubmit:()=>void
 }
 const Output: FC<Props> = (props) => {
   const [output, _setOutput] = React.useState('0');
@@ -59,7 +60,7 @@ const Output: FC<Props> = (props) => {
         setOutput('0');
         break;
       case '确定':
-        //TODO
+        props.onSubmit();
         break;
     }
     props.onChange(parseFloat(output));
