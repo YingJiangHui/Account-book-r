@@ -33,7 +33,9 @@ const RecordStyle = styled.div`
 `;
 type Props = {
   className: string,
-  onChange: () => void
+  onClose: () => void,
+  onOpen: () => void
+
 }
 
 const Record: FC<Props> = (props) => {
@@ -44,7 +46,6 @@ const Record: FC<Props> = (props) => {
     amount: 0,
     note: ''
   });
-  type keys = keyof typeof record;
   const [output, setOutput] = React.useState<string>('');
   const onChange = (value: Partial<typeof record>) => {
     setRecord({
@@ -63,7 +64,7 @@ const Record: FC<Props> = (props) => {
       <RecordStyle className={props.className}>
 
         <Options>
-          <Close onClick={props.onChange}/>
+          <Close onClick={props.onClose}/>
           <SelectInfo
             value={record.category}
             onChange={(value) => onChange({category: value})}
@@ -83,14 +84,8 @@ const Record: FC<Props> = (props) => {
           />
 
           <OpenNotePanel
-            onClick={() => {setVisibleNote(true);}}
+            onClick={() => {props.onClose();setVisibleNote(true);}}
           >{record.note?<><span>修改</span>：{record.note}</>:<span>添加备注</span>}</OpenNotePanel>
-
-          <Note onChange={(value) => onChange({note: value})}
-                onChangeClass={() => setVisibleNote(false)}
-                value={record.note}
-                className={visibleNote ? 'moveTo' : 'moveOut'}
-          />
         </Options>
 
         <Pad
@@ -98,7 +93,13 @@ const Record: FC<Props> = (props) => {
           category={record.category}
           onChange={(value: string) => setOutput(value)}
         />
+
       </RecordStyle>
+      <Note onChange={(value) => onChange({note: value})}
+            onChangeClass={() => {setVisibleNote(false);props.onOpen()}}
+            value={record.note}
+            className={visibleNote ? 'moveTo' : 'moveOut'}
+      />
     </Cover>
   );
 };
