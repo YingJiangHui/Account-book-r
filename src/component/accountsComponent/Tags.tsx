@@ -3,7 +3,7 @@ import Icon from 'component/Icon';
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
-import {disburseTagsList, incomeTagsList} from 'TagList';
+import {disburseTagsList, incomeTagsList} from 'useTags';
 
 const Wrapper = styled.section`
   .view{

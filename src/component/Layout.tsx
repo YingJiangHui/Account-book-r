@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React from 'react'
+import React, {FC} from 'react';
 import Header from 'component/Header'
 import Nav from 'component/Nav'
 
@@ -13,12 +13,12 @@ const Main = styled.main`
   flex-grow: 1;
   overflow: auto;
 `;
-const Layout =(props:any)=>{
+const Layout:FC =(props)=>{
   return(
     <LayoutStyle>
       <Header />
       <Main>
-        {props.children}
+          {props.children}
       </Main>
       <Nav />
     </LayoutStyle>

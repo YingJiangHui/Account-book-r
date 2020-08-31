@@ -1,13 +1,13 @@
 import React, {FC} from 'react';
 import styled from 'styled-components';
 import 'index.scss';
-import Close from 'component/recordComponent/Close';
-import Pad from '../component/recordComponent/Pad';
-import Output from '../component/recordComponent/Output';
-import Tags from '../component/recordComponent/Tags';
-import Note from '../component/recordComponent/Note';
-import SelectInfo from '../component/recordComponent/SelectInfo';
-import OpenNotePanel from '../component/recordComponent/OpenNotePanel';
+import Close from 'component/accountsComponent/Close';
+import Pad from 'component/accountsComponent/Pad';
+import Output from 'component/accountsComponent/Output';
+import Tags from 'component/accountsComponent/Tags';
+import Note from 'component/accountsComponent/Note';
+import SelectInfo from 'component/accountsComponent/SelectInfo';
+import OpenNotePanel from 'component/accountsComponent/OpenNotePanel';
 import Cover from 'component/Cover';
 
 const Options = styled.div`
@@ -38,7 +38,7 @@ type Props = {
 
 }
 
-const Record: FC<Props> = (props) => {
+const KeepAccounts: FC<Props> = (props) => {
   const [visibleNote, setVisibleNote] = React.useState(false);
   const [record, setRecord] = React.useState({
     category: '-',
@@ -103,4 +103,4 @@ const Record: FC<Props> = (props) => {
     </Cover>
   );
 };
-export default Record;
+export default KeepAccounts;
