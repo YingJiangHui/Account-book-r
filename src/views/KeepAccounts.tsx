@@ -10,6 +10,7 @@ import SelectInfo from 'component/accountsComponent/SelectInfo';
 import OpenNotePanel from 'component/accountsComponent/OpenNotePanel';
 import Cover from 'component/Cover';
 import {useTags} from '../useTags';
+
 const Options = styled.div`
   padding: 16px;
 `;
@@ -34,7 +35,7 @@ type Props = {
   onClose: () => void,
   onOpen: () => void
 }
-type Record={
+type Record = {
   category: Category,
   tagIndex: number,
   amount: number,
@@ -51,7 +52,7 @@ const KeepAccounts: FC<Props> = (props) => {
     amount: 0,
     note: ''
   });
-  const {getTags} = useTags()
+  const {getTags,setTags,updateTags} = useTags();
   const [output, setOutput] = React.useState<string>('');
   const onChange = (value: Partial<typeof record>) => {
     setRecord({
@@ -72,7 +73,7 @@ const KeepAccounts: FC<Props> = (props) => {
           <Close onClick={props.onClose}/>
           <SelectInfo
             value={record.category}
-            onChange={(value:Category) => onChange({category: value})}
+            onChange={(value: Category) => onChange({category: value})}
           />
           <Output
             onSubmit={onSubmit}
@@ -88,7 +89,7 @@ const KeepAccounts: FC<Props> = (props) => {
               setVisibleAddTag(true);
             }}
             className={record.category === '+' ? 'special' : 'base'}
-            onChange={(value:number) => onChange({tagIndex: value})}
+            onChange={(value: number) => onChange({tagIndex: value})}
           />
 
           <OpenNotePanel
@@ -122,7 +123,7 @@ const KeepAccounts: FC<Props> = (props) => {
         <Note title='请填写类别名'
               placeholder='不能重复添加类型名'
               maxLen={4}
-              onChange={(value) => console.log(value)}
+              onChange={(value) => {updateTags(value,record.category)}}
               onChangeClass={() => {
                 setVisibleAddTag(false);
                 props.onOpen();
