@@ -3,15 +3,16 @@ import Icon from 'component/Icon';
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
+import PopOptionBox from '../PopOptionBox';
 const Wrapper = styled.section`
   .view{
     padding-bottom: 10px;
     width: 100%;
     overflow: auto;
     >ol{
+    display: flex;
     height: 68px;
     margin-top: 20px;
-    display: flex;
     margin-left: -6px;
     >li{
       &.base-selected{
@@ -86,7 +87,7 @@ const Tags: FC<Props> = (props) => {
             <li onClick={props.onClick}><Icon name='add'/>添加</li>
         </ol>
       </div>
-
+      <PopOptionBox />
     </Wrapper>
   );
 };
