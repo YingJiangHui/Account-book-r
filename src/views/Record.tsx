@@ -84,7 +84,7 @@ const Record: FC<Props> = (props) => {
 
           <OpenNotePanel
             onClick={() => {setVisibleNote(true);}}
-          />
+          >{record.note?<><span>修改</span>：{record.note}</>:<span>添加备注</span>}</OpenNotePanel>
 
           <Note onChange={(value) => onChange({note: value})}
                 onChangeClass={() => setVisibleNote(false)}

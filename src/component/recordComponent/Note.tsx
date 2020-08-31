@@ -71,20 +71,33 @@ const Wrapper = styled.section`
 type Props = {
   value: string,
   className: string,
-  onChange:(value:string)=>void
-  onChangeClass:()=>void
+  onChange: (value: string) => void
+  onChangeClass: () => void
 }
 const Note: FC<Props> = (props) => {
+  const [output, setOutput] = React.useState(props.value);
+  const [notes, setNotes] = React.useState<string[]>([]);
   const refInput = React.useRef<HTMLInputElement>(null);
-  const onEnsure=()=>{
-    props.onChange(refInput.current?.value||'');
-    props.onChangeClass()
-  }
-  React.useEffect(()=>{
-    if(props.className==='moveTo'){
-      refInput.current?.focus()
+  const addNote = (note: string) => {
+    if (notes.length >= 3)
+      setNotes((notes) => notes.slice(0, -1));
+    if (notes.indexOf(note) === -1)
+      setNotes((notes) => [note].concat(notes));
+  };
+  const onEnsure = () => {
+    const value = refInput.current?.value || '';
+    props.onChange(value);
+    props.onChangeClass();
+    addNote(value);
+  };
+  React.useEffect(() => {
+    if (props.className === 'moveTo') {
+      refInput.current?.focus();
     }
-  },[props.className])
+  }, [props.className]);
+  const onChange = (e: React.ChangeEvent) => {
+    setOutput((e.target as HTMLInputElement).value);
+  };
   return (
     <Cover className={props.className}>
       <Wrapper className={props.className}>
@@ -93,9 +106,9 @@ const Note: FC<Props> = (props) => {
           <li>请添加备注</li>
           <li onClick={onEnsure}>确定</li>
         </ol>
-        <input ref={refInput}  defaultValue={props.value} type="text" placeholder='请输入备注内容'/>
+        <input ref={refInput} onChange={onChange} value={output} type="text" placeholder='请输入备注内容'/>
         <ol className='notes'>
-          <li>dd</li>
+          {notes.map((item) => <li onClick={() => setOutput(item)} key={item}>{item}</li>)}
         </ol>
       </Wrapper>
     </Cover>

@@ -4,10 +4,13 @@ import styled from 'styled-components';
 
 const Wrapper = styled.section`
 margin-top: 20px;
+
   button{
-    color: #4c5d7f;
-    background: transparent;
-    border: none;
+      background: transparent;
+      border: none;
+  >span{
+      color: #4c5d7f;
+    }
   }
 `;
 type Props={
@@ -16,7 +19,7 @@ type Props={
 const OpenNotePanel: FC<Props> = (props) => {
   return (
     <Wrapper>
-      <button onClick={props.onClick}>添加备注</button>
+      <button onClick={props.onClick}>{props.children}</button>
     </Wrapper>
   );
 };
