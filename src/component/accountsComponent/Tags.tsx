@@ -3,8 +3,7 @@ import Icon from 'component/Icon';
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
-import {disburseTagsList, incomeTagsList} from 'useTags';
-
+import {useDisburseTagsList, useIncomeTagsList} from '../../useTags';
 const Wrapper = styled.section`
   .view{
     padding-bottom: 10px;
@@ -53,13 +52,15 @@ const Wrapper = styled.section`
 `;
 
 
-
 type Props={
   onChange:(value:number)=>void,
   category:string,
   className:string,
 }
 const Tags: FC<Props> = (props) => {
+  const {incomeTags,setIncomeTags} = useIncomeTagsList()
+  const {disburseTags,setDisburseTags} = useDisburseTagsList()
+
   const [index,setIndex] = useState(0);
   const toggle=(i:number)=>{
     setIndex(i)
@@ -74,7 +75,7 @@ const Tags: FC<Props> = (props) => {
     <Wrapper>
       <div className="view">
         <ol>
-          {(props.category==='-'?incomeTagsList:disburseTagsList).map((item:TagItem,i:number)=><li onClick={()=>toggle(i)} className={index===i?props.className+'-selected':''} key={item.icon}><Icon name={item.icon}/> {item.text}</li>)}
+          {(props.category==='-'?incomeTags:disburseTags).map((item:TagItem,i:number)=><li onClick={()=>toggle(i)} className={index===i?props.className+'-selected':''} key={item.icon}><Icon name={item.icon}/> {item.text}</li>)}
         </ol>
       </div>
     </Wrapper>
