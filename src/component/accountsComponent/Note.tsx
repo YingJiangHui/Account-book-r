@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Icon from '../Icon';
 import theme from 'theme';
 import Cover from '../Cover';
-
+import 'keyframes.scss';
 const Wrapper = styled.section`
   width: 100vw;
   background: #fff;
@@ -15,11 +15,9 @@ const Wrapper = styled.section`
   left: 0;
   top: 100%;
   transition: transform .2s;
-  &.moveTo{
-    transform: translateY(-100%);
-  }
-  &.moveOut{
-    transform: translateY(100%);
+  
+  &.move{
+    animation: move .3s forwards;
   }
   >.note-control{
     display: flex;
@@ -80,10 +78,11 @@ const Wrapper = styled.section`
 `;
 type Props = {
   value: string,
-  className: string,
+  placeholder:string,
   onChange: (value: string) => void
   onChangeClass: () => void,
-  maxLen: number
+  maxLen: number,
+  title:string
 }
 const Note: FC<Props> = (props) => {
   const [output, setOutput] = React.useState(props.value);
@@ -102,24 +101,21 @@ const Note: FC<Props> = (props) => {
     addNote(value);
   };
   React.useEffect(() => {
-    if (props.className === 'moveTo') {
       refInput.current?.focus();
-    }
-  }, [props.className]);
+  });
   const onChange = (e: React.ChangeEvent) => {
     if(output.length<props.maxLen)
       setOutput((e.target as HTMLInputElement).value);
-
   };
   return (
-    <Cover className={props.className}>
-      <Wrapper className={props.className}>
+    <Cover className='move'>
+      <Wrapper className='move'>
         <ol className='note-control'>
           <li onClick={props.onChangeClass}><Icon name='left'/></li>
-          <li>请添加备注</li>
+          <li>{props.title}</li>
           <li onClick={onEnsure}>确定</li>
         </ol>
-        <input ref={refInput} onChange={onChange} value={output} type="text" placeholder='请输入备注内容'/>
+        <input ref={refInput} onChange={onChange} value={output} type="text" placeholder={props.placeholder}/>
         <p>{output.length}/{props.maxLen}</p>
         <ol className='notes'>
           {notes.map((item) => <li onClick={() => setOutput(item)} key={item}>{item}</li>)}

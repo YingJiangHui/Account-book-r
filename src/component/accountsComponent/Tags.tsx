@@ -3,8 +3,6 @@ import Icon from 'component/Icon';
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
-import {useDisburseTagsList, useIncomeTagsList} from '../../useTags';
-
 const Wrapper = styled.section`
   .view{
     padding-bottom: 10px;
@@ -55,29 +53,22 @@ const Wrapper = styled.section`
 
 type Props = {
   onChange: (value: number) => void,
-  category: string,
   className: string,
+  onClick:()=>void,
+  value:TagItem[]
 }
 const Tags: FC<Props> = (props) => {
-  const {incomeTags} = useIncomeTagsList();
-  const {disburseTags} = useDisburseTagsList();
-  const [tag, setTag] = useState<TagItem[]>([]);
+  const [tags, setTags] = useState<TagItem[]>(props.value);
+  React.useEffect(()=>{
+    setTags(props.value)
+  },[props.value])
   const [index, setIndex] = useState(1);
   const toggle = (i: number) => {
     setIndex(i);
   };
-
-  React.useEffect(() => {
-    let tmp: TagItem[] = [];
-    if (props.category === '-') {
-      tmp = incomeTags;
-    } else if (props.category === '+') {
-      tmp = disburseTags;
-    }
-    setTag(tmp);
-    setIndex(tmp[0].id);
-  }, [props.category]);
-
+  React.useEffect(()=>{
+    setIndex(tags[0].id)
+  },[tags])
   React.useEffect(() => {
     props.onChange(index);
   }, [index]);
@@ -85,15 +76,17 @@ const Tags: FC<Props> = (props) => {
     <Wrapper>
       <div className="view">
         <ol>
-          {tag.map((item: TagItem) =>
+          {tags.map((item: TagItem) =>
             <li
               onClick={() => toggle(item.id)}
               className={index === item.id ? props.className + '-selected' : ''}
               key={item.id}>
               <Icon name={item.icon}/>
               {item.text}</li>)}
+            <li onClick={props.onClick}><Icon name='add'/>添加</li>
         </ol>
       </div>
+
     </Wrapper>
   );
 };
