@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import styled from 'styled-components';
+import {Wrapper,Options} from 'component/keepAccounts/style'
 import 'index.scss';
 import Close from 'component/accountsComponent/Close';
 import Pad from 'component/accountsComponent/Pad';
@@ -11,30 +11,13 @@ import OpenNotePanel from 'component/accountsComponent/OpenNotePanel';
 import Cover from 'component/Cover';
 import {useTags} from '../useTags';
 
-const Options = styled.div`
-  padding: 16px;
-`;
-const Wrapper = styled.div`
-  z-index: 1;
-  width: 100vw;
-  transition: .3s;
-  top:100%;
-  left: 0;
-  border-radius: 10px 10px 0 0;
-  background: #fff;
-  position: fixed;
-  &.moveTo{
-      transform: translateY(-100%);
-  }
-  &.moveOut{
-      transform: translateY(100%);
-  }
-`;
+
 type Props = {
   className: string,
   onClose: () => void,
   onOpen: () => void
 }
+
 type Record = {
   category: Category,
   tagIndex: number,
