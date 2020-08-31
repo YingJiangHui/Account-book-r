@@ -74,8 +74,8 @@ const Record = () => {
           </li>
           <li>
             <ul>
-              <li>餐飲</li>
-              <li className='done'>20:32 | 吃飯</li>
+              <li>餐饮</li>
+              <li className='done'>20:32 | 吃饭</li>
             </ul>
           </li>
         </ol>

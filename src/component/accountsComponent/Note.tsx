@@ -40,7 +40,17 @@ const Wrapper = styled.section`
         }
       }
     }
+  >p{
+    margin-top: 16px;
+    margin-top: 16px;
+
+    font-size: 14px;
+    color: ${theme.tingeFontColor};
+  }
   >input[type=text]{
+  &::-webkit-input-placeholder{
+    color: ${theme.tingeFontColor};
+  }
     font-size: 17px;
     width: 100%;
     margin-top: 20px;
@@ -72,7 +82,8 @@ type Props = {
   value: string,
   className: string,
   onChange: (value: string) => void
-  onChangeClass: () => void
+  onChangeClass: () => void,
+  maxLen: number
 }
 const Note: FC<Props> = (props) => {
   const [output, setOutput] = React.useState(props.value);
@@ -96,7 +107,9 @@ const Note: FC<Props> = (props) => {
     }
   }, [props.className]);
   const onChange = (e: React.ChangeEvent) => {
-    setOutput((e.target as HTMLInputElement).value);
+    if(output.length<props.maxLen)
+      setOutput((e.target as HTMLInputElement).value);
+
   };
   return (
     <Cover className={props.className}>
@@ -107,6 +120,7 @@ const Note: FC<Props> = (props) => {
           <li onClick={onEnsure}>确定</li>
         </ol>
         <input ref={refInput} onChange={onChange} value={output} type="text" placeholder='请输入备注内容'/>
+        <p>{output.length}/{props.maxLen}</p>
         <ol className='notes'>
           {notes.map((item) => <li onClick={() => setOutput(item)} key={item}>{item}</li>)}
         </ol>

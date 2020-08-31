@@ -4,10 +4,11 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
 import {useDisburseTagsList, useIncomeTagsList} from '../../useTags';
+
 const Wrapper = styled.section`
   .view{
     padding-bottom: 10px;
-    width: 100vw;
+    width: 100%;
     overflow: auto;
     >ol{
     height: 68px;
@@ -52,37 +53,45 @@ const Wrapper = styled.section`
 `;
 
 
-type Props={
-  onChange:(value:number)=>void,
-  category:string,
-  className:string,
+type Props = {
+  onChange: (value: number) => void,
+  category: string,
+  className: string,
 }
 const Tags: FC<Props> = (props) => {
-  const {incomeTags,findTag} = useIncomeTagsList()
-  const {disburseTags} = useDisburseTagsList()
+  const {incomeTags} = useIncomeTagsList();
+  const {disburseTags} = useDisburseTagsList();
+  const [tag, setTag] = useState<TagItem[]>([]);
+  const [index, setIndex] = useState(1);
+  const toggle = (i: number) => {
+    setIndex(i);
+  };
 
-  const [index,setIndex] = useState(1);
-  const toggle=(i:number)=>{
-    setIndex(i)
-  }
-  React.useEffect(()=>{
-    setIndex(1)
-  },[props.category])
-  React.useEffect(()=>{
-    props.onChange(index)
-  },[index])
+  React.useEffect(() => {
+    let tmp: TagItem[] = [];
+    if (props.category === '-') {
+      tmp = incomeTags;
+    } else if (props.category === '+') {
+      tmp = disburseTags;
+    }
+    setTag(tmp);
+    setIndex(tmp[0].id);
+  }, [props.category]);
+
+  React.useEffect(() => {
+    props.onChange(index);
+  }, [index]);
   return (
     <Wrapper>
       <div className="view">
         <ol>
-          {(props.category==='-'?incomeTags:disburseTags)
-            .map((item:TagItem)=>
-              <li
-                onClick={()=>toggle(item.id)}
-                className={index===item.id?props.className+'-selected':''}
-                key={item.id}>
-                <Icon name={item.icon}/>
-                {item.text}</li>)}
+          {tag.map((item: TagItem) =>
+            <li
+              onClick={() => toggle(item.id)}
+              className={index === item.id ? props.className + '-selected' : ''}
+              key={item.id}>
+              <Icon name={item.icon}/>
+              {item.text}</li>)}
         </ol>
       </div>
     </Wrapper>

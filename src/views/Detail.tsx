@@ -16,6 +16,7 @@ const Header = styled.header`
   background: ${theme.themeColor};
   color: #fff;
   padding: 16px;
+  font-size: 14px;
   button{
     background: #51bd83;
     color: #fff;
@@ -25,7 +26,6 @@ const Header = styled.header`
   }
   >ol{
   margin-top: 20px;
-    font-size: 15px;
     display: flex;
     max-width: 500px;
     justify-content: space-between;
@@ -48,11 +48,11 @@ function Detail() {
     <>
       <Layout>
         <Header>
-          <button>全部類型</button>
+          <button>全部类型</button>
             <ol>
               <li><input type="date"/></li>
-              <li>縂支出￥100.00</li>
-              <li>總收入￥100.00</li>
+              <li>总支出￥100.00</li>
+              <li>总收入￥100.00</li>
             </ol>
         </Header>
         <Wrapper>

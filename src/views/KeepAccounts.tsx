@@ -95,7 +95,8 @@ const KeepAccounts: FC<Props> = (props) => {
         />
 
       </RecordStyle>
-      <Note onChange={(value) => onChange({note: value})}
+      <Note maxLen={30}
+            onChange={(value) => onChange({note: value})}
             onChangeClass={() => {setVisibleNote(false);props.onOpen()}}
             value={record.note}
             className={visibleNote ? 'moveTo' : 'moveOut'}
