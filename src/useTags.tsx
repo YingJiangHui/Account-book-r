@@ -18,8 +18,8 @@ const tagList: TagItem[] = [
 const useTags = () => {
   const [tags, setTags] = React.useState<TagItem[]>(tagList);
   const findTag = (id: number) => find(id, tags);
-  const getTags = (category: Category) => {
-    return tags.filter((tag) => category === tag.category);
+  const fetchTags = (category: Category) => {
+    setTags(tagList.filter((tag) => category === tag.category));
   };
   const updateTags = (name: string, category: Category) => {
     setTags(tags.concat([{id: createId(), icon: 'accounts', text: name, category}]));
@@ -30,7 +30,7 @@ const useTags = () => {
   const editTag = (id: number, text: string) => {
     setTags(tags.map(tag => tag.id === id ? {...tag, text} : tag));
   };
-  return {tags, getTags, setTags, removeTag, editTag, findTag, updateTags};
+  return {tags, fetchTags, setTags, removeTag, editTag, findTag, updateTags};
 };
 
 export {

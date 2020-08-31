@@ -35,7 +35,7 @@ const KeepAccounts: FC<Props> = (props) => {
     amount: 0,
     note: ''
   });
-  const {getTags,setTags,updateTags} = useTags();
+  const {fetchTags,tags,updateTags} = useTags();
   const [output, setOutput] = React.useState<string>('');
   const onChange = (value: Partial<typeof record>) => {
     setRecord({
@@ -43,6 +43,9 @@ const KeepAccounts: FC<Props> = (props) => {
       ...value
     });
   };
+  React.useEffect(()=>{
+    fetchTags(record.category)
+  },[record.category])
   const onSubmit = () => {
     const StorageRecordName = 'recordTable';
     const recordTable = JSON.parse(localStorage.getItem(StorageRecordName) || '[]');
@@ -66,7 +69,7 @@ const KeepAccounts: FC<Props> = (props) => {
             }} value={output}/>
 
           <Tags
-            value={getTags(record.category)}
+            value={tags}
             onClick={() => {
               props.onClose();
               setVisibleAddTag(true);
