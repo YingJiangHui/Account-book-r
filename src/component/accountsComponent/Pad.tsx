@@ -73,7 +73,7 @@ const Pad: FC<Props> = (props) => {
       <button>4</button>
       <button>5</button>
       <button>6</button>
-      <button className={props.className+'-ok'+' '+'ok'}>确定</button>
+      <button className={`${props.className}-ok ok`}>确定</button>
       <button>7</button>
       <button>8</button>
       <button>9</button>

@@ -44,7 +44,7 @@ const SelectInfo:FC<Props>=(props)=>{
   const categoryMap = {'-':'支出','+':'收入'};
   const categoryStyle = {'-':'selectedBase','+':'selectedSpecial'};
   type keys = keyof typeof categoryMap;
-  const [categoryList,SetCategoryList] = React.useState<keys[]>(['-','+'])
+  const categoryList = React.useState<keys[]>(['-','+'])[0]
   const [selectedItem,setSelectedItem] = React.useState(props.value)
   const onChange=(tag:string)=>{
     setSelectedItem(tag as keys)

@@ -31,6 +31,7 @@ const Output: FC<Props> = (props) => {
     }
   };
   React.useEffect(() => {
+    props.onChange(parseFloat(output));
     switch (props.value) {
       case '0':
       case '1':
@@ -43,28 +44,26 @@ const Output: FC<Props> = (props) => {
       case '8':
       case '9':
         if (output === '0') {
-          setOutput(props.value);
+          return setOutput(props.value);
         } else {
-          setOutput(output + props.value);
+          return setOutput(output + props.value);
         }
         break;
       case '.':
         if (output.indexOf('.') === -1) {
-          setOutput(output + props.value);
+          return setOutput(output + props.value);
         }
         break;
       case 'removeOnly':
-        setOutput(output.slice(0, -1)||'0');
+        return setOutput(output.slice(0, -1)||'0');
         break;
       case 'clear':
-        setOutput('0');
+        return setOutput('0');
         break;
       case '确定':
-        props.onSubmit();
+        return props.onSubmit();
         break;
     }
-    props.onChange(parseFloat(output));
-
   }, [props.value]);
 
   return (

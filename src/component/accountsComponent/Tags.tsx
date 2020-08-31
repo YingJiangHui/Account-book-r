@@ -58,15 +58,15 @@ type Props={
   className:string,
 }
 const Tags: FC<Props> = (props) => {
-  const {incomeTags,setIncomeTags} = useIncomeTagsList()
-  const {disburseTags,setDisburseTags} = useDisburseTagsList()
+  const {incomeTags} = useIncomeTagsList()
+  const {disburseTags} = useDisburseTagsList()
 
-  const [index,setIndex] = useState(0);
+  const [index,setIndex] = useState(1);
   const toggle=(i:number)=>{
     setIndex(i)
   }
   React.useEffect(()=>{
-    setIndex(0)
+    setIndex(1)
   },[props.category])
   React.useEffect(()=>{
     props.onChange(index)
@@ -75,7 +75,13 @@ const Tags: FC<Props> = (props) => {
     <Wrapper>
       <div className="view">
         <ol>
-          {(props.category==='-'?incomeTags:disburseTags).map((item:TagItem,i:number)=><li onClick={()=>toggle(i)} className={index===i?props.className+'-selected':''} key={item.icon}><Icon name={item.icon}/> {item.text}</li>)}
+          {(props.category==='-'?incomeTags:disburseTags)
+            .map((item:TagItem)=>
+              <li
+                onClick={()=>toggle(item.id)}
+                className={index===item.id?props.className+'-selected':''}
+                key={item.id}><Icon name={item.icon}
+              /> {item.text}</li>)}
         </ol>
       </div>
     </Wrapper>
