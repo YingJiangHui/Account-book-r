@@ -48,7 +48,6 @@ const Pad: FC<Props> = (props) => {
     const input = (e.target as HTMLButtonElement).textContent;
     if (input === null || input === undefined) return;
     props.onChange(input);
-    console.log('fuck');
   };
 
 

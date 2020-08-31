@@ -58,7 +58,7 @@ type Props={
   className:string,
 }
 const Tags: FC<Props> = (props) => {
-  const {incomeTags} = useIncomeTagsList()
+  const {incomeTags,findTag} = useIncomeTagsList()
   const {disburseTags} = useDisburseTagsList()
 
   const [index,setIndex] = useState(1);
@@ -80,8 +80,9 @@ const Tags: FC<Props> = (props) => {
               <li
                 onClick={()=>toggle(item.id)}
                 className={index===item.id?props.className+'-selected':''}
-                key={item.id}><Icon name={item.icon}
-              /> {item.text}</li>)}
+                key={item.id}>
+                <Icon name={item.icon}/>
+                {item.text}</li>)}
         </ol>
       </div>
     </Wrapper>
