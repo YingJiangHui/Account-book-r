@@ -17,7 +17,7 @@ const Wrapper = styled.section`
       padding: 5px 10px;
       margin-right:10px ;
       &.selectedBase{
-        background: ${theme.tingeColor};
+        background: ${theme.tingeColorOpacity};
         color: ${theme.themeColor};
         box-shadow: 0 0 2px ${theme.themeColor};
       }

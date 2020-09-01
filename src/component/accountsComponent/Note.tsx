@@ -24,6 +24,7 @@ const Wrapper = styled.section`
     justify-content: space-between;
     align-items: center;
     >li{
+    
         &:nth-child(1){
           width: 50px;
             >.icon{
@@ -36,10 +37,12 @@ const Wrapper = styled.section`
             width: 50px;
            color: ${theme.themeColor};
         }
+        &.disable-click{
+           color: ${theme.tingeColor};
+        }
       }
     }
   >p{
-    margin-top: 16px;
     margin-top: 16px;
 
     font-size: 14px;
@@ -69,7 +72,7 @@ const Wrapper = styled.section`
       padding: 5px 10px;
       margin-right:10px ;
       &.selected{
-        background: ${theme.tingeColor};
+        background: ${theme.tingeColorOpacity};
         color: ${theme.themeColor};
         box-shadow: 0 0 2px ${theme.themeColor};
       }
@@ -95,6 +98,7 @@ const Note: FC<Props> = (props) => {
       setNotes((notes) => [note].concat(notes));
   };
   const onEnsure = () => {
+    if(output.length===0)return;
     const value = refInput.current?.value || '';
     props.onChange(value);
     props.onChangeClass();
@@ -113,7 +117,7 @@ const Note: FC<Props> = (props) => {
         <ol className='note-control'>
           <li onClick={props.onChangeClass}><Icon name='left'/></li>
           <li>{props.title}</li>
-          <li onClick={onEnsure}>确定</li>
+          <li onClick={onEnsure} className={output.length===0?'disable-click':''}>确定</li>
         </ol>
         <input ref={refInput} onChange={onChange} value={output} type="text" placeholder={props.placeholder}/>
         <p>{output.length}/{props.maxLen}</p>

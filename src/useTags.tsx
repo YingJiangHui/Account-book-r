@@ -1,7 +1,6 @@
 import React from 'react';
 import createId from 'lib/createId';
 
-const find = (id: number, list: TagItem[]) => list.find(tag => id === tag.id);
 const tagList: TagItem[] = [
   {id: createId(), icon: 'clothes', text: '服装美容', category: '-'},
   {id: createId(), icon: 'fun', text: '娱乐', category: '-'},
@@ -17,7 +16,7 @@ const tagList: TagItem[] = [
 
 const useTags = () => {
   const [tags, setTags] = React.useState<TagItem[]>(tagList);
-  const findTag = (id: number) => find(id, tags);
+  const findTag = (id: number) => tags.find(tag => id === tag.id)
   const fetchTags = (category: Category) => {
     setTags(tagList.filter((tag) => category === tag.category));
   };

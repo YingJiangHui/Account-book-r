@@ -10,6 +10,8 @@ import SelectInfo from 'component/accountsComponent/SelectInfo';
 import OpenNotePanel from 'component/accountsComponent/OpenNotePanel';
 import Cover from 'component/Cover';
 import {useTags} from '../useTags';
+import styled from 'styled-components';
+
 
 
 type Props = {
@@ -28,6 +30,7 @@ type Record = {
 const KeepAccounts: FC<Props> = (props) => {
   const [visibleRemark, setVisibleRemark] = React.useState(false);
   const [visibleAddTag, setVisibleAddTag] = React.useState(false);
+  const [updateTagId, setUpdateTagId] = React.useState(-1);
 
   const [record, setRecord] = React.useState<Record>({
     category: '-',
@@ -35,7 +38,8 @@ const KeepAccounts: FC<Props> = (props) => {
     amount: 0,
     note: ''
   });
-  const {fetchTags,tags,updateTags} = useTags();
+  const {fetchTags,tags,updateTags,removeTag,editTag,findTag} = useTags();
+
   const [output, setOutput] = React.useState<string>('');
   const onChange = (value: Partial<typeof record>) => {
     setRecord({
@@ -69,10 +73,11 @@ const KeepAccounts: FC<Props> = (props) => {
             }} value={output}/>
 
           <Tags
+            onRemoveTag={(id:number)=>{removeTag(id)}}
             value={tags}
-            onClick={() => {
+            onClick={(id:number|undefined) => {
               props.onClose();
-              setVisibleAddTag(true);
+              id?setUpdateTagId(id):setVisibleAddTag(true);
             }}
             className={record.category === '+' ? 'special' : 'base'}
             onChange={(value: number) => onChange({tagIndex: value})}
@@ -87,11 +92,11 @@ const KeepAccounts: FC<Props> = (props) => {
         </Options>
 
         <Pad
+          value={record.amount}
           className={record.category === '+' ? 'special' : 'base'}
           category={record.category}
           onChange={(value: string) => setOutput(value)}
         />
-
       </Wrapper>
       {visibleRemark ?
         <Note placeholder='请输入备注内容'
@@ -115,6 +120,18 @@ const KeepAccounts: FC<Props> = (props) => {
                 props.onOpen();
               }}
               value=''
+        />
+        : ''}
+      {updateTagId>0 ?
+        <Note title='请填写类别名'
+              placeholder='不能重复添加类型名'
+              maxLen={4}
+              onChange={(value) => {editTag(updateTagId,value)}}
+              onChangeClass={() => {
+                setUpdateTagId(-1);
+                props.onOpen();
+              }}
+              value={findTag(updateTagId)?.text||""}
         />
         : ''}
     </Cover>

@@ -20,13 +20,13 @@ const Wrapper = styled.section`
 `;
 type Props = {
   value: string,
-  onChange:(value:number)=>void,
-  onSubmit:()=>void
+  onChange: (value: number) => void,
+  onSubmit: () => void
 }
 const Output: FC<Props> = (props) => {
   const [output, _setOutput] = React.useState('0');
   const setOutput = (value: string) => {
-    if(output.length<16){
+    if (output.length < 16) {
       _setOutput(value);
     }
   };
@@ -44,24 +44,26 @@ const Output: FC<Props> = (props) => {
       case '8':
       case '9':
         if (output === '0') {
-          return setOutput(props.value);
+          setOutput(props.value);
         } else {
-          return setOutput(output + props.value);
+          setOutput(output + props.value);
         }
         break;
       case '.':
         if (output.indexOf('.') === -1) {
-          return setOutput(output + props.value);
+          setOutput(output + props.value);
         }
         break;
       case 'removeOnly':
-        return setOutput(output.slice(0, -1)||'0');
+        setOutput(output.slice(0, -1) || '0');
         break;
       case 'clear':
-        return setOutput('0');
+        setOutput('0');
         break;
       case '确定':
-        return props.onSubmit();
+        if (output !== '0') {
+          props.onSubmit();
+        }
         break;
     }
   }, [props.value]);

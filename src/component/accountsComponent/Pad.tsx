@@ -25,10 +25,18 @@ const Wrapper = styled.section`
       color: #fff;
       height: 192px;
     }
+    
+  
     &.base-ok{
       background: ${theme.themeColor};
     }
     &.special-ok{
+       background: ${theme.special.themeColor};
+    }
+     &.base-disable-ok{
+      background: ${theme.tingeColor};
+    }
+    &.special-disable-ok{
        background: ${theme.special.tingeColor};
     }
     &.zero{
@@ -39,7 +47,8 @@ const Wrapper = styled.section`
 type Props = {
   onChange: (value: string) => void,
   category: string,
-  className:string
+  className:string,
+  value:number
 }
 
 
@@ -50,6 +59,11 @@ const Pad: FC<Props> = (props) => {
     props.onChange(input);
   };
 
+  const [amount,setAmount ]= React.useState(props.value)
+  React.useEffect(()=>{
+    console.log(amount)
+    setAmount(props.value)
+  },[props.value])
 
   let timer: number;
   const onTouchStart = () => {
@@ -72,7 +86,7 @@ const Pad: FC<Props> = (props) => {
       <button>4</button>
       <button>5</button>
       <button>6</button>
-      <button className={`${props.className}-ok ok`}>确定</button>
+      <button className={`${props.className}-ok ok ${amount===0?props.className+'-disable-ok':''}`}>确定</button>
       <button>7</button>
       <button>8</button>
       <button>9</button>
