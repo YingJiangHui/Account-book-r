@@ -1,7 +1,7 @@
 import React from 'react';
 import createId from 'lib/createId';
 
-const tagList: TagItem[] = [
+const tagLists: TagItem[] = [
   {id: createId(), icon: 'clothes', text: '服装美容', category: '-'},
   {id: createId(), icon: 'fun', text: '娱乐', category: '-'},
   {id: createId(), icon: 'learn', text: '学习', category: '-'},
@@ -15,10 +15,31 @@ const tagList: TagItem[] = [
 ];
 
 const useTags = () => {
-  const [tags, setTags] = React.useState<TagItem[]>(tagList);
-  const findTag = (id: number) => tags.find(tag => id === tag.id)
+  const [tags, setTags] = React.useState<TagItem[]>([]);
+  const tagList = React.useRef<TagItem[]>([]);
+  React.useEffect(() => {
+    tagList.current = JSON.parse(window.localStorage.getItem('tags') || '[]');
+  }, []);
+  const count = React.useRef<number>(0);
+  React.useEffect(() => {
+    count.current += 1;
+  }, [tags]);
+
+  React.useEffect(() => {
+    if (count.current <= 1) return;
+    let cloneTags: TagItem[] = clone(tags);
+    for (let item of tagList.current) {
+      cloneTags = cloneTags.filter(tag => tag.id !== item.id);
+    }
+    tagList.current=[...tagList.current, ...cloneTags]
+    window.localStorage.setItem('tags', JSON.stringify(tagList.current));
+  }, [tags]);
+  const clone = (array: any[]) => {
+    return JSON.parse(JSON.stringify(array));
+  };
+  const findTag = (id: number) => tags.find(tag => id === tag.id);
   const fetchTags = (category: Category) => {
-    setTags(tagList.filter((tag) => category === tag.category));
+    setTags(tagList.current.filter((tag) => category === tag.category));
   };
   const updateTags = (name: string, category: Category) => {
     setTags(tags.concat([{id: createId(), icon: 'accounts', text: name, category}]));

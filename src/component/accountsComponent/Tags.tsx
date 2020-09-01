@@ -72,7 +72,7 @@ const Tags: FC<Props> = (props) => {
     setIndex(i);
   };
   React.useEffect(() => {
-    setIndex(tags[0].id);
+    setIndex(tags[0]?.id);
   }, [tags]);
   React.useEffect(() => {
     props.onChange(index);
