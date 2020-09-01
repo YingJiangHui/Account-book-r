@@ -1,7 +1,9 @@
 import styled from 'styled-components';
-import {FC} from 'react';
+import {FC, memo, useEffect, useState} from 'react';
 import React from 'react';
-import theme from 'theme'
+import theme from 'theme';
+import dayjs from 'dayjs';
+
 const Wrapper = styled.section`
   display: flex;
   justify-content: space-between;
@@ -28,7 +30,7 @@ const Wrapper = styled.section`
       }
     }
   }
-  input[type=date]{
+  input[date]{
       font-size: 14px;
       border: none;
       border-radius: 25px;
@@ -36,28 +38,37 @@ const Wrapper = styled.section`
   }
 `;
 
-type Props={
-  onChange:(value:Category)=>void,
-  value:string,
+type Props = {
+  onChangeCategory: (value: Category) => void
+  onChangeDate: (value: string) => void
+  value: string
 }
-const SelectInfo:FC<Props>=(props)=>{
-  const categoryMap = {'-':'支出','+':'收入'};
-  const categoryStyle = {'-':'selectedBase','+':'selectedSpecial'};
-  const categoryList = React.useState<Category[]>(['-','+'])[0]
-  const [selectedItem,setSelectedItem] = React.useState(props.value)
-  const onChange=(tag:Category)=>{
-    setSelectedItem(tag)
-    props.onChange(tag);
-  }
-  return(
+
+const SelectInfo: FC<Props> = memo((props) => {
+  const categoryMap = {'-': '支出', '+': '收入'};
+  const categoryStyle = {'-': 'selectedBase', '+': 'selectedSpecial'};
+  const categoryList = React.useState<Category[]>(['-', '+'])[0];
+  const [selectedItem, setSelectedItem] = React.useState(props.value);
+  const onChange = (tag: Category) => {
+    setSelectedItem(tag);
+    props.onChangeCategory(tag);
+  };
+  const nowDate = dayjs(new Date()).format('YYYY-MM-DD')
+  const [date, setDate] = useState(nowDate);
+
+  useEffect(() => {
+    props.onChangeDate(nowDate);
+  },[date]);
+  return (
     <Wrapper>
       <ol>
-        {categoryList.map((el:Category)=><li key={el} className={selectedItem===el?categoryStyle[el]:''} onClick={()=>onChange(el)}>{categoryMap[el]}</li>)}
+        {categoryList.map((el: Category) => <li key={el} className={selectedItem === el ? categoryStyle[el] : ''}
+                                                onClick={() => onChange(el)}>{categoryMap[el]}</li>)}
       </ol>
-      <input type="date"/>
+      <input type="date" value={date} onChange={(e) => {setDate(e.target.value);}}/>
     </Wrapper>
 
-  )
-}
+  );
+});
 
-export default SelectInfo
+export default SelectInfo;

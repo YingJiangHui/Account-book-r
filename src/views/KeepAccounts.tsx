@@ -1,5 +1,5 @@
-import React, {FC} from 'react';
-import {Wrapper,Options} from 'component/keepAccounts/style'
+import React, {FC, useCallback, useEffect} from 'react';
+import {Wrapper, Options} from 'component/keepAccounts/style';
 import 'index.scss';
 import Close from 'component/accountsComponent/Close';
 import Pad from 'component/accountsComponent/Pad';
@@ -9,61 +9,58 @@ import Note from 'component/accountsComponent/Note';
 import SelectInfo from 'component/accountsComponent/SelectInfo';
 import OpenNotePanel from 'component/accountsComponent/OpenNotePanel';
 import Cover from 'component/Cover';
-import {useTags} from '../useTags';
-import styled from 'styled-components';
-
-
+import {useTags} from '../hooks/useTags';
+import useRecords from 'hooks/useRecords';
+import dayjs from 'dayjs'
 
 type Props = {
   className: string,
   onClose: () => void,
   onOpen: () => void
 }
-
-type Record = {
-  category: Category,
-  tagIndex: number,
-  amount: number,
-  note: string
-}
+const recordData: RecordItem = {
+  category: '-',
+  tagIndex: 0,
+  amount: 0,
+  note: '',
+  createAt: dayjs(new Date).format('YYYY-DD-MM')
+};
 
 const KeepAccounts: FC<Props> = (props) => {
+
+
+  const {recordList, setRecordList, addRecord} = useRecords();
+  const {fetchTags, tags, updateTags, removeTag, editTag, findTag} = useTags();
   const [visibleRemark, setVisibleRemark] = React.useState(false);
   const [visibleAddTag, setVisibleAddTag] = React.useState(false);
+
   const [updateTagId, setUpdateTagId] = React.useState(-1);
 
-  const [record, setRecord] = React.useState<Record>({
-    category: '-',
-    tagIndex: 0,
-    amount: 0,
-    note: ''
-  });
-  const {fetchTags,tags,updateTags,removeTag,editTag,findTag} = useTags();
+  const [record, setRecord] = React.useState<RecordItem>(recordData);
 
   const [output, setOutput] = React.useState<string>('');
-  const onChange = (value: Partial<typeof record>) => {
+  const onChange = useCallback((value: Partial<typeof record>) => {
     setRecord({
       ...record,
       ...value
     });
-  };
-  React.useEffect(()=>{
-    fetchTags(record.category)
-  },[record.category])
+  }, [record]);
+  React.useEffect(() => {
+    fetchTags(record.category);
+  }, [record.category]);
   const onSubmit = () => {
-    const StorageRecordName = 'recordTable';
-    const recordTable = JSON.parse(localStorage.getItem(StorageRecordName) || '[]');
-    recordTable.push(record);
-    localStorage.setItem(StorageRecordName, JSON.stringify(recordTable));
+    addRecord(record);
   };
   return (
     <Cover className={props.className}>
+      {JSON.stringify(record)}
       <Wrapper className={props.className}>
         <Options>
           <Close onClick={props.onClose}/>
           <SelectInfo
             value={record.category}
-            onChange={(value: Category) => onChange({category: value})}
+            onChangeCategory={(value: Category) => onChange({category: value})}
+            onChangeDate={(value: string) => onChange({createAt: value})}
           />
           <Output
             onSubmit={onSubmit}
@@ -71,13 +68,12 @@ const KeepAccounts: FC<Props> = (props) => {
               setOutput('');
               onChange({amount: value});
             }} value={output}/>
-
           <Tags
-            onRemoveTag={(id:number)=>{removeTag(id)}}
+            onRemoveTag={(id: number) => {removeTag(id);}}
             value={tags}
-            onClick={(id:number|undefined) => {
+            onClick={(id: number | undefined) => {
               props.onClose();
-              id?setUpdateTagId(id):setVisibleAddTag(true);
+              id ? setUpdateTagId(id) : setVisibleAddTag(true);
             }}
             className={record.category === '+' ? 'special' : 'base'}
             onChange={(value: number) => onChange({tagIndex: value})}
@@ -114,7 +110,7 @@ const KeepAccounts: FC<Props> = (props) => {
         <Note title='请填写类别名'
               placeholder='不能重复添加类型名'
               maxLen={4}
-              onChange={(value) => {updateTags(value,record.category)}}
+              onChange={(value) => {updateTags(value, record.category);}}
               onChangeClass={() => {
                 setVisibleAddTag(false);
                 props.onOpen();
@@ -122,16 +118,16 @@ const KeepAccounts: FC<Props> = (props) => {
               value=''
         />
         : ''}
-      {updateTagId>0 ?
+      {updateTagId > 0 ?
         <Note title='请填写类别名'
               placeholder='不能重复添加类型名'
               maxLen={4}
-              onChange={(value) => {editTag(updateTagId,value)}}
+              onChange={(value) => {editTag(updateTagId, value);}}
               onChangeClass={() => {
                 setUpdateTagId(-1);
                 props.onOpen();
               }}
-              value={findTag(updateTagId)?.text||""}
+              value={findTag(updateTagId)?.text || ""}
         />
         : ''}
     </Cover>

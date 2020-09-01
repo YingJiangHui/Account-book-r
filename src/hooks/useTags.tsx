@@ -1,6 +1,6 @@
 import React from 'react';
 import createId from 'lib/createId';
-import useUpdate from './hooks/useUpdate';
+import useUpdate from './useUpdate';
 const useTags = () => {
   const [tags, setTags] = React.useState<TagItem[]>([]);
   const tagList = React.useRef<TagItem[]>([]);
