@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   left: 0;
   border-radius: 10px 10px 0 0;
   background: #fff;
-  position: absolute;
+  position: fixed;
  &.moveTo{
       transform: translateY(-100%);
   }

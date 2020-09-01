@@ -61,7 +61,6 @@ const Pad: FC<Props> = (props) => {
 
   const [amount,setAmount ]= React.useState(props.value)
   React.useEffect(()=>{
-    console.log(amount)
     setAmount(props.value)
   },[props.value])
 

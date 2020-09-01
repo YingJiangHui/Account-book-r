@@ -1,39 +1,37 @@
 import React from 'react';
 import createId from 'lib/createId';
-
-const tagLists: TagItem[] = [
-  {id: createId(), icon: 'clothes', text: '服装美容', category: '-'},
-  {id: createId(), icon: 'fun', text: '娱乐', category: '-'},
-  {id: createId(), icon: 'learn', text: '学习', category: '-'},
-  {id: createId(), icon: 'medical', text: '医疗', category: '-'},
-  {id: createId(), icon: 'shopping', text: '购物', category: '-'},
-  {id: createId(), icon: 'sport', text: '运动健身', category: '-'},
-  {id: createId(), icon: 'salary', text: '薪水', category: '-'},
-  {id: createId(), icon: 'transfer', text: '转账', category: '-'},
-  {id: createId(), icon: 'salary', text: '薪水', category: '+'},
-  {id: createId(), icon: 'transfer', text: '转账', category: '+'},
-];
-
+import useUpdate from './hooks/useUpdate';
 const useTags = () => {
   const [tags, setTags] = React.useState<TagItem[]>([]);
   const tagList = React.useRef<TagItem[]>([]);
-  React.useEffect(() => {
-    tagList.current = JSON.parse(window.localStorage.getItem('tags') || '[]');
-  }, []);
-  const count = React.useRef<number>(0);
-  React.useEffect(() => {
-    count.current += 1;
-  }, [tags]);
 
   React.useEffect(() => {
-    if (count.current <= 1) return;
-    let cloneTags: TagItem[] = clone(tags);
-    for (let item of tagList.current) {
-      cloneTags = cloneTags.filter(tag => tag.id !== item.id);
+    tagList.current = JSON.parse(window.localStorage.getItem('tags') ||'[]');
+    if(tagList.current.length===0){
+      tagList.current = [
+        {id: createId(), icon: 'clothes', text: '服装美容', category: '-'},
+        {id: createId(), icon: 'fun', text: '娱乐', category: '-'},
+        {id: createId(), icon: 'learn', text: '学习', category: '-'},
+        {id: createId(), icon: 'medical', text: '医疗', category: '-'},
+        {id: createId(), icon: 'shopping', text: '购物', category: '-'},
+        {id: createId(), icon: 'sport', text: '运动健身', category: '-'},
+        {id: createId(), icon: 'salary', text: '薪水', category: '-'},
+        {id: createId(), icon: 'transfer', text: '转账', category: '-'},
+        {id: createId(), icon: 'salary', text: '薪水', category: '+'},
+        {id: createId(), icon: 'transfer', text: '转账', category: '+'},
+      ]
     }
-    tagList.current=[...tagList.current, ...cloneTags]
-    window.localStorage.setItem('tags', JSON.stringify(tagList.current));
-  }, [tags]);
+  }, []);
+
+  useUpdate(()=>{
+    let cloneTags:TagItem[] = clone(tags);
+    for(let item of tagList.current){
+      cloneTags = cloneTags.filter(tag=>tag.id!==item.id);
+    }
+    tagList.current = [...tagList.current,...cloneTags]
+    window.localStorage.setItem('tags',JSON.stringify(tagList.current))
+  },[tags])
+
   const clone = (array: any[]) => {
     return JSON.parse(JSON.stringify(array));
   };
