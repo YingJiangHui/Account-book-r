@@ -1,27 +1,41 @@
 import {useEffect, useState} from 'react';
 import useUpdate from './useUpdate';
 import dayjs from 'dayjs'
-
+import clone from '../lib/clone';
+import {useTags} from 'hooks/useTags'
 const useRecords = () => {
   const [recordList, setRecordList] = useState<RecordItem[]>([]);
   const addRecord = (record:RecordItem)=>{
     if(record.createAt==='')
       record.createAt=dayjs(new Date()).format('YYYY-MM-DDTHH:mm')
-    setRecordList(()=>[...recordList,record])
 
+    setRecordList(()=>[...recordList,record])
+  }
+  const {findTag} = useTags()
+  const filterRecordUsedmonth=(month:string)=>{
+    return recordList.filter((record)=>dayjs(record.createAt).format('MM')===month)
+  }
+  const filterRecordUsedTag=(TagId:number)=>{
+    return recordList.filter((record)=>record.tagIndex===TagId)
   }
   useUpdate(()=>{
-    window.localStorage.setItem('record',JSON.stringify(recordList))
+    window.localStorage.setItem('record',JSON.stringify(sortRecord()))
   },[recordList])
 
   useEffect(()=>{
     setRecordList(()=>fetchRecord())
   },[])
 
+  const sortRecord=():RecordItem[]=>{
+    return (clone(recordList) as RecordItem[]).sort((a,b)=>a.createAt>b.createAt?-1:1)
+  }
+
   const fetchRecord = () :RecordItem[]=>{
     const storageRecord = JSON.parse(window.localStorage.getItem('record')||'[]')
     return storageRecord
   }
-  return {recordList, setRecordList,addRecord,fetchRecord};
+  return {recordList,addRecord,fetchRecord};
 };
+
+
 export default useRecords;

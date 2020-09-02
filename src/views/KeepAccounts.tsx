@@ -5,7 +5,7 @@ import Close from 'component/accountsComponent/Close';
 import Pad from 'component/accountsComponent/Pad';
 import Output from 'component/accountsComponent/Output';
 import Tags from 'component/accountsComponent/Tags';
-import Note from 'component/accountsComponent/Note';
+import PopUpInput from 'component/PopUpInput';
 import SelectInfo from 'component/accountsComponent/SelectInfo';
 import OpenNotePanel from 'component/accountsComponent/OpenNotePanel';
 import Cover from 'component/Cover';
@@ -98,39 +98,40 @@ const KeepAccounts: FC<Props> = (props) => {
         />
       </Wrapper>
       {visibleRemark ?
-        <Note placeholder='请输入备注内容'
-              title='请添加备注'
-              maxLen={30}
-              onChange={(value) => onChange({note: value})}
-              onChangeClass={() => {
+        <PopUpInput
+                    placeholder='请输入备注内容'
+                    title='请添加备注'
+                    maxLen={30}
+                    onChange={(value) => onChange({note: value})}
+                    onChangeClass={() => {
                 setVisibleRemark(false);
                 props.onOpen();
               }}
-              value={record.note}
+                    value={record.note}
         />
         : ''}
       {visibleAddTag ?
-        <Note title='请填写类别名'
-              placeholder='不能重复添加类型名'
-              maxLen={4}
-              onChange={(value) => {updateTags(value, record.category);}}
-              onChangeClass={() => {
+        <PopUpInput title='请填写类别名'
+                    placeholder='不能重复添加类型名'
+                    maxLen={4}
+                    onChange={(value) => {updateTags(value, record.category);}}
+                    onChangeClass={() => {
                 setVisibleAddTag(false);
                 props.onOpen();
               }}
-              value=''
+                    value=''
         />
         : ''}
       {updateTagId > 0 ?
-        <Note title='请填写类别名'
-              placeholder='不能重复添加类型名'
-              maxLen={4}
-              onChange={(value) => {editTag(updateTagId, value);}}
-              onChangeClass={() => {
+        <PopUpInput title='请填写类别名'
+                    placeholder='不能重复添加类型名'
+                    maxLen={4}
+                    onChange={(value) => {editTag(updateTagId, value);}}
+                    onChangeClass={() => {
                 setUpdateTagId(-1);
                 props.onOpen();
               }}
-              value={findTag(updateTagId)?.text || ""}
+                    value={findTag(updateTagId)?.text || ""}
         />
         : ''}
     </Cover>

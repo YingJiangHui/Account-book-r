@@ -9,7 +9,6 @@ const LayoutStyle = styled.div`
   flex-direction: column;
 `;
 const Main = styled.main`
-  position: relative;
   flex-grow: 1;
   overflow: auto;
 `;

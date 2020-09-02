@@ -1,0 +1,12 @@
+.my-node-enter {
+  transform: translateY(0);
+}
+.my-node-enter-active {
+  transition:transform 2s;
+}
+.my-node-exit {
+
+}
+.my-node-exit-active {
+  transform: translateY(500px);
+}

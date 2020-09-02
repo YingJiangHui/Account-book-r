@@ -1,26 +1,32 @@
 import {FC, memo} from 'react';
 import React from 'react';
 import styled from 'styled-components';
-import Icon from '../Icon';
+import Icon from './Icon';
 import theme from 'theme';
-import Cover from '../Cover';
-import 'keyframes.scss';
-const Wrapper = styled.section`
-  width: 100vw;
-  background: #fff;
-  border-radius: 10px 10px 0 0;
-  padding: 16px;
-  z-index: 6;
-  position: fixed;
-  left: 0;
-  top: 100%;
-  transition: transform .2s;
-  
-  &.move{
-    animation: move .3s forwards;
-  }
-  >.note-control{
-    display: flex;
+import Cover from './Cover';
+import '../keyframes.scss';
+import {Wrapper} from 'component/PopUp/commonStyle'
+const List = styled.ol`
+    margin-top: 20px;
+    margin-bottom: 50px;
+    >li{            
+      background:#f1f1f1;
+      color: #a9a9a9;
+      font-size: 14px;
+      font-weight: 100;
+      border-radius: 25px;
+      display: inline-block;
+      padding: 5px 10px;
+      margin-right:10px ;
+      &.selected{
+        background: ${theme.tingeColorOpacity};
+        color: ${theme.themeColor};
+        box-shadow: 0 0 2px ${theme.themeColor};
+      }
+    }
+`
+const Control = styled.ol`
+ display: flex;
     justify-content: space-between;
     align-items: center;
     >li{
@@ -41,44 +47,7 @@ const Wrapper = styled.section`
            color: ${theme.tingeColor};
         }
       }
-    }
-  >p{
-    margin-top: 16px;
-
-    font-size: 14px;
-    color: ${theme.tingeFontColor};
-  }
-  >input[type=text]{
-  &::-webkit-input-placeholder{
-    color: ${theme.tingeFontColor};
-  }
-    font-size: 17px;
-    width: 100%;
-    margin-top: 20px;
-    height: 48px;
-    border: none;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-  }
-  >.notes{
-    margin-top: 20px;
-    margin-bottom: 50px;
-    >li{            
-      background:#f1f1f1;
-      color: #a9a9a9;
-      font-size: 14px;
-      font-weight: 100;
-      border-radius: 25px;
-      display: inline-block;
-      padding: 5px 10px;
-      margin-right:10px ;
-      &.selected{
-        background: ${theme.tingeColorOpacity};
-        color: ${theme.themeColor};
-        box-shadow: 0 0 2px ${theme.themeColor};
-      }
-    }
-  }
-`;
+`
 type Props = {
   value: string,
   placeholder:string,
@@ -87,7 +56,7 @@ type Props = {
   maxLen: number,
   title:string
 }
-const Note: FC<Props> = memo((props) => {
+const PopUpInput: FC<Props> = memo((props) => {
   const [output, setOutput] = React.useState(props.value);
   const [notes, setNotes] = React.useState<string[]>([]);
   const refInput = React.useRef<HTMLInputElement>(null);
@@ -114,18 +83,18 @@ const Note: FC<Props> = memo((props) => {
   return (
     <Cover className='move'>
       <Wrapper className='move'>
-        <ol className='note-control'>
-          <li onClick={props.onChangeClass}><Icon name='left'/></li>
-          <li>{props.title}</li>
-          <li onClick={onEnsure} className={output.length===0?'disable-click':''}>确定</li>
-        </ol>
+          <Control>
+            <li onClick={props.onChangeClass}><Icon name='left'/></li>
+            <li>{props.title}</li>
+            <li onClick={onEnsure} className={output.length===0?'disable-click':''}>确定</li>
+          </Control>
         <input ref={refInput} onChange={onChange} value={output} type="text" placeholder={props.placeholder}/>
         <p>{output.length}/{props.maxLen}</p>
-        <ol className='notes'>
+        <List>
           {notes.map((item) => <li onClick={() => setOutput(item)} key={item}>{item}</li>)}
-        </ol>
+        </List>
       </Wrapper>
     </Cover>
   );
 });
-export default Note;
+export default PopUpInput;

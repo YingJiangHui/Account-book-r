@@ -16,7 +16,7 @@ const Wrapper = styled.div`
       transform: translateY(-100%);
   }
   &.moveOut{
-      transform: translateY(100%);
+      transform: translateY(0);
   }
 `;
 
