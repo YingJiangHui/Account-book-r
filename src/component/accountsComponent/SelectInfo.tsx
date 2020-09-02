@@ -30,7 +30,7 @@ const Wrapper = styled.section`
       }
     }
   }
-  input[type=date]{
+  input[type=datetime-local]{
       font-size: 14px;
       border: none;
       border-radius: 25px;
@@ -53,7 +53,8 @@ const SelectInfo: FC<Props> = memo((props) => {
     setSelectedItem(tag);
     props.onChangeCategory(tag);
   };
-  const nowDate = dayjs(new Date()).format('YYYY-MM-DD');
+  const nowDate = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
+
   const [date, setDate] = useState(nowDate);
 
   useEffect(() => {
@@ -65,7 +66,7 @@ const SelectInfo: FC<Props> = memo((props) => {
         {categoryList.map((el: Category) => <li key={el} className={selectedItem === el ? categoryStyle[el] : ''}
                                                 onClick={() => onChange(el)}>{categoryMap[el]}</li>)}
       </ol>
-      <input type="date" value={date} onChange={(e) => {setDate(e.target.value);}}/>
+      <input type="dateTime-local" value={dayjs(date).format('YYYY-MM-DDTHH:mm')} onChange={(e) => {setDate(e.target.value);}}/>
     </Wrapper>
 
   );

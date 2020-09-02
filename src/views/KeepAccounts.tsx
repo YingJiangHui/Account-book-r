@@ -23,7 +23,7 @@ const recordData: RecordItem = {
   tagIndex: 0,
   amount: 0,
   note: '',
-  createAt: dayjs(new Date).format('YYYY-DD-MM')
+  createAt: ''
 };
 
 const KeepAccounts: FC<Props> = (props) => {
