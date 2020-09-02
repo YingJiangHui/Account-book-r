@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styled from 'styled-components';
 import Icon from './Icon';
 import theme from '../theme';
-
+import dayjs from 'dayjs';
+import {useTags}from 'hooks/useTags'
 const Wrapper = styled.section`
   border-radius: 10px;
   overflow: hidden;
@@ -19,9 +20,12 @@ const Wrapper = styled.section`
      }
      >ol{
        display: flex;
-       width: 200px;
+       min-width: 130px;
        justify-content: space-between;
        align-items: center;
+       >li{
+        margin-left: 10px;
+       }
      }
   }
   main{
@@ -36,6 +40,7 @@ const Wrapper = styled.section`
       width: 130px;
       display: flex;
       .done{
+        min-width: 70px;
         margin-top: 5px;
         font-size: 14px;
         font-weight: 200;
@@ -58,14 +63,21 @@ const Wrapper = styled.section`
      }
   }
 `;
-const Record = () => {
+
+type Props={
+  recordItem:RecordItem
+}
+const Records:FC<Props> = (props) => {
+
+  const {findTag}= useTags()
+  const {recordItem} = props
   return (
     <Wrapper>
       <header>
-        <div className="date">8月27日 今天</div>
+        <div className="date">{dayjs(recordItem.createAt).format('MM月DD日')}</div>
         <ol>
-          <li>支 10.00</li>
-          <li>收 0.00</li>
+          <li>支 {recordItem.category==='-'?recordItem.amount:'0.00'}</li>
+          <li>收 {recordItem.category==='+'?recordItem.amount:'0.00'}</li>
         </ol>
       </header>
       <main>
@@ -75,15 +87,15 @@ const Record = () => {
           </li>
           <li>
             <ul>
-              <li>餐饮</li>
-              <li className='done'>20:32 | 吃饭</li>
+              <li>{findTag(recordItem.tagIndex)?.text}</li>
+              <li className='done'>{dayjs(recordItem.createAt).format('HH:mm')} {recordItem.note?'| '+recordItem.note:''}</li>
             </ul>
           </li>
         </ol>
-        <div>-10.00</div>
+        <div>{(recordItem.category==="+"?'+':'-')+recordItem.amount}</div>
       </main>
     </Wrapper>
   );
 };
 
-export default Record;
+export default Records;

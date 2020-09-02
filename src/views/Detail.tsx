@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import Layout from '../component/Layout';
 import OpenRecordButton from '../component/OpenRecordButton';
 import KeepAccounts from 'views/KeepAccounts';
-import Record from 'component/Record'
+import Records from 'component/Records'
 import {Header,Wrapper} from 'component/Detail/style'
 import useRecords from 'hooks/useRecords'
 const  Detail:FC=()=> {
@@ -20,8 +20,7 @@ const  Detail:FC=()=> {
             </ol>
         </Header>
         <Wrapper>
-          {recordList.map(record=><Record/>)}
-
+          {recordList.map((record,index)=><Records key={index} recordItem={record}/>)}
         </Wrapper>
       </Layout>
       <OpenRecordButton onClick={() => setVisible(true)}/>

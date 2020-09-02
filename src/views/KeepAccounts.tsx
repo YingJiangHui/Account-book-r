@@ -31,6 +31,7 @@ const KeepAccounts: FC<Props> = (props) => {
 
   const {recordList, setRecordList, addRecord} = useRecords();
   const {fetchTags, tags, updateTags, removeTag, editTag, findTag} = useTags();
+
   const [visibleRemark, setVisibleRemark] = React.useState(false);
   const [visibleAddTag, setVisibleAddTag] = React.useState(false);
 
@@ -54,7 +55,6 @@ const KeepAccounts: FC<Props> = (props) => {
   };
   return (
     <Cover className={props.className}>
-      {JSON.stringify(record)}
       <Wrapper className={props.className}>
         <Options>
           <Close onClick={props.onClose}/>
