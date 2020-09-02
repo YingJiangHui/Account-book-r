@@ -53,12 +53,12 @@ const SelectInfo: FC<Props> = memo((props) => {
     setSelectedItem(tag);
     props.onChangeCategory(tag);
   };
-  const nowDate = dayjs(new Date()).format('YYYY-MM-DD')
+  const nowDate = dayjs(new Date()).format('YYYY-MM-DD');
   const [date, setDate] = useState(nowDate);
 
   useEffect(() => {
-    props.onChangeDate(nowDate);
-  },[date]);
+    props.onChangeDate(date);
+  }, [date]);
   return (
     <Wrapper>
       <ol>
