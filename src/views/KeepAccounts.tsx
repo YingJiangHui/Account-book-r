@@ -29,7 +29,7 @@ const recordData: RecordItem = {
 const KeepAccounts: FC<Props> = (props) => {
 
 
-  const {recordList, setRecordList, addRecord} = useRecords();
+  const { addRecord} = useRecords();
   const {fetchTags, tags, updateTags, removeTag, editTag, findTag} = useTags();
 
   const [visibleRemark, setVisibleRemark] = React.useState(false);

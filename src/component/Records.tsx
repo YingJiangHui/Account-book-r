@@ -4,6 +4,7 @@ import Icon from './Icon';
 import theme from '../theme';
 import dayjs from 'dayjs';
 import {useTags}from 'hooks/useTags'
+import cn from 'classnames'
 const Wrapper = styled.section`
   border-radius: 10px;
   overflow: hidden;
@@ -59,7 +60,11 @@ const Wrapper = styled.section`
           background: ${theme.themeColor};
           height: 40px;
           width: 40px;
+          &.special{
+            background: ${theme.special.themeColor};
+          }
         }
+        
      }
   }
 `;
@@ -83,7 +88,7 @@ const Records:FC<Props> = (props) => {
       <main>
         <ol>
           <li className="icon-wrapper">
-            <Icon name='learn'/>
+            <Icon name={findTag(recordItem.tagIndex)?.icon ||''} className={cn(recordItem.category==='+'?'special':'')}/>
           </li>
           <li>
             <ul>

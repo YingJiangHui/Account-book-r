@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import Layout from '../component/Layout';
 import OpenRecordButton from '../component/OpenRecordButton';
 import KeepAccounts from 'views/KeepAccounts';
@@ -7,7 +7,7 @@ import {Header,Wrapper} from 'component/Detail/style'
 import useRecords from 'hooks/useRecords'
 const  Detail:FC=()=> {
   const [visible, setVisible] = React.useState<boolean>(false);
-  const {recordList,fetchRecord,addRecord} = useRecords()
+  const {fetchRecord} = useRecords()
   return (
     <>
       <Layout>

@@ -20,7 +20,6 @@ const useRecords = () => {
 
   const fetchRecord = () :RecordItem[]=>{
     const storageRecord = JSON.parse(window.localStorage.getItem('record')||'[]')
-
     return storageRecord
   }
   return {recordList, setRecordList,addRecord,fetchRecord};
