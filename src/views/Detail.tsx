@@ -8,9 +8,6 @@ import theme from '../theme';
 
 const Wrapper = styled.div`
     padding: 10px;
-    .record-wrap{
-      margin-bottom: 10px;
-    }
 `
 const Header = styled.header`
   background: ${theme.themeColor};
@@ -56,12 +53,7 @@ function Detail() {
             </ol>
         </Header>
         <Wrapper>
-          <div className="record-wrap">
             <Record/>
-          </div>
-          <div className="record-wrap">
-            <Record/>
-          </div>
         </Wrapper>
       </Layout>
       <OpenRecordButton onClick={() => setVisible(true)}/>

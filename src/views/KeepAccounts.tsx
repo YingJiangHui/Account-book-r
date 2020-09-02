@@ -50,6 +50,7 @@ const KeepAccounts: FC<Props> = (props) => {
   }, [record.category]);
   const onSubmit = () => {
     addRecord(record);
+    setOutput('clear')
   };
   return (
     <Cover className={props.className}>
@@ -60,8 +61,7 @@ const KeepAccounts: FC<Props> = (props) => {
           <SelectInfo
             value={record.category}
             onChangeCategory={(value: Category) => onChange({category: value})}
-            onChangeDate={(value: string) => {onChange({createAt: value});
-              console.log(value);}}
+            onChangeDate={(value: string) => {onChange({createAt: value});}}
           />
           <Output
             onSubmit={onSubmit}

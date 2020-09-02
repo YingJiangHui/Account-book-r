@@ -6,6 +6,7 @@ import theme from '../theme';
 const Wrapper = styled.section`
   border-radius: 10px;
   overflow: hidden;
+  margin-bottom: 10px;
   header{
      padding: 16px;
      height: 68px;

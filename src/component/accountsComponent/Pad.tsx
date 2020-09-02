@@ -58,7 +58,7 @@ const Pad: FC<Props> = memo((props) => {
     if (input === null || input === undefined) return;
     props.onChange(input);
   };
-
+  //用于查看是否可以点击确定按钮
   const [amount,setAmount ]= React.useState(props.value)
   React.useEffect(()=>{
     setAmount(props.value)
