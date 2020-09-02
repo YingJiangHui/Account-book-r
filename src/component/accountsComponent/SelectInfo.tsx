@@ -30,7 +30,7 @@ const Wrapper = styled.section`
       }
     }
   }
-  input[date]{
+  input[type=date]{
       font-size: 14px;
       border: none;
       border-radius: 25px;

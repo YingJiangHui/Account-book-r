@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, memo} from 'react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -16,11 +16,11 @@ margin-top: 20px;
 type Props={
   onClick:()=>void
 }
-const OpenNotePanel: FC<Props> = (props) => {
+const OpenNotePanel: FC<Props> =memo( (props) => {
   return (
     <Wrapper>
       <button onClick={props.onClick}>{props.children}</button>
     </Wrapper>
   );
-};
+});
 export default OpenNotePanel;

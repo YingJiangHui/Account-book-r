@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import Icon from 'component/Icon';
 import theme from 'theme';
 
@@ -15,12 +15,12 @@ const Wrapper = styled.button`
 type Props={
   onClick:()=>void
 }
-const Close:FC<Props> =(props) => {
+const Close:FC<Props> =memo((props) => {
   return (
     <Wrapper onClick={props.onClick}>
       <Icon name='close'/>
     </Wrapper>
   );
-};
+});
 
 export default Close;

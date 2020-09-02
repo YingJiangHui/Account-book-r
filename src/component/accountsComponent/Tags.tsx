@@ -1,4 +1,4 @@
-import {FC, useState} from 'react';
+import {FC, memo, useState} from 'react';
 import Icon from 'component/Icon';
 import React from 'react';
 import styled from 'styled-components';
@@ -62,7 +62,7 @@ type Props = {
   onClick: (id?:number) => void,
   value: TagItem[]
 }
-const Tags: FC<Props> = (props) => {
+const Tags: FC<Props> = memo((props) => {
   const [tags, setTags] = useState<TagItem[]>(props.value);
   React.useEffect(() => {
     setTags(props.value);
@@ -124,5 +124,5 @@ const Tags: FC<Props> = (props) => {
 
     </Wrapper>
   );
-};
+});
 export default Tags;

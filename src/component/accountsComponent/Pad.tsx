@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, memo} from 'react';
 import Icon from 'component/Icon';
 import React from 'react';
 import styled from 'styled-components';
@@ -52,7 +52,7 @@ type Props = {
 }
 
 
-const Pad: FC<Props> = (props) => {
+const Pad: FC<Props> = memo((props) => {
   const onClick = (e: React.MouseEvent) => {
     const input = (e.target as HTMLButtonElement).textContent;
     if (input === null || input === undefined) return;
@@ -94,5 +94,5 @@ const Pad: FC<Props> = (props) => {
     </Wrapper>
 
   );
-};
+});
 export default Pad;

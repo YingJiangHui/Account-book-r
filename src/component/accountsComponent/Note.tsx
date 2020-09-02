@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, memo} from 'react';
 import React from 'react';
 import styled from 'styled-components';
 import Icon from '../Icon';
@@ -87,7 +87,7 @@ type Props = {
   maxLen: number,
   title:string
 }
-const Note: FC<Props> = (props) => {
+const Note: FC<Props> = memo((props) => {
   const [output, setOutput] = React.useState(props.value);
   const [notes, setNotes] = React.useState<string[]>([]);
   const refInput = React.useRef<HTMLInputElement>(null);
@@ -127,5 +127,5 @@ const Note: FC<Props> = (props) => {
       </Wrapper>
     </Cover>
   );
-};
+});
 export default Note;

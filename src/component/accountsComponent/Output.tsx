@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {FC} from 'react';
+import {FC, memo} from 'react';
 import React from 'react';
 
 const Wrapper = styled.section`
@@ -23,7 +23,7 @@ type Props = {
   onChange: (value: number) => void,
   onSubmit: () => void
 }
-const Output: FC<Props> = (props) => {
+const Output: FC<Props> =memo( (props) => {
   const [output, _setOutput] = React.useState('0');
   const setOutput = (value: string) => {
     if (output.length < 16) {
@@ -74,5 +74,5 @@ const Output: FC<Props> = (props) => {
       <div className='output'>{output}</div>
     </Wrapper>
   );
-};
+});
 export default Output;
