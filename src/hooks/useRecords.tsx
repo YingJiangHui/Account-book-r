@@ -7,15 +7,22 @@ const useRecords = () => {
   const addRecord = (record:RecordItem)=>{
     if(record.createAt==='')
       record.createAt=dayjs(new Date()).format('YYYY-MM-DDTHH:mm')
-    setRecordList([...recordList,record])
+    setRecordList(()=>[...recordList,record])
+
   }
   useUpdate(()=>{
     window.localStorage.setItem('record',JSON.stringify(recordList))
   },[recordList])
+
   useEffect(()=>{
-    const storageRecord = JSON.parse(window.localStorage.getItem('record')||'[]')
-    setRecordList(storageRecord)
+    setRecordList(()=>fetchRecord())
   },[])
-  return {recordList, setRecordList,addRecord};
+
+  const fetchRecord = () :RecordItem[]=>{
+    const storageRecord = JSON.parse(window.localStorage.getItem('record')||'[]')
+
+    return storageRecord
+  }
+  return {recordList, setRecordList,addRecord,fetchRecord};
 };
 export default useRecords;

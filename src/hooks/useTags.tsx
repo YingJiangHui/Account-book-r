@@ -22,7 +22,6 @@ const useTags = () => {
   React.useEffect(() => {
 
   }, []);
-  console.log(tagList.current);
   useUpdate(()=>{
     let cloneTags:TagItem[] = clone(tags);
     for(let item of tagList.current){
