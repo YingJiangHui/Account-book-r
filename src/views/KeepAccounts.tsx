@@ -51,7 +51,8 @@ const KeepAccounts: FC<Props> = (props) => {
   }, [record.category]);
   const onSubmit = () => {
     addRecord(record);
-    setOutput('clear')
+    setOutput('clear');
+    props.onClose();
   };
   return (
     <Cover className={props.className}>
