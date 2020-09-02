@@ -27,6 +27,7 @@ const Wrapper = styled.div`
   height: 100px;
   display: flex;justify-content: center;align-items: center;
   flex-direction: column;
+  z-index: 99;
   .icon{
     fill:#fff;
     width: 34px;
@@ -40,17 +41,19 @@ type Props = {
 }
 const Tooltip: FC<Props> = ({value, inProp}) => {
   return (
-    <Transition in={inProp} timeout={duration}>
+    <div>
+    <Transition unmountOnExit={true}  in={inProp} timeout={duration}>
       {(state: keyof typeof transitionStyles) => (
         <Wrapper style={{
           ...defaultStyle,
           ...transitionStyles[state]
         }}>
-          <Icon name='true'/>
+          <Icon name='true2'/>
           {value}
         </Wrapper>
       )}
     </Transition>
+    </div>
   );
 };
 export default Tooltip;

@@ -11,12 +11,12 @@ import OpenNotePanel from 'component/accountsComponent/OpenNotePanel';
 import Cover from 'component/Cover';
 import {useTags} from '../hooks/useTags';
 import useRecords from 'hooks/useRecords';
-import dayjs from 'dayjs'
 
 type Props = {
   className: string,
   onClose: () => void,
-  onOpen: () => void
+  onOpen: () => void,
+  ensure:()=>void,
 }
 const recordData: RecordItem = {
   category: '-',
@@ -53,6 +53,7 @@ const KeepAccounts: FC<Props> = (props) => {
     addRecord(record);
     setOutput('clear');
     props.onClose();
+    props.ensure();
   };
   return (
     <Cover className={props.className}>

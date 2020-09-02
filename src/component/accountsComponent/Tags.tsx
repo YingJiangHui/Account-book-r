@@ -102,6 +102,7 @@ const Tags: FC<Props> = memo((props) => {
                 }
               }
               onClick={(e) => {
+                console.log(item.id)
                 toggle(item.id);
               }}
               className={index === item.id ? props.className + '-selected' : ''}
