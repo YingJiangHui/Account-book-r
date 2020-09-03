@@ -1,26 +1,25 @@
-.move-enter{
+.popUp-enter{
   transform: translateY(0);
 }
-.move-enter-active{
+.popUp-enter-active{
   transform: translateY(-100%);
   transition: transform 300ms;
 }
-.move-enter-done{
+.popUp-enter-done{
   transform: translateY(-100%);
 }
-.move-exit{
+.popUp-exit{
   transform: translateY(-100%);
 }
-.move-exit-active{
+.popUp-exit-active{
   transform: translateY(0);
   transition: transform 300ms;
 }
-.move-exit-done{
+.popUp-exit-done{
   transform: translateY(0);
 
 }
-
-.defaultPos{
+.popUp{
   position: absolute;
   left: 0;
   top:100%

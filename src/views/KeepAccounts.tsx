@@ -5,7 +5,7 @@ import Close from 'component/accountsComponent/Close';
 import Pad from 'component/accountsComponent/Pad';
 import Output from 'component/accountsComponent/Output';
 import Tags from 'component/accountsComponent/Tags';
-import PopUpInput from 'component/PopUpInput';
+import PopUpInput from 'component/PopUp/PopUpInput';
 import SelectInfo from 'component/accountsComponent/SelectInfo';
 import OpenNotePanel from 'component/accountsComponent/OpenNotePanel';
 import Cover from 'component/Cover';
@@ -16,7 +16,7 @@ type Props = {
   className: string,
   onClose: () => void,
   onOpen: () => void,
-  ensure:()=>void,
+  ensure: () => void,
 }
 const recordData: RecordItem = {
   category: '-',
@@ -29,7 +29,7 @@ const recordData: RecordItem = {
 const KeepAccounts: FC<Props> = (props) => {
 
 
-  const { addRecord} = useRecords();
+  const {addRecord} = useRecords();
   const {fetchTags, tags, updateTags, removeTag, editTag, findTag} = useTags();
 
   const [visibleRemark, setVisibleRemark] = React.useState(false);
@@ -56,7 +56,7 @@ const KeepAccounts: FC<Props> = (props) => {
     props.ensure();
   };
   return (
-    <Cover className={props.className}>
+    <Cover>
       <Wrapper className={props.className}>
         <Options>
           <Close onClick={props.onClose}/>
@@ -97,43 +97,43 @@ const KeepAccounts: FC<Props> = (props) => {
           onChange={(value: string) => setOutput(value)}
         />
       </Wrapper>
-      {visibleRemark ?
-        <PopUpInput
-                    placeholder='请输入备注内容'
-                    title='请添加备注'
-                    maxLen={30}
-                    onChange={(value) => onChange({note: value})}
-                    onChangeClass={() => {
-                setVisibleRemark(false);
-                props.onOpen();
-              }}
-                    value={record.note}
-        />
-        : ''}
-      {visibleAddTag ?
-        <PopUpInput title='请填写类别名'
-                    placeholder='不能重复添加类型名'
-                    maxLen={4}
-                    onChange={(value) => {updateTags(value, record.category);}}
-                    onChangeClass={() => {
-                setVisibleAddTag(false);
-                props.onOpen();
-              }}
-                    value=''
-        />
-        : ''}
-      {updateTagId > 0 ?
-        <PopUpInput title='请填写类别名'
-                    placeholder='不能重复添加类型名'
-                    maxLen={4}
-                    onChange={(value) => {editTag(updateTagId, value);}}
-                    onChangeClass={() => {
-                setUpdateTagId(-1);
-                props.onOpen();
-              }}
-                    value={findTag(updateTagId)?.text || ""}
-        />
-        : ''}
+
+      <PopUpInput
+        close={() => {
+          setVisibleRemark(false);
+          props.onOpen();
+        }}
+        show={visibleRemark}
+        placeholder='请输入备注内容'
+        title='请添加备注'
+        maxLen={30}
+        onChange={(value) => onChange({note: value})}
+        value={record.note}
+      />
+      <PopUpInput
+        show={visibleAddTag}
+        title='请填写类别名'
+        placeholder='不能重复添加类型名'
+        maxLen={4}
+        onChange={(value) => {updateTags(value, record.category);}}
+        close={() => {
+          setVisibleAddTag(false);
+          props.onOpen();
+        }}
+        value=''
+      />
+      <PopUpInput
+        show={updateTagId>0}
+        title='请填写类别名'
+        placeholder='不能重复添加类型名'
+        maxLen={4}
+        onChange={(value) => {editTag(updateTagId, value);}}
+        close={() => {
+          setUpdateTagId(-1);
+          props.onOpen();
+        }}
+        value={findTag(updateTagId)?.text || ""}
+      />
     </Cover>
   );
 };

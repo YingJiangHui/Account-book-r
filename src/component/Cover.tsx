@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 `
 
 type Props={
-  className:string
+  className?:string
 }
 const Cover:FC<Props> =(props)=>{
   return(

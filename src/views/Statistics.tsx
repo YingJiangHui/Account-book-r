@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../component/Layout';
-import PopUpSelect from '../component/PopUpSelect';
+import PopUpSelect from '../component/PopUp/PopUpSelect';
 
 function Statistics() {
   return (

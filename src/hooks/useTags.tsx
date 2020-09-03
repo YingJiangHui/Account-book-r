@@ -4,24 +4,26 @@ import useUpdate from './useUpdate';
 const useTags = () => {
   const [tags, setTags] = React.useState<TagItem[]>([]);
   const tagList = React.useRef<TagItem[]>([]);
-  tagList.current = JSON.parse(window.localStorage.getItem('tags') ||'[]');
-  if(tagList.current.length===0){
-    tagList.current = [
-      {id: createId(), icon: 'clothes', text: '服装美容', category: '-'},
-      {id: createId(), icon: 'fun', text: '娱乐', category: '-'},
-      {id: createId(), icon: 'learn', text: '学习', category: '-'},
-      {id: createId(), icon: 'medical', text: '医疗', category: '-'},
-      {id: createId(), icon: 'shopping', text: '购物', category: '-'},
-      {id: createId(), icon: 'sport', text: '运动健身', category: '-'},
-      {id: createId(), icon: 'salary', text: '薪水', category: '-'},
-      {id: createId(), icon: 'transfer', text: '转账', category: '-'},
-      {id: createId(), icon: 'salary', text: '薪水', category: '+'},
-      {id: createId(), icon: 'transfer', text: '转账', category: '+'},
-    ]
-  }
-  React.useEffect(() => {
 
+  React.useEffect(() => {
+    tagList.current = JSON.parse(window.localStorage.getItem('tags') ||'[]');
+    if(tagList.current.length===0){
+      tagList.current = [
+        {id: createId(), icon: 'clothes', text: '服装美容', category: '-'},
+        {id: createId(), icon: 'fun', text: '娱乐', category: '-'},
+        {id: createId(), icon: 'learn', text: '学习', category: '-'},
+        {id: createId(), icon: 'medical', text: '医疗', category: '-'},
+        {id: createId(), icon: 'shopping', text: '购物', category: '-'},
+        {id: createId(), icon: 'sport', text: '运动健身', category: '-'},
+        {id: createId(), icon: 'salary', text: '薪水', category: '-'},
+        {id: createId(), icon: 'transfer', text: '转账', category: '-'},
+        {id: createId(), icon: 'salary', text: '薪水', category: '+'},
+        {id: createId(), icon: 'transfer', text: '转账', category: '+'},
+      ]
+    }
   }, []);
+
+
   useUpdate(()=>{
     let cloneTags:TagItem[] = clone(tags);
     for(let item of tagList.current){
