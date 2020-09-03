@@ -4,7 +4,8 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
 import PopOptionBox from '../PopOptionBox';
-import useUpdate from 'hooks/useUpdate'
+import useUpdate from 'hooks/useUpdate';
+
 const Wrapper = styled.section`
   .view{
     padding-bottom: 10px;
@@ -56,33 +57,36 @@ const Wrapper = styled.section`
 
 
 type Props = {
-  onRemoveTag:(id:number)=>void,
+  onRemoveTag: (id: number) => void,
   onChange: (value: number) => void,
   className: string,
-  onClick: (id?:number) => void,
+  onClick: (id?: number) => void,
   value: TagItem[]
 }
 const Tags: FC<Props> = memo((props) => {
-  const {value} = props
+  const {value} = props;
   const [tags, setTags] = useState<TagItem[]>([]);
+  const [index, setIndex] = useState(1);
+  const toggle = (i: number) => {
+    setIndex(i);
+  };
 
   useEffect(() => {
     setTags(value);
   }, [value]);
 
-  const [index, setIndex] = useState(1);
 
-  const toggle = (i: number) => {
-    setIndex(i);
-  };
+
+  useEffect(() => {
+    setIndex(tags[0]?.id)
+  }, [tags]);
+
   React.useEffect(() => {
     props.onChange(index);
   }, [index]);
 
   let timer = -1;
-
   const [visiblePop, setVisiblePop] = React.useState(-1);
-
   if (visiblePop)
     document.addEventListener('click', () => {setVisiblePop(-1);}, {once: true});
 
@@ -95,7 +99,6 @@ const Tags: FC<Props> = memo((props) => {
               onTouchStart={
                 (e: React.TouchEvent) => {
                   timer = setTimeout(() => setVisiblePop(item.id), 1000);
-
                 }
               }
               onTouchEnd={
@@ -105,23 +108,22 @@ const Tags: FC<Props> = memo((props) => {
                 }
               }
               onClick={(e) => {
-                console.log(item.id)
                 toggle(item.id);
               }}
               className={index === item.id ? props.className + '-selected' : ''}
               key={item.id}>
               <Icon name={item.icon}/>
               {
-                visiblePop === item.id ? <PopOptionBox  x={() => {
-                  props.onClick(item.id)
+                visiblePop === item.id ? <PopOptionBox x={() => {
+                  props.onClick(item.id);
                 }} y={() => {
-                  if(window.confirm('是否删除')){
-                    props.onRemoveTag(item.id)
+                  if (window.confirm('是否删除')) {
+                    props.onRemoveTag(item.id);
                   }
                 }}/> : ''
               }
               {item.text}</li>)}
-          <li onClick={()=>props.onClick()}><Icon name='add'/>添加</li>
+          <li onClick={() => props.onClick()}><Icon name='add'/>添加</li>
         </ol>
       </div>
 

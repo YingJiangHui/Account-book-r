@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect} from 'react';
+import React, {FC, useCallback, useEffect, useState} from 'react';
 import {Wrapper, Options} from 'component/keepAccounts/style';
 import 'index.scss';
 import Close from 'component/accountsComponent/Close';
@@ -31,14 +31,20 @@ const KeepAccounts: FC<Props> = (props) => {
   const {addRecord} = useRecords();
   const {fetchTags, tags, updateTags, removeTag, editTag, findTag} = useTags();
 
-  const [visibleRemark, setVisibleRemark] = React.useState(false);
-  const [visibleAddTag, setVisibleAddTag] = React.useState(false);
+  const [visibleRemark, setVisibleRemark] = useState(false);
+  const [visibleAddTag, setVisibleAddTag] = useState(false);
+  const [updateTagId, setUpdateTagId] = useState(-1);
 
-  const [updateTagId, setUpdateTagId] = React.useState(-1);
+  const [record, setRecord] = useState<RecordItem>(recordData);
 
-  const [record, setRecord] = React.useState<RecordItem>(recordData);
+  const [tagList,setTagList] = useState<TagItem[]>([])
 
-  const [output, setOutput] = React.useState<string>('');
+  useEffect(()=>{
+    setTagList(fetchTags(record.category))
+    console.log('fuck')
+  },[record.category,props.onOpen])
+
+  const [output, setOutput] = useState<string>('');
   const onChange = useCallback((value: Partial<typeof record>) => {
     setRecord({
       ...record,
@@ -69,11 +75,12 @@ const KeepAccounts: FC<Props> = (props) => {
             }} value={output}/>
           <Tags
             onRemoveTag={(id: number) => {removeTag(id);}}
-            value={fetchTags(record.category)}
+            value={tagList}
             onClick={(id: number | undefined) => {
               props.onClose();
               id ? setUpdateTagId(id) : setVisibleAddTag(true);
             }}
+
             className={record.category === '+' ? 'special' : 'base'}
             onChange={(value: number) => onChange({tagIndex: value})}
           />
