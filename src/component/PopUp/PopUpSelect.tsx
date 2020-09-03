@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import Icon from '../Icon';
 import {CSSTransition} from 'react-transition-group'; // ES6
@@ -26,32 +26,23 @@ const Control = styled.ol`
     }
   }
 `;
-const List = styled.ol`
-  padding: 12px;
-  display: flex;
-  flex-wrap: wrap;
-  >li{ 
-  font-size: 18px;
-  border: 4px solid #fafafa;
-    height: 62px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    width: 25%;
-  }
-`;
+
 
 type Props = {
   title: string,
+  show:boolean,
+  close:()=>void
 }
-const PopUpSelect: FC<Props> = ({title,children}) => {
-  const [inProp, setInProp] = useState(false);
+const PopUpSelect: FC<Props> = ({title,children,show,close}) => {
+  const [visible, setVisible] = useState(false);
+  useEffect(()=>{
+    setVisible(show)
+  },[show])
   return (
-      <PopUp show={inProp} style={{background:'#fafafa'}}>
+      <PopUp show={visible} style={{background:'#fafafa'}}>
         <div>
           <Control>
-            <li onClick={()=>setInProp(false)}><Icon name='close'/></li>
+            <li onClick={close}><Icon name='close'/></li>
             <li>{title}</li>
           </Control>
           {children}

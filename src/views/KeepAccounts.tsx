@@ -28,8 +28,7 @@ const recordData: RecordItem = {
 
 const KeepAccounts: FC<Props> = (props) => {
 
-
-  const {addRecord} = useRecords();
+  const {addRecord,ref} = useRecords();
   const {fetchTags, tags, updateTags, removeTag, editTag, findTag} = useTags();
 
   const [visibleRemark, setVisibleRemark] = React.useState(false);
@@ -46,9 +45,6 @@ const KeepAccounts: FC<Props> = (props) => {
       ...value
     });
   }, [record]);
-  React.useEffect(() => {
-    fetchTags(record.category);
-  }, [record.category]);
   const onSubmit = () => {
     addRecord(record);
     setOutput('clear');
@@ -73,7 +69,7 @@ const KeepAccounts: FC<Props> = (props) => {
             }} value={output}/>
           <Tags
             onRemoveTag={(id: number) => {removeTag(id);}}
-            value={tags}
+            value={fetchTags(record.category)}
             onClick={(id: number | undefined) => {
               props.onClose();
               id ? setUpdateTagId(id) : setVisibleAddTag(true);

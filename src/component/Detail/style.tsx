@@ -22,6 +22,19 @@ const Header = styled.header`
     max-width: 500px;
     justify-content: space-between;
     >li{
+    &:nth-child(1){
+      position: relative;
+      &::after{
+        position: absolute;
+        left: 120%;
+        top: 50%;
+        transform: translateY(-50%);
+        content: '';
+        border-style: solid;
+        border-color: #fff transparent transparent transparent;
+        border-width: 6px;
+      }
+    }
       >input{
         border: none;
         fill:#fff;

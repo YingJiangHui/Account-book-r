@@ -1,10 +1,10 @@
-import {FC, memo, useState} from 'react';
+import {FC, memo, useEffect, useState} from 'react';
 import Icon from 'component/Icon';
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
 import PopOptionBox from '../PopOptionBox';
-
+import useUpdate from 'hooks/useUpdate'
 const Wrapper = styled.section`
   .view{
     padding-bottom: 10px;
@@ -63,21 +63,24 @@ type Props = {
   value: TagItem[]
 }
 const Tags: FC<Props> = memo((props) => {
-  const [tags, setTags] = useState<TagItem[]>(props.value);
-  React.useEffect(() => {
-    setTags(props.value);
-  }, [props.value]);
+  const {value} = props
+  const [tags, setTags] = useState<TagItem[]>([]);
+
+  useEffect(() => {
+    setTags(value);
+  }, [value]);
+
   const [index, setIndex] = useState(1);
+
   const toggle = (i: number) => {
     setIndex(i);
   };
   React.useEffect(() => {
-    setIndex(tags[0]?.id);
-  }, [tags]);
-  React.useEffect(() => {
     props.onChange(index);
   }, [index]);
+
   let timer = -1;
+
   const [visiblePop, setVisiblePop] = React.useState(-1);
 
   if (visiblePop)
@@ -108,7 +111,6 @@ const Tags: FC<Props> = memo((props) => {
               className={index === item.id ? props.className + '-selected' : ''}
               key={item.id}>
               <Icon name={item.icon}/>
-
               {
                 visiblePop === item.id ? <PopOptionBox  x={() => {
                   props.onClick(item.id)
