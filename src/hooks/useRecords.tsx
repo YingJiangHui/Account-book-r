@@ -19,7 +19,10 @@ const useRecords = () => {
   const filterRecordUsedMonth = (month: string) => {
     return recordList.filter((record) => dayjs(record.createAt).format('MM月') === month);
   };
-  const filterRecordUsedTag = (TagId: number) => {
+  const filterRecordUsedTag = (TagId: number,records?:RecordItem[]) => {
+    if(records){
+      return records.filter((record) => record.tagIndex === TagId);
+    }
     return recordList.filter((record) => record.tagIndex === TagId);
   };
   useUpdate(() => {

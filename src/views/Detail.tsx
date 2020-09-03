@@ -24,10 +24,15 @@ const Detail: FC = () => {
   const {filterRecordUsedMonth, recordList, fetchRecord, filterRecordUsedTag} = useRecords();
   const [appearMonth, setAppearMonth] = useState(nowMonth);
   const [record, setRecord] = useState<RecordItem[]>([]);
-
+  const [tagId, setTagId] = useState<number>(0);
   useEffect(() => {
-    setRecord(()=>filterRecordUsedMonth(appearMonth));
-  }, [recordList, appearMonth]);
+    const newRecords = filterRecordUsedMonth(appearMonth);
+    setRecord(() => newRecords);
+    // 0表示显示全部
+    if (tagId !== 0) {
+      setRecord(() => filterRecordUsedTag(tagId, newRecords));
+    }
+  }, [recordList, appearMonth, tagId]);
 
 
   return (
@@ -70,9 +75,9 @@ const Detail: FC = () => {
         onChange={(value: string, category: Category | undefined) => {
           setVisibleTag(false);
           if (category)
-            setRecord(filterRecordUsedTag(findId(value, category)!.id));
+            setTagId(findId(value, category)!.id);
           else
-            setRecord(record);
+            setTagId(0);
         }}/>
     </>
   );
