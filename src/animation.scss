@@ -1,12 +1,27 @@
-.my-node-enter {
+.move-enter{
   transform: translateY(0);
 }
-.my-node-enter-active {
-  transition:transform 2s;
+.move-enter-active{
+  transform: translateY(-100%);
+  transition: transform 300ms;
 }
-.my-node-exit {
+.move-enter-done{
+  transform: translateY(-100%);
+}
+.move-exit{
+  transform: translateY(-100%);
+}
+.move-exit-active{
+  transform: translateY(0);
+  transition: transform 300ms;
+}
+.move-exit-done{
+  transform: translateY(0);
 
 }
-.my-node-exit-active {
-  transform: translateY(500px);
+
+.defaultPos{
+  position: absolute;
+  left: 0;
+  top:100%
 }

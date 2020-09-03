@@ -9,9 +9,7 @@ const Wrapper = styled.div`
   width: 100vw;
   background: #fafafa;
   border-radius: 10px 10px 0 0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+
   z-index:9;
 `
 const Control = styled.ol` 
@@ -61,7 +59,10 @@ const PopUpSelect: FC<Props> = ({title}) => {
       <button type="button" onClick={() => setInProp(true)}>
         Click to Enter
       </button>
-      <CSSTransition >
+      <button type="button" onClick={() => setInProp(false)}>
+        Click to Exit
+      </button>
+      <CSSTransition classNames='move' className='defaultPos' timeout={300} unmountOnExit={true} in={inProp}>
         <Cover className=''>
         <Wrapper>
           <Control>
