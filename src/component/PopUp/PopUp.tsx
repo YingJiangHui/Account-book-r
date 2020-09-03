@@ -28,14 +28,15 @@ const Caver = styled.div`
   z-index: 8;
 `;
 const PopUp: FC<Props> = ({show, children, style, className}) => {
-  const [inPop, setInPop] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    setInPop(show);
+    setVisible(show);
   }, [show]);
 
+
   return (
-    <CSSTransition classNames='popUp' className='popUp' timeout={300} unmountOnExit={true} in={inPop}>
+    <CSSTransition classNames='popUp' className='popUp' timeout={300} unmountOnExit={true} in={visible}>
       <Wrapper>
         <Caver />
         <Container className={cn(className)} style={style}>

@@ -6,56 +6,28 @@ import Records from 'component/Records';
 import {Header, Wrapper} from 'component/Detail/style';
 import useRecords from 'hooks/useRecords';
 import Tooltip from '../component/Tooltip';
-import PopUpSelect from '../component/PopUp/PopUpSelect';
-import styled from 'styled-components';
-import theme from '../theme';
+import PopUpSelect from '../component/PopUpMonthBox';
 import dayjs from 'dayjs';
-import {filter} from 'minimatch';
+import PopUpMonthBox from '../component/PopUpMonthBox';
 
-const Container = styled.div`
-  padding: 16px 12px 16px 12px;
-p{
-  margin: 8px;
-  color: ${theme.tingeFontColor};
-  text-align: center;
-}
->ol{
-  display: flex;
-  flex-wrap: wrap;
-  >li{ 
-  font-size: 18px;
-  border: 4px solid #fafafa;
-    height: 62px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    width: 25%;
-  }
-}
 
-`;
-const nowMonth = dayjs(new Date()).format('MM月')
+const nowMonth = dayjs(new Date()).format('MM月');
 const Detail: FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [visibleMonth, setVisibleMonth] = useState(false);
-  const {filterRecordUsedMonth,ref} = useRecords();
-  const [visibleTip, setVisibleTip] = useState(false);
-  const [appearMonth,setAppearMonth]=useState(nowMonth)
 
-  const selectMonth = (e: React.MouseEvent) => {
-    const month = (e.target as Element).nodeName === 'LI' ? (e.target as Element).textContent : '';
-    setAppearMonth(month!)
-    setVisibleMonth(false)
-  };
+  const {filterRecordUsedMonth, fetchRecord} = useRecords();
+  const [visibleTip, setVisibleTip] = useState(false);
+  const [appearMonth, setAppearMonth] = useState(nowMonth);
+
   return (
     <>
       <Tooltip value='记一笔' inProp={visibleTip}/>
       <Layout>
         <Header>
-          <button onClick={() => setVisibleMonth(true)}>全部类型</button>
+          <button onClick={() => {/*setVisibleMonth(true)*/}}>全部类型</button>
           <ol>
-            <li onClick={() => setVisibleMonth(true)}>{appearMonth}</li>
+            <li onClick={() => {setVisibleMonth(true);}}>{appearMonth}</li>
             <li>总支出￥100.00</li>
             <li>总收入￥100.00</li>
           </ol>
@@ -67,6 +39,7 @@ const Detail: FC = () => {
       <OpenRecordButton onClick={() => setVisible(true)}/>
       <KeepAccounts
         ensure={() => {
+          fetchRecord();
           setVisibleTip(true);
           setTimeout(() => {setVisibleTip(false);}, 2000);
         }}
@@ -74,16 +47,10 @@ const Detail: FC = () => {
         onClose={() => {setVisible(false);}}
         className={visible ? 'moveTo' : 'moveOut'}
       />
-      <PopUpSelect close={() => setVisibleMonth(false)} show={visibleMonth} title='选择月份'>
-        <Container>
-          <p>{dayjs(new Date()).format('YYYY年')}</p>
-          <ol
-            onClick={selectMonth}>
-            {[0, 1, 2, 3, 4, 5, 6].map((month) => <li
-              key={month}>{dayjs(new Date()).subtract(month, 'month').format('MM月')}</li>)}
-          </ol>
-        </Container>
-      </PopUpSelect>
+      <PopUpMonthBox show={visibleMonth} close={() => setVisibleMonth(false)} onChange={(value: string) => {
+        setAppearMonth(value);
+        setVisibleMonth(false);
+      }}/>
     </>
   );
 
