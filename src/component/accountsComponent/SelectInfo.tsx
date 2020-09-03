@@ -66,7 +66,7 @@ const SelectInfo: FC<Props> = memo((props) => {
         {categoryList.map((el: Category) => <li key={el} className={selectedItem === el ? categoryStyle[el] : ''}
                                                 onClick={() => onChange(el)}>{categoryMap[el]}</li>)}
       </ol>
-      <input type="dateTime-local" value={dayjs(date).format('YYYY-MM-DDTHH:mm')} onChange={(e) => {setDate(e.target.value);}}/>
+      <input type="dateTime-local" value={dayjs(date).format('YYYY-MM-DDTHH:mm')} onChange={(e) => {setDate(e.target.value+dayjs(new Date()).format(':ss'));}}/>
     </Wrapper>
 
   );

@@ -10,7 +10,7 @@ const useRecords = () => {
 
   const addRecord = (record: RecordItem) => {
     if (record.createAt === '')
-      record.createAt = dayjs(new Date()).format('YYYY-MM-DDTHH:mm');
+      record.createAt = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
     setRecordList(() => [...recordList, record]);
   };
 
@@ -28,7 +28,7 @@ const useRecords = () => {
   }, [recordList]);
 
   useEffect(() => {
-    fetchRecord()
+    fetchRecord();
   }, []);
 
   const sortRecord = (): RecordItem[] => {
@@ -36,8 +36,7 @@ const useRecords = () => {
   };
 
   const fetchRecord = () => {
-    setTimeout(()=>setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]')))
-    ;
+    setTimeout(() => setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]')));
   };
 
   return {recordList, addRecord, fetchRecord, filterRecordUsedMonth, filterRecordUsedTag};

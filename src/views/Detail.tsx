@@ -6,7 +6,6 @@ import Records from 'component/Records';
 import {Header, Wrapper} from 'component/Detail/style';
 import useRecords from 'hooks/useRecords';
 import Tooltip from '../component/Tooltip';
-import PopUpSelect from '../component/PopUpMonthBox';
 import dayjs from 'dayjs';
 import PopUpMonthBox from '../component/PopUpMonthBox';
 
@@ -16,10 +15,14 @@ const Detail: FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [visibleMonth, setVisibleMonth] = useState(false);
 
-  const {filterRecordUsedMonth, fetchRecord} = useRecords();
+  const {filterRecordUsedMonth,recordList, fetchRecord} = useRecords();
   const [visibleTip, setVisibleTip] = useState(false);
   const [appearMonth, setAppearMonth] = useState(nowMonth);
+  const [record,setRecord] = useState<RecordItem[]>([]);
 
+  useEffect(()=>{
+    setRecord(filterRecordUsedMonth(appearMonth))
+  },[recordList,appearMonth])
   return (
     <>
       <Tooltip value='记一笔' inProp={visibleTip}/>
@@ -33,7 +36,7 @@ const Detail: FC = () => {
           </ol>
         </Header>
         <Wrapper>
-          {filterRecordUsedMonth(appearMonth).map((record, index) => <Records key={index} recordItem={record}/>)}
+          {record.map((record, index) => <Records key={index} recordItem={record}/>)}
         </Wrapper>
       </Layout>
       <OpenRecordButton onClick={() => setVisible(true)}/>
