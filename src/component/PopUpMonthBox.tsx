@@ -29,24 +29,21 @@ p{
 `;
 type Props = {
   onChange: (value: string) => void
-  show:boolean,
-  close:()=>void
+  show: boolean,
+  close: () => void
 }
-const PopUpMonthBox: FC<Props> = ({close,onChange,show}) => {
+const PopUpMonthBox: FC<Props> = ({close, onChange, show}) => {
   const [visible, setVisible] = useState(show);
-  useEffect(()=>{
+  useEffect(() => {
     setVisible(show);
-  },[show])
+  }, [show]);
   return (
     <PopUpSelect close={close} show={visible} title='选择月份'>
       <Container>
         <p>{dayjs(new Date()).format('YYYY年')}</p>
         <ol
-          onClick={(e: React.MouseEvent) =>{
-            onChange(((e.target as Element).nodeName === 'LI' ? (e.target as Element).textContent : '') || '')
-          }
-
-          }>
+          onClick={(e: React.MouseEvent) =>
+            onChange(((e.target as Element).nodeName === 'LI' ? (e.target as Element).textContent : '') || '')}>
           {[0, 1, 2, 3, 4, 5, 6].map((month) => <li
             key={month}>{dayjs(new Date()).subtract(month, 'month').format('MM月')}</li>)}
         </ol>

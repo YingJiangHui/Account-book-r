@@ -17,7 +17,6 @@ const useRecords = () => {
   const {findTag} = useTags();
 
   const filterRecordUsedMonth = (month: string) => {
-
     return recordList.filter((record) => dayjs(record.createAt).format('MM月') === month);
   };
   const filterRecordUsedTag = (TagId: number) => {

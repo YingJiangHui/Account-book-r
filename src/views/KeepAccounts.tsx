@@ -28,7 +28,7 @@ const recordData: RecordItem = {
 
 const KeepAccounts: FC<Props> = (props) => {
 
-  const {addRecord} = useRecords();
+  const {addRecord,filterRecordUsedTag} = useRecords();
   const {fetchTags, tags, updateTags, removeTag, editTag, findTag} = useTags();
 
   const [visibleRemark, setVisibleRemark] = useState(false);
