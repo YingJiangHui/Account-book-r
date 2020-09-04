@@ -28,7 +28,7 @@ const recordData: RecordItem = {
 
 const KeepAccounts: FC<Props> = (props) => {
 
-  const {addRecord,filterRecordUsedTag} = useRecords();
+  const {addRecord, filterRecordUsedTag} = useRecords();
   const {fetchTags, tags, updateTags, removeTag, editTag, findTag} = useTags();
 
   const [visibleRemark, setVisibleRemark] = useState(false);
@@ -37,12 +37,11 @@ const KeepAccounts: FC<Props> = (props) => {
 
   const [record, setRecord] = useState<RecordItem>(recordData);
 
-  const [tagList,setTagList] = useState<TagItem[]>([])
+  const [tagList, setTagList] = useState<TagItem[]>([]);
 
-  useEffect(()=>{
-    setTagList(fetchTags(record.category))
-    console.log('fuck')
-  },[record.category,props.onOpen])
+  useEffect(() => {
+    setTagList(fetchTags(record.category));
+  }, [record.category, props.onOpen]);
 
   const [output, setOutput] = useState<string>('');
   const onChange = useCallback((value: Partial<typeof record>) => {
@@ -126,7 +125,7 @@ const KeepAccounts: FC<Props> = (props) => {
         value=''
       />
       <PopUpInput
-        show={updateTagId>0}
+        show={updateTagId > 0}
         title='请填写类别名'
         placeholder='不能重复添加类型名'
         maxLen={4}

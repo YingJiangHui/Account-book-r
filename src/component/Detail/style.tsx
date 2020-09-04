@@ -17,23 +17,32 @@ const Header = styled.header`
     
   }
   >ol{
-  margin-top: 20px;
+    margin-top: 20px;
     display: flex;
-    max-width: 500px;
-    justify-content: space-between;
+    width: 300px;
     >li{
+    color: rgba(255,255,255,0.8);
     &:nth-child(1){
+    color: #fafafa;
+      width: 50px;
       position: relative;
       &::after{
         position: absolute;
-        left: 120%;
+        right: 0;
         top: 50%;
         transform: translateY(-50%);
         content: '';
         border-style: solid;
-        border-color: #fff transparent transparent transparent;
+        border-color: rgba(255,255,255,0.5) transparent transparent transparent;
         border-width: 6px;
       }
+    }
+    &:last-child{
+      margin-left: 15px;
+    }
+    
+    &:nth-last-child(2){
+      margin-left: 20px;
     }
       >input{
         border: none;
