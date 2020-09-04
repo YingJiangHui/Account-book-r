@@ -22,6 +22,7 @@ type Props = {
   show:boolean
 }
 const recordData: RecordItem = {
+  id:0,
   category: '-',
   tagIndex: 0,
   amount: 0,

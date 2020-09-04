@@ -8,6 +8,7 @@ type TagItem = {
 }
 
 type RecordItem = {
+  id:number,
   category: Category,
   tagIndex: number,
   amount: number,

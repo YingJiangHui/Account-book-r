@@ -5,6 +5,7 @@ import {useTags} from 'hooks/useTags';
 import cn from 'classnames';
 import useRecords from 'hooks/useRecords';
 import {Wrapper, Amount, Do, IconWrapper, Info, Main} from 'component/Records/records';
+import {NavLink} from 'react-router-dom';
 
 type Props = {
   records: RecordItem[]
@@ -35,7 +36,8 @@ const Records: FC<Props> = (props) => {
       <Main>
         <ol>
           {records.map(record => (
-            <li key={record.createAt} onTouchMove={(e: React.TouchEvent) => {console.log(e.touches);}}>
+            <NavLink key={record.createAt} to={'/detail/record/'+record.id}>
+            <li  onTouchMove={(e: React.TouchEvent) => {console.log(e.touches);}}>
               <IconWrapper>
                 <Icon name={findTag(record.tagIndex)?.icon || ''}
                       className={cn(record.category === '+' ? 'special' : '')}/>
@@ -51,6 +53,7 @@ const Records: FC<Props> = (props) => {
               </Info>
 
             </li>
+              </NavLink>
           ))}
 
         </ol>

@@ -40,8 +40,9 @@ const Main = styled.main`
      justify-content: space-between;
      align-items: center;
     >ol{
+    
           width: 100%;
-      >li{
+      >a>li{
       position: relative;
       left: 0;
        //TODO

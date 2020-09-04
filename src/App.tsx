@@ -7,7 +7,7 @@ import Setting from 'views/Setting';
 import Statistics from 'views/Statistics';
 import Detail from 'views/Detail';
 import NotFound from './views/NotFound';
-
+import RecordItem from 'views/RecordItem'
 
 
 export default function App() {
@@ -18,7 +18,7 @@ export default function App() {
           <Detail/>
         </Route>
         <Route exact path="/detail/record/:id">
-          <Detail/>
+          <RecordItem/>
         </Route>
         <Route exact path="/statistics">
           <Statistics/>

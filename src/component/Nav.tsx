@@ -55,7 +55,6 @@ const Nav = () => {
     <NavStyle>
       <ul>
         <li>
-
           <NavLink to="/detail" activeClassName='selected'>
             <Icon name="detail"/>
             <span>明细</span>

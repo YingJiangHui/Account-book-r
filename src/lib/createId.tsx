@@ -1,9 +1,16 @@
 import React from 'react'
-let id = parseInt(window.localStorage.getItem('maxId')||'0');
 
-const createId = ():number=>{
-  id+=1;
-  window.localStorage.setItem('maxId',id.toString());
-  return id;
+
+const generator = (key:string)=>{
+  let id:number = parseInt(window.localStorage.getItem(key)||'0');
+  const createId = ():number=>{
+    id+=1;
+    window.localStorage.setItem(key,id.toString());
+    return id
+  }
+  return {
+    createId
+  }
 }
-export default createId
+
+export default generator

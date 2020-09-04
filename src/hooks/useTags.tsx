@@ -1,8 +1,10 @@
 import React from 'react';
-import createId from 'lib/createId';
+import generator from 'lib/createId';
 import useUpdate from './useUpdate';
 
 let tagList = JSON.parse(window.localStorage.getItem('tags') || '[]');
+const {createId} = generator('tagMaxId')
+
 if (tagList.length === 0) {
   tagList = [
     {id: createId(), icon: 'clothes', text: '服装美容', category: '-'},
@@ -23,12 +25,15 @@ const useTags = () => {
   React.useEffect(() => {
     setTags(tagList);
   }, [tagList]);
-  const findId = (text: string, category: Category):TagItem|undefined => {
-    return tags.find(tag => tag.text === text && tag.category === category);
-  };
+
   useUpdate(() => {
     window.localStorage.setItem('tags', JSON.stringify(tags));
   }, [tags]);
+
+  const findId = (text: string, category: Category):TagItem|undefined => {
+    return tags.find(tag => tag.text === text && tag.category === category);
+  };
+
   const findTag = (id: number) => tags.find(tag => id === tag.id);
 
   const fetchTags = (category: Category, tagList?: TagItem[]) => {
