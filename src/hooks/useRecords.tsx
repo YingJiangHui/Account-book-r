@@ -19,12 +19,17 @@ const useRecords = () => {
   const filterRecordUsedMonth = (month: string) => {
     return recordList.filter((record) => dayjs(record.createAt).format('MM月') === month);
   };
-  const filterRecordUsedTag = (TagId: number,records?:RecordItem[]) => {
-    if(records){
+  const filterRecordUsedTag = (TagId: number, records?: RecordItem[]) => {
+    if (records) {
       return records.filter((record) => record.tagIndex === TagId);
     }
     return recordList.filter((record) => record.tagIndex === TagId);
   };
+
+  const totalAmount = (records:RecordItem[],category:Category):number=>{
+    return records.reduce((sum,record)=>category===record.category?sum+record.amount:sum,0)
+  }
+
   useUpdate(() => {
     window.localStorage.setItem('record', JSON.stringify(sortRecord()));
   }, [recordList]);
@@ -41,7 +46,7 @@ const useRecords = () => {
     setTimeout(() => setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]')));
   };
 
-  return {recordList, addRecord, fetchRecord, filterRecordUsedMonth, filterRecordUsedTag};
+  return {recordList, addRecord, fetchRecord, filterRecordUsedMonth, totalAmount,filterRecordUsedTag};
 };
 
 
