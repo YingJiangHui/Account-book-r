@@ -1,7 +1,7 @@
 import {useLocation} from 'react-router';
 import React from 'react';
 
-function NoMatch() {
+function NotFound() {
   let location = useLocation();
   return (
     <div>
@@ -12,4 +12,4 @@ function NoMatch() {
   );
 }
 
-export default NoMatch
+export default NotFound
