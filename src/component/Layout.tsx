@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import Header from 'component/Header'
 import Nav from 'component/Nav'
 
@@ -12,7 +12,7 @@ const Main = styled.main`
   flex-grow: 1;
   overflow: auto;
 `;
-const Layout:FC =(props)=>{
+const Layout:FC =memo((props)=>{
   return(
     <LayoutStyle>
       <Header />
@@ -22,6 +22,6 @@ const Layout:FC =(props)=>{
       <Nav />
     </LayoutStyle>
   )
-}
+})
 
 export default Layout

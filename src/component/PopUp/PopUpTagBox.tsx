@@ -1,5 +1,5 @@
 import PopUpSelect from 'component/PopUp/PopUpSelect';
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {useTags} from 'hooks/useTags';
 import theme from '../../theme';
@@ -39,7 +39,7 @@ type Props = {
   onChange: (value: string, category?: Category) => void
   value: TagItem[]
 }
-const PopUpTagBox: FC<Props> = ({close, show, value, onChange}) => {
+const PopUpTagBox: FC<Props> = memo(({close, show, value, onChange}) => {
   const {fetchTags} = useTags();
   const [income, setIncome] = useState<TagItem[]>([]);
   const [disburse, setDisburse] = useState<TagItem[]>([]);
@@ -88,5 +88,5 @@ const PopUpTagBox: FC<Props> = ({close, show, value, onChange}) => {
       </Container>
     </PopUpSelect>
   );
-};
+});
 export default PopUpTagBox;

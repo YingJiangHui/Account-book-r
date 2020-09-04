@@ -24,3 +24,20 @@
   left: 0;
   top:100%
 }
+
+
+.recordItem-enter {
+  opacity: 0;
+}
+.recordItem-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.recordItem-exit {
+  opacity: 1;
+}
+.recordItem-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+

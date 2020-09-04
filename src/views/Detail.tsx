@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, memo, useCallback, useEffect, useState} from 'react';
 import Layout from '../component/Layout';
 import OpenRecordButton from '../component/OpenRecordButton';
 import KeepAccounts from 'views/KeepAccounts';
@@ -10,10 +10,10 @@ import dayjs from 'dayjs';
 import PopUpMonthBox from '../component/PopUpMonthBox';
 import PopUpTagBox from '../component/PopUp/PopUpTagBox';
 import {useTags} from '../hooks/useTags';
-
+import 'style/animation.scss'
 
 const nowMonth = dayjs(new Date()).format('MM月');
-const Detail: FC = () => {
+const Detail: FC = memo(() => {
   const {tags, findId} = useTags();
 
   const [visibleAccounts, setVisibleAccounts] = useState<boolean>(false);
@@ -35,10 +35,12 @@ const Detail: FC = () => {
       setRecord(() => filterRecordUsedTag(tagId, newRecords));
     }
   }, [recordList, appearMonth, tagId]);
+
   useEffect(()=>{
     setRecordGroup(records())
   },[record])
-  const records = () => {
+
+  const records = useCallback( () => {
     if(record.length===0)return[]
     let recordsOfDay: RecordItem[] = [];
     const recordGroup = []
@@ -57,7 +59,8 @@ const Detail: FC = () => {
       recordGroup
     )
 
-  };
+  },[record]);
+
   return (
     <>
       <Tooltip value='记一笔' inProp={visibleTip}/>
@@ -71,19 +74,19 @@ const Detail: FC = () => {
             </ol>
         </Header>
         <Wrapper>
-          {recordGroup}
+            {recordGroup}
         </Wrapper>
       </Layout>
       <OpenRecordButton onClick={() => setVisibleAccounts(true)}/>
+
       <KeepAccounts
         ensure={() => {
           fetchRecord();
           setVisibleTip(true);
           setTimeout(() => {setVisibleTip(false);}, 2000);
         }}
-        onOpen={() => {setVisibleAccounts(true);}}
-        onClose={() => {setVisibleAccounts(false);}}
-        className={visibleAccounts ? 'moveTo' : 'moveOut'}
+        isVisible={(value:boolean)=>{setVisibleAccounts(value)}}
+        show={visibleAccounts}
       />
       <PopUpMonthBox
         show={visibleMonth}
@@ -106,6 +109,6 @@ const Detail: FC = () => {
     </>
   );
 
-};
+});
 
 export default Detail;

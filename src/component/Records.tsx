@@ -6,7 +6,6 @@ import cn from 'classnames';
 import useRecords from 'hooks/useRecords';
 import {Wrapper,Amount, Do, IconWrapper, Info, Main} from 'component/Records/records';
 
-
 type Props = {
   records: RecordItem[]
 }
@@ -36,7 +35,7 @@ const Records: FC<Props> = (props) => {
       <Main>
         <ol>
           {records.map(record => (
-            <li key={record.createAt}>
+            <li key={record.createAt} onTouchMove={(e:React.TouchEvent)=>{console.log(e.touches);}}>
               <IconWrapper>
                 <Icon name={findTag(record.tagIndex)?.icon || ''}
                       className={cn(record.category === '+' ? 'special' : '')}/>

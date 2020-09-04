@@ -2,14 +2,11 @@ import React, {FC} from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  &.moveTo{
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;left: 0;
-    background: rgba(0,0,0,.8);
-  }
-`
+  background: rgba(0,0,0,0.5);
+  width: 100vw;
+  height: 100vh;
+  z-index: 8;
+`;
 
 type Props={
   className?:string
@@ -17,7 +14,7 @@ type Props={
 const Cover:FC<Props> =(props)=>{
   return(
     <Wrapper className={props.className}>
-      {props.children}
+
     </Wrapper>
   )
 }

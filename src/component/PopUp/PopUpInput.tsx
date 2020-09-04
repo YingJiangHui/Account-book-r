@@ -3,27 +3,6 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
 import Xx from 'component/PopUp/Xx';
-import '../../keyframes.scss';
-
-const List = styled.ol`
-    margin-top: 20px;
-    margin-bottom: 50px;
-    >li{            
-      background:#f1f1f1;
-      color: #a9a9a9;
-      font-size: 14px;
-      font-weight: 100;
-      border-radius: 25px;
-      display: inline-block;
-      padding: 5px 10px;
-      margin-right:10px ;
-      &.selected{
-        background: ${theme.tingeColorOpacity};
-        color: ${theme.themeColor};
-        box-shadow: 0 0 2px ${theme.themeColor};
-      }
-    }
-`;
 
 const Container = styled.div`
   padding: 16px;
@@ -71,7 +50,7 @@ const PopUpInput: FC<Props> = memo((props) => {
   };
   React.useEffect(() => {
     refInput.current?.focus();
-  });
+  },[]);
   const onChange = (e: React.ChangeEvent) => {
     if (output.length < props.maxLen)
       setOutput((e.target as HTMLInputElement).value);

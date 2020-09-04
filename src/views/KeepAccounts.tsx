@@ -1,6 +1,5 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
-import {Wrapper, Options} from 'component/keepAccounts/style';
-import 'index.scss';
+import React, {FC, memo, useCallback, useEffect, useState} from 'react';
+import '../style/index.scss';
 import Close from 'component/accountsComponent/Close';
 import Pad from 'component/accountsComponent/Pad';
 import Output from 'component/accountsComponent/Output';
@@ -8,15 +7,19 @@ import Tags from 'component/accountsComponent/Tags';
 import PopUpInput from 'component/PopUp/PopUpInput';
 import SelectInfo from 'component/accountsComponent/SelectInfo';
 import OpenNotePanel from 'component/accountsComponent/OpenNotePanel';
-import Cover from 'component/Cover';
 import {useTags} from '../hooks/useTags';
 import useRecords from 'hooks/useRecords';
+import PopUp from 'component/PopUp/PopUp'
+import styled from 'styled-components';
+
+const Options = styled.div`
+  padding: 16px;
+`;
 
 type Props = {
-  className: string,
-  onClose: () => void,
-  onOpen: () => void,
+  isVisible:(value:boolean)=>void
   ensure: () => void,
+  show:boolean
 }
 const recordData: RecordItem = {
   category: '-',
@@ -26,10 +29,10 @@ const recordData: RecordItem = {
   createAt: ''
 };
 
-const KeepAccounts: FC<Props> = (props) => {
-
-  const {addRecord, filterRecordUsedTag} = useRecords();
-  const {fetchTags, tags, updateTags, removeTag, editTag, findTag} = useTags();
+const KeepAccounts: FC<Props> =memo( (props) => {
+  const {show,ensure,isVisible} = props
+  const {addRecord} = useRecords();
+  const {fetchTags, updateTags, removeTag, editTag, findTag} = useTags();
 
   const [visibleRemark, setVisibleRemark] = useState(false);
   const [visibleAddTag, setVisibleAddTag] = useState(false);
@@ -41,7 +44,7 @@ const KeepAccounts: FC<Props> = (props) => {
 
   useEffect(() => {
     setTagList(fetchTags(record.category));
-  }, [record.category, props.onOpen]);
+  }, [record.category, show]);
 
   const [output, setOutput] = useState<string>('');
   const onChange = useCallback((value: Partial<typeof record>) => {
@@ -53,14 +56,18 @@ const KeepAccounts: FC<Props> = (props) => {
   const onSubmit = () => {
     addRecord(record);
     setOutput('clear');
-    props.onClose();
+    isVisible(false)
     props.ensure();
   };
+  const [visibleThis,setVisibleThis] = useState(false)
+  useEffect(()=>{
+    setVisibleThis(show)
+  },[show])
   return (
-    <Cover>
-      <Wrapper className={props.className}>
+<>
+      <PopUp show={visibleThis} >
         <Options>
-          <Close onClick={props.onClose}/>
+          <Close onClick={()=>isVisible(false)}/>
           <SelectInfo
             value={record.category}
             onChangeCategory={(value: Category) => onChange({category: value})}
@@ -76,7 +83,7 @@ const KeepAccounts: FC<Props> = (props) => {
             onRemoveTag={(id: number) => {removeTag(id);}}
             value={tagList}
             onClick={(id: number | undefined) => {
-              props.onClose();
+              props.isVisible(false);
               id ? setUpdateTagId(id) : setVisibleAddTag(true);
             }}
 
@@ -86,7 +93,7 @@ const KeepAccounts: FC<Props> = (props) => {
 
           <OpenNotePanel
             onClick={() => {
-              props.onClose();
+              props.isVisible(false);
               setVisibleRemark(true);
             }}
           >{record.note ? <><span>修改</span>：{record.note}</> : <span>添加备注</span>}</OpenNotePanel>
@@ -98,12 +105,12 @@ const KeepAccounts: FC<Props> = (props) => {
           category={record.category}
           onChange={(value: string) => setOutput(value)}
         />
-      </Wrapper>
+      </PopUp>
 
       <PopUpInput
         close={() => {
           setVisibleRemark(false);
-          props.onOpen();
+          props.isVisible(true);
         }}
         show={visibleRemark}
         placeholder='请输入备注内容'
@@ -120,7 +127,7 @@ const KeepAccounts: FC<Props> = (props) => {
         onChange={(value) => {updateTags(value, record.category);}}
         close={() => {
           setVisibleAddTag(false);
-          props.onOpen();
+          props.isVisible(true);
         }}
         value=''
       />
@@ -132,11 +139,11 @@ const KeepAccounts: FC<Props> = (props) => {
         onChange={(value) => {editTag(updateTagId, value);}}
         close={() => {
           setUpdateTagId(-1);
-          props.onOpen();
+          props.isVisible(true);
         }}
         value={findTag(updateTagId)?.text || ""}
       />
-    </Cover>
+      </>
   );
-};
+});
 export default KeepAccounts;

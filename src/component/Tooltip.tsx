@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {Transition} from 'react-transition-group';
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import Icon from './Icon';
 
 const duration = 300;
@@ -39,7 +39,7 @@ type Props = {
   inProp: boolean
   value: string
 }
-const Tooltip: FC<Props> = ({value, inProp}) => {
+const Tooltip: FC<Props> =memo( ({value, inProp}) => {
   return (
     <div>
     <Transition unmountOnExit={true}  in={inProp} timeout={duration}>
@@ -55,5 +55,5 @@ const Tooltip: FC<Props> = ({value, inProp}) => {
     </Transition>
     </div>
   );
-};
+});
 export default Tooltip;

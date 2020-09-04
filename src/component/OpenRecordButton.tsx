@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import styled from 'styled-components';
 import Icon from './Icon';
 import theme from 'theme';
@@ -22,11 +22,11 @@ const RecordButton = styled.div`
   }
 `;
 
-const OpenRecordButton = (props:any) => {
+const OpenRecordButton =memo( (props:any) => {
   return (
     <RecordButton onClick={props.onClick}>
       <Icon name='record1'/>
     </RecordButton>
   );
-};
+});
 export default OpenRecordButton;

@@ -1,5 +1,5 @@
 import PopUpSelect from 'component/PopUp/PopUpSelect';
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import theme from '../theme';
 import dayjs from 'dayjs';
@@ -32,7 +32,7 @@ type Props = {
   show: boolean,
   close: () => void
 }
-const PopUpMonthBox: FC<Props> = ({close, onChange, show}) => {
+const PopUpMonthBox: FC<Props> =memo( ({close, onChange, show}) => {
   const [visible, setVisible] = useState(show);
   useEffect(() => {
     setVisible(show);
@@ -50,6 +50,6 @@ const PopUpMonthBox: FC<Props> = ({close, onChange, show}) => {
       </Container>
     </PopUpSelect>
   );
-};
+});
 
 export default PopUpMonthBox;

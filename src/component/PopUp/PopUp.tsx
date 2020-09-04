@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React, {FC, useEffect, useState} from 'react';
 import {CSSTransition} from 'react-transition-group';
-import 'animation.scss';
+import '../../style/animation.scss';
 import cn from 'classnames';
-
+import Cover from 'component/Cover'
 const Wrapper = styled.div`
   
 `;
@@ -21,12 +21,7 @@ type Props = {
   style?: {}
   className?: string
 }
-const Caver = styled.div`
-  background: rgba(0,0,0,0.111);
-  width: 100vw;
-  height: 100vh;
-  z-index: 8;
-`;
+
 const PopUp: FC<Props> = ({show, children, style, className}) => {
   const [visible, setVisible] = useState(false);
 
@@ -38,7 +33,7 @@ const PopUp: FC<Props> = ({show, children, style, className}) => {
   return (
     <CSSTransition classNames='popUp' className='popUp' timeout={300} unmountOnExit={true} in={visible}>
       <Wrapper>
-        <Caver />
+        <Cover />
         <Container className={cn(className)} style={style}>
             {children}
           </Container>

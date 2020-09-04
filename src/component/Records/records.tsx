@@ -42,6 +42,9 @@ const Main = styled.main`
     >ol{
           width: 100%;
       >li{
+      position: relative;
+      left: 0;
+       //TODO
       display: flex;
       align-items: center;        
       &:last-child{
