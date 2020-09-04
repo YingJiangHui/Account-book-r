@@ -68,26 +68,30 @@ const Tags: FC<Props> = memo((props) => {
   const {value,defaultIndex} = props;
   const [tags, setTags] = useState<TagItem[]>([]);
   const [index, setIndex] = useState(1);
+  const [firstIndex,setFirstIndex] = useState(0);
+
   const toggle = (i: number) => {
     setIndex(i);
   };
-
 
   useEffect(() => {
     setTags(value);
   }, [value]);
 
   useEffect(()=>{
-    if(defaultIndex)
+    if(defaultIndex){
       setIndex(defaultIndex)
-  },[defaultIndex])
-//TODO
-  useEffect(() => {
-    if(!defaultIndex)
-      setIndex(tags[0]?.id)
-  }, [tags]);
+      setFirstIndex(defaultIndex)
+    }
 
-  React.useEffect(() => {
+  },[defaultIndex])
+  useUpdate(() => {
+    setFirstIndex(defaultIndex?defaultIndex:tags[0]?.id)
+  }, [tags]);
+  useEffect(()=>{
+      setIndex(firstIndex)
+  },[firstIndex])
+  useEffect(() => {
     props.onChange(index);
   }, [index]);
 

@@ -1,6 +1,6 @@
 import React, {FC, memo, useEffect, useState} from 'react';
 import Layout from '../component/Layout';
-import {useParams, HashRouter as router} from "react-router-dom";
+import {useParams, HashRouter as router, useHistory} from "react-router-dom";
 import useRecords from 'hooks/useRecords';
 import Icon from '../component/Icon';
 import {useTags} from '../hooks/useTags';
@@ -12,7 +12,7 @@ import cn from 'classnames';
 import AlertSelectBox from '../component/PopUp/AlertSelectBox';
 
 const RecordItem: FC = memo(() => {
-  const {findRecord, fetchRecord,removeRecord} = useRecords();
+  const {findRecord, fetchRecord, removeRecord} = useRecords();
   const {findTag} = useTags();
   let {id} = useParams();
   id = parseInt(id);
@@ -28,7 +28,7 @@ const RecordItem: FC = memo(() => {
   }, [recordItem]);
   const [visibleTip, setVisibleTip] = useState(false);
   const [visibleAccounts, setVisibleAccounts] = useState(false);
-
+  const history = useHistory();
   return (
     <>
       <Layout>
@@ -46,13 +46,17 @@ const RecordItem: FC = memo(() => {
             </Info>
           </View>
           <Control>
-            <button onClick={()=>setVisibleAlert(true)}>删除</button>
+            <button onClick={() => setVisibleAlert(true)}>删除</button>
             <button onClick={() => setVisibleAccounts(true)}>编辑</button>
           </Control>
         </Wrapper>
       </Layout>
       <Tooltip value='改一笔' inProp={visibleTip}/>
-      {visibleAlert ? <AlertSelectBox value='删除后无法恢复，是否删除' ensure={() => { removeRecord(id);setVisibleAlert(false);}}
+      {visibleAlert ? <AlertSelectBox value='删除后无法恢复，是否删除' ensure={() => {
+        history.goBack();
+        removeRecord(id);
+        setVisibleAlert(false);
+      }}
                                       cancel={() => {setVisibleAlert(false);}}/> : ''}
       <KeepAccounts
         id={id}

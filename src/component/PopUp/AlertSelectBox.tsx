@@ -51,8 +51,6 @@ const AlertSelectBox: FC<Props> = memo(({value, children,ensure,cancel}) => {
           </Control>
         </Wrapper>
       </Cover>
-
-
     </>
   );
 });
