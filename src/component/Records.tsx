@@ -36,7 +36,7 @@ const Records: FC<Props> = (props) => {
       <Main>
         <ol>
           {records.map(record => (
-            <NavLink key={record.createAt} to={'/detail/record/'+record.id}>
+            <NavLink key={record.id} to={'/detail/record/'+record.id}>
             <li  onTouchMove={(e: React.TouchEvent) => {console.log(e.touches);}}>
               <IconWrapper>
                 <Icon name={findTag(record.tagIndex)?.icon || ''}

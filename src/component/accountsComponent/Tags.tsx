@@ -62,23 +62,29 @@ type Props = {
   className: string,
   onClick: (id?: number) => void,
   value: TagItem[]
+  defaultIndex?:number
 }
 const Tags: FC<Props> = memo((props) => {
-  const {value} = props;
+  const {value,defaultIndex} = props;
   const [tags, setTags] = useState<TagItem[]>([]);
   const [index, setIndex] = useState(1);
   const toggle = (i: number) => {
     setIndex(i);
   };
 
+
   useEffect(() => {
     setTags(value);
   }, [value]);
 
-
-
+  useEffect(()=>{
+    if(defaultIndex)
+      setIndex(defaultIndex)
+  },[defaultIndex])
+//TODO
   useEffect(() => {
-    setIndex(tags[0]?.id)
+    if(!defaultIndex)
+      setIndex(tags[0]?.id)
   }, [tags]);
 
   React.useEffect(() => {
@@ -112,6 +118,7 @@ const Tags: FC<Props> = memo((props) => {
               }}
               className={index === item.id ? props.className + '-selected' : ''}
               key={item.id}>
+
               <Icon name={item.icon}/>
               {
                 visiblePop === item.id ? <PopOptionBox x={() => {

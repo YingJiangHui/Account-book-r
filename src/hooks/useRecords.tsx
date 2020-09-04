@@ -10,17 +10,31 @@ const Records:RecordItem[] = JSON.parse(window.localStorage.getItem('record') ||
 const useRecords = () => {
 
   const [recordList, setRecordList] = useState<RecordItem[]>([]);
-
-  const addRecord = (record: RecordItem) => {
+  const editRecord = (record:RecordItem,id:number)=>{
+    removeRecord(id);
+    addRecord(record,id)
+  }
+  const addRecord = (record: RecordItem,id?:number) => {
     if (record.createAt === '')
       record.createAt = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
-    record.id = createId()
-    setRecordList(() => [...recordList, record]);
+    record.id = id?id:createId()
+    setRecordList((recordList) => [...recordList, record]);
   };
 
   const findRecord = (id:number)=>{
     return recordList.find((record)=>record.id ===id);
   }
+  const removeRecord = (id:number)=>{
+    setRecordList((recordList)=>recordList.filter((record)=>record.id!==id))
+  }
+
+  useUpdate(() => {
+    window.localStorage.setItem('record', JSON.stringify(sortRecord()));
+  }, [recordList]);
+
+  useEffect(() => {
+    setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]'));
+  }, [Records]);
 
   const filterRecordUsedMonth = (month: string) => {
     return recordList.filter((record) => dayjs(record.createAt).format('MM月') === month);
@@ -38,13 +52,7 @@ const useRecords = () => {
       : records.reduce((sum, record) => sum + record.amount, 0);
 
 
-  useUpdate(() => {
-    window.localStorage.setItem('record', JSON.stringify(sortRecord()));
-  }, [recordList]);
 
-  useEffect(() => {
-    setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]'));
-  }, [Records]);
 
   const sortRecord = (): RecordItem[] => {
     return (clone(recordList) as RecordItem[]).sort((a, b) => a.createAt > b.createAt ? -1 : 1);
@@ -54,7 +62,7 @@ const useRecords = () => {
     setTimeout(() => setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]')));
   };
 
-  return {recordList, findRecord,addRecord, fetchRecord, filterRecordUsedMonth, totalAmount, filterRecordUsedTag};
+  return {recordList, findRecord,addRecord, fetchRecord,editRecord,removeRecord, filterRecordUsedMonth, totalAmount, filterRecordUsedTag};
 };
 
 

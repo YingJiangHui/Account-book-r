@@ -17,11 +17,13 @@ const Options = styled.div`
 `;
 
 type Props = {
+  id?:number
+  defaultRecord?:RecordItem
   isVisible:(value:boolean)=>void
-  ensure: () => void,
+  ensure: () => void
   show:boolean
 }
-const recordData: RecordItem = {
+let recordData: RecordItem = {
   id:0,
   category: '-',
   tagIndex: 0,
@@ -31,8 +33,9 @@ const recordData: RecordItem = {
 };
 
 const KeepAccounts: FC<Props> =memo( (props) => {
-  const {show,ensure,isVisible} = props
-  const {addRecord} = useRecords();
+  const {show,ensure,isVisible,defaultRecord,id} = props
+
+  const {addRecord,editRecord} = useRecords();
   const {fetchTags, updateTags, removeTag, editTag, findTag} = useTags();
 
   const [visibleRemark, setVisibleRemark] = useState(false);
@@ -42,12 +45,12 @@ const KeepAccounts: FC<Props> =memo( (props) => {
   const [record, setRecord] = useState<RecordItem>(recordData);
 
   const [tagList, setTagList] = useState<TagItem[]>([]);
-
   useEffect(() => {
     setTagList(fetchTags(record.category));
   }, [record.category, show]);
 
   const [output, setOutput] = useState<string>('');
+
   const onChange = useCallback((value: Partial<typeof record>) => {
     setRecord({
       ...record,
@@ -55,15 +58,22 @@ const KeepAccounts: FC<Props> =memo( (props) => {
     });
   }, [record]);
   const onSubmit = () => {
-    addRecord(record);
+    if(id)
+      editRecord(record,id)
+    else
+      addRecord(record);
     setOutput('clear');
     isVisible(false)
-    props.ensure();
+    ensure();
   };
   const [visibleThis,setVisibleThis] = useState(false)
   useEffect(()=>{
     setVisibleThis(show)
-  },[show])
+  },[show,defaultRecord])
+  useEffect(()=>{
+    if(defaultRecord)
+      setRecord(defaultRecord)
+  },[defaultRecord])
   return (
 <>
       <PopUp show={visibleThis} >
@@ -71,15 +81,18 @@ const KeepAccounts: FC<Props> =memo( (props) => {
           <Close onClick={()=>isVisible(false)}/>
           <SelectInfo
             value={record.category}
+            defaultDate={record.createAt}
             onChangeCategory={(value: Category) => onChange({category: value})}
             onChangeDate={(value: string) => {onChange({createAt: value});}}
           />
           <Output
+            defaultValue={record.amount.toString()}
             onSubmit={onSubmit}
             onChange={(value: number) => {
               setOutput('');
               onChange({amount: value});
-            }} value={output}/>
+            }}
+            value={output}/>
           <Tags
             onRemoveTag={(id: number) => {removeTag(id);}}
             value={tagList}
@@ -87,7 +100,7 @@ const KeepAccounts: FC<Props> =memo( (props) => {
               props.isVisible(false);
               id ? setUpdateTagId(id) : setVisibleAddTag(true);
             }}
-
+            defaultIndex={defaultRecord?.tagIndex}
             className={record.category === '+' ? 'special' : 'base'}
             onChange={(value: number) => onChange({tagIndex: value})}
           />

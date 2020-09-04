@@ -42,9 +42,11 @@ type Props = {
   onChangeCategory: (value: Category) => void
   onChangeDate: (value: string) => void
   value: string
+  defaultDate?:string
 }
 
 const SelectInfo: FC<Props> = memo((props) => {
+  const {defaultDate} = props
   const categoryMap = {'-': '支出', '+': '收入'};
   const categoryStyle = {'-': 'selectedBase', '+': 'selectedSpecial'};
   const categoryList = React.useState<Category[]>(['-', '+'])[0];
@@ -66,7 +68,7 @@ const SelectInfo: FC<Props> = memo((props) => {
         {categoryList.map((el: Category) => <li key={el} className={selectedItem === el ? categoryStyle[el] : ''}
                                                 onClick={() => onChange(el)}>{categoryMap[el]}</li>)}
       </ol>
-      <input type="dateTime-local" value={dayjs(date).format('YYYY-MM-DDTHH:mm')} onChange={(e) => {setDate(e.target.value+dayjs(new Date()).format(':ss'));}}/>
+      <input type="dateTime-local" value={defaultDate?dayjs(defaultDate).format('YYYY-MM-DDTHH:mm'):dayjs(date).format('YYYY-MM-DDTHH:mm')} onChange={(e) => {setDate(e.target.value+dayjs(new Date()).format(':ss'));}}/>
     </Wrapper>
 
   );

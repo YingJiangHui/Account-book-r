@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {FC, memo} from 'react';
+import {FC, memo, useEffect} from 'react';
 import React from 'react';
 
 const Wrapper = styled.section`
@@ -19,17 +19,23 @@ const Wrapper = styled.section`
     }
 `;
 type Props = {
+  defaultValue?:string;
   value: string,
   onChange: (value: number) => void,
   onSubmit: () => void
 }
 const Output: FC<Props> =memo( (props) => {
+  const {defaultValue}= props
   const [output, _setOutput] = React.useState('0');
   const setOutput = (value: string) => {
     if (output.length < 16) {
       _setOutput(value);
     }
   };
+  useEffect(()=>{
+    if(defaultValue)
+    _setOutput(defaultValue)
+  },[defaultValue])
   React.useEffect(() => {
     props.onChange(parseFloat(output));
     switch (props.value) {
@@ -65,6 +71,7 @@ const Output: FC<Props> =memo( (props) => {
           props.onSubmit();
         }
         break;
+
     }
   }, [props.value]);
 
