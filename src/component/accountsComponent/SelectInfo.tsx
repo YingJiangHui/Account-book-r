@@ -3,7 +3,7 @@ import {FC, memo, useEffect, useState} from 'react';
 import React from 'react';
 import theme from 'theme';
 import dayjs from 'dayjs';
-
+import Category from 'component/Category'
 const Wrapper = styled.section`
   display: flex;
   justify-content: space-between;
@@ -40,37 +40,29 @@ const Wrapper = styled.section`
 
 type Props = {
   onChangeCategory: (value: Category) => void
+  category: string
   onChangeDate: (value: string) => void
-  value: string
-  defaultDate?:string
+  defaultDate?: string
 }
+const nowDate = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
 
 const SelectInfo: FC<Props> = memo((props) => {
-  const {defaultDate} = props
-  const categoryMap = {'-': '支出', '+': '收入'};
-  const categoryStyle = {'-': 'selectedBase', '+': 'selectedSpecial'};
-  const categoryList = React.useState<Category[]>(['-', '+'])[0];
-  const [selectedItem, setSelectedItem] = React.useState(props.value);
-  const onChange = (tag: Category) => {
-    setSelectedItem(tag);
-    props.onChangeCategory(tag);
-  };
-  const nowDate = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
-
+  const {onChangeCategory,defaultDate} = props
   const [date, setDate] = useState(nowDate);
-
+  const [category,setCatecory] = useState('-')
+  useEffect(()=>{
+    setCatecory(props.category)
+  },[props.category])
   useEffect(() => {
     props.onChangeDate(date);
   }, [date]);
   return (
     <Wrapper>
-      <ol>
-        {categoryList.map((el: Category) => <li key={el} className={selectedItem === el ? categoryStyle[el] : ''}
-                                                onClick={() => onChange(el)}>{categoryMap[el]}</li>)}
-      </ol>
-      <input type="dateTime-local" value={defaultDate?dayjs(defaultDate).format('YYYY-MM-DDTHH:mm'):dayjs(date).format('YYYY-MM-DDTHH:mm')} onChange={(e) => {setDate(e.target.value+dayjs(new Date()).format(':ss'));}}/>
+      <Category value={category} onChange={(value)=>onChangeCategory(value)}/>
+      <input type="dateTime-local"
+             value={defaultDate ? dayjs(defaultDate).format('YYYY-MM-DDTHH:mm') : dayjs(date).format('YYYY-MM-DDTHH:mm')}
+             onChange={(e) => {setDate(e.target.value + dayjs(new Date()).format(':ss'));}}/>
     </Wrapper>
-
   );
 });
 

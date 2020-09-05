@@ -85,7 +85,7 @@ const KeepAccounts: FC<Props> =memo( (props) => {
         <Options>
           <Close onClick={()=>isVisible(false)}/>
           <SelectInfo
-            value={record.category}
+            category={record.category}
             defaultDate={record.createAt}
             onChangeCategory={(value: Category) => onChange({category: value})}
             onChangeDate={(value: string) => {onChange({createAt: value});}}
