@@ -3,6 +3,7 @@ import Layout from '../component/Layout';
 import CollectAccounts from '../component/CollectAccounts';
 import AccountsRateOfTag from '../component/statisticsComponent/AccountsRateOfTag';
 import useTagsuseTags from 'hooks/useRecords';
+import AccountsCompareChart from '../component/statisticsComponent/AccountsCompareChart';
 
 function Statistics() {
   const [currentDate, setCurrentDate] = useState('');
@@ -15,6 +16,7 @@ function Statistics() {
                        onChange={(value) => {setCurrentDate(value);}}
                        stream={(value) => setAmount(value)}/>
       <AccountsRateOfTag value={amountByTag(record,'tag')} totalAmount={amount}/>
+      <AccountsCompareChart value={amountByTag(record,'day')}/>
     </Layout>
   );
 }

@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import Icon from '../Icon';
 import theme from '../../theme';
 import cs from 'classnames';
-import {useTags} from 'hooks/useTags'
+import {useTags} from 'hooks/useTags';
 import {taggedTemplateExpression} from '@babel/types';
+
 const Wrapper = styled.div`
   background: #ffffff;
   display: flex;
@@ -47,36 +48,36 @@ const Label = styled.div`
 const Amount = styled.div`
   text-align: end;
   width: 82px;
-`
+`;
 const Rate = styled.span`
   margin-right: 10px;
   font-size: 14px;
   color: ${theme.tingeFontColor};
-`
+`;
 
 type Props = {
-  index:string
+  index: string
   value: number,
-  totalAmount: {'+':number,'-':number},
-  category:Category
+  totalAmount: { '+': number, '-': number },
+  category: Category
 }
 
-const TagItemChart: FC<Props> = ({value, totalAmount,index,category}) => {
-  const indexTag = parseInt(index)
-  const {findTag} = useTags()
-  const [rate,setRate ]= useState('')
-  const [tag,setTag] = useState<TagItem>({} as TagItem);
+const TagItemChart: FC<Props> = ({value, totalAmount, index, category}) => {
+  const indexTag = parseInt(index);
+  const {findTag} = useTags();
+  const [rate, setRate] = useState('');
+  const [tag, setTag] = useState<TagItem>({} as TagItem);
 
-  const tmpTag = findTag(indexTag)
+  const tmpTag = findTag(indexTag);
 
-  useEffect(()=>{
-    if(tmpTag){
-      setTag(tmpTag)
-      setRate(Math.round(value/totalAmount[tmpTag.category]*100).toString()+'%')
+  useEffect(() => {
+    if (tmpTag) {
+      setTag(tmpTag);
+      setRate(Math.round(value / totalAmount[tmpTag.category] * 100).toString() + '%');
     }
-  },[tmpTag])
-  if(tmpTag?.category!==category)
-    return(<></>);
+  }, [tmpTag]);
+  if (tmpTag?.category !== category)
+    return (<></>);
   return (
     <Wrapper>
       <Label>
@@ -85,7 +86,7 @@ const TagItemChart: FC<Props> = ({value, totalAmount,index,category}) => {
       </Label>
       <Rate>{rate}</Rate>
       <ProgressBar>
-        <p className={cs(tag.category === '+' ? 'special' : '')} style={{width:rate}}></p>
+        <p className={cs(tag.category === '+' ? 'special' : '')} style={{width: rate}}></p>
       </ProgressBar>
       <Amount>
         ￥{value}

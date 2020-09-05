@@ -4,20 +4,25 @@ import TagItemChart from '../AccountsRateOfTag/TagItemChart';
 import Category from 'component/Category'
 import StatisticsChartTitle from './StatisticsChartTitle';
 const Wrapper = styled.section`
-  
   background: #fff;
   padding: 18px;
   margin-top: 6px;
-  >div{
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
+
 `;
+const  Container =styled.div`
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  >div{
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+`
 type Props = {
   value: { [key: string]: number }
   totalAmount: { '+': number; '-': number }
 }
 const AccountsRateOfTag: FC<Props> = ({value, totalAmount}) => {
+  console.log('rate');
+  console.log(value);
   const [amountList, setAmountList] = useState<{ [key: string]: number }>();
   const [amount, setAmount] = useState<{ '+': number; '-': number }>({'+': 0, '-': 0});
   const [category,setCategory] = useState<Category>('-');
@@ -34,9 +39,12 @@ const AccountsRateOfTag: FC<Props> = ({value, totalAmount}) => {
   }, [value]);
   return (
     <Wrapper>
-      <StatisticsChartTitle onChange={(value:Category)=>{setCategory(value)}} value={category}>收支构成</StatisticsChartTitle>
+      <Container>
+        <StatisticsChartTitle onChange={(value:Category)=>{setCategory(value)}} value={category}>收支构成</StatisticsChartTitle>
 
-      {group()}
+        {group()}
+      </Container>
+
     </Wrapper>
   );
 };

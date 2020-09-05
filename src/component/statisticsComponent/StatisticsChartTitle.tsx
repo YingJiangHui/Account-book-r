@@ -10,7 +10,7 @@ type Props = {
   onChange:(value:Category)=>void
 }
 const StatisticsChartTitle:FC<Props> = ({value,onChange,children})=>{
-  const [category,setCategory] = useState<Category>('+')
+  const [category,setCategory] = useState<Category>('-')
   useEffect(()=>{
     setCategory(value)
   },[value])

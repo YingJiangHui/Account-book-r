@@ -46,7 +46,7 @@ const Category: FC<Props> = ({value, onChange}) => {
     <Wrapper>
       <ol>
         {categoryList.map(category =>
-          <li className={cs(category===selected?styleMap[selected]:'')} key={category} onClick={()=>{onChange(category)}}>{categoryMap[category]}</li>
+          <li className={cs(category===selected?styleMap[selected]:'')} key={category} onClick={()=>{onChange(category);}}>{categoryMap[category]}</li>
         )}
       </ol>
     </Wrapper>

@@ -11,7 +11,7 @@ const Container = styled.div`
   width: 100vw;
   background: #fff;
   border-radius: 12px 12px 0 0 ;
-  z-index: 9;
+  z-index: 98;
   position: absolute;
   bottom: 0;
   left: 0;

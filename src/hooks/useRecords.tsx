@@ -54,8 +54,8 @@ const useRecords = () => {
 
   const amountByTag = (record: RecordItem[],type:string):{ [key: string]: number } => {
     const hashMap: { [key: string]: string } = {
-      'day':'DD日',
-      'month':'MM月',
+      'day':'YYYY年MM月DD日',
+      'month':'YYYY年MM月',
       'year':'YYYY年',
     }
     const obj: { [key:string]: number } = {} ;
