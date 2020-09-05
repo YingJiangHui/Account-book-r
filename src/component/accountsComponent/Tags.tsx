@@ -3,7 +3,7 @@ import Icon from 'component/Icon';
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
-import PopOptionBox from '../PopOptionBox';
+import PopOptionBox from '../PopUp/PopOptionBox';
 import useUpdate from 'hooks/useUpdate';
 
 const Wrapper = styled.section`

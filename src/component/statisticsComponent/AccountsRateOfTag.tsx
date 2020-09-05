@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, {FC, useEffect, useState} from 'react';
-import TagItemChart from './AccountsRateOfTag/TagItemChart';
+import TagItemChart from '../AccountsRateOfTag/TagItemChart';
 import Category from 'component/Category'
 const Wrapper = styled.section`
   

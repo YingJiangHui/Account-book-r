@@ -1,6 +1,6 @@
 import React, {FC, memo} from 'react';
 import styled from 'styled-components';
-import Cover from '../Cover';
+import Cover from './popUpRootComponent/Cover';
 
 const Wrapper = styled.div`
   background: #fff;

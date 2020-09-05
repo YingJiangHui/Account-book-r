@@ -1,4 +1,4 @@
-import PopUpSelect from 'component/PopUp/PopUpSelect';
+import PopUpNoSure from 'component/PopUp/popUpBoxComponent/PopUpNoSure';
 import React, {FC, memo, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {useTags} from 'hooks/useTags';
@@ -53,7 +53,7 @@ const PopUpTagBox: FC<Props> = memo(({close, show, value, onChange}) => {
     setVisible(show);
   }, [show]);
   return (
-    <PopUpSelect close={close} show={visible} title='选择月份'>
+    <PopUpNoSure close={close} show={visible} title='选择月份'>
       <Container>
         <ol>
           <li
@@ -86,7 +86,7 @@ const PopUpTagBox: FC<Props> = memo(({close, show, value, onChange}) => {
         </ol>
 
       </Container>
-    </PopUpSelect>
+    </PopUpNoSure>
   );
 });
 export default PopUpTagBox;

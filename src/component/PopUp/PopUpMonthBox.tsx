@@ -1,7 +1,7 @@
-import PopUpSelect from 'component/PopUp/PopUpSelect';
+import PopUpNoSure from 'component/PopUp/popUpBoxComponent/PopUpNoSure';
 import React, {FC, memo, useEffect, useState} from 'react';
 import styled from 'styled-components';
-import theme from '../theme';
+import theme from '../../theme';
 import dayjs from 'dayjs';
 import cs from 'classnames'
 const Container = styled.div`
@@ -45,7 +45,7 @@ const PopUpMonthBox: FC<Props> = memo(({close, onChange,show}) => {
   const now = dayjs(new Date()).format('YYYY年')
 
   return (
-    <PopUpSelect close={close} show={visible} title='选择月份'>
+    <PopUpNoSure close={close} show={visible} title='选择月份'>
       <Container>
         <p>{now}</p>
         <ol
@@ -56,7 +56,7 @@ const PopUpMonthBox: FC<Props> = memo(({close, onChange,show}) => {
             key={month}>{dayjs(new Date()).subtract(month, 'month').format('MM月')}</li>)}
         </ol>
       </Container>
-    </PopUpSelect>
+    </PopUpNoSure>
   );
 });
 

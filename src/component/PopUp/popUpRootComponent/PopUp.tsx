@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React, {FC, useEffect, useState} from 'react';
 import {CSSTransition} from 'react-transition-group';
-import '../../style/animation.scss';
+import '../../../style/animation.scss';
 import cn from 'classnames';
-import Cover from 'component/Cover'
+import Cover from 'component/PopUp/popUpRootComponent/Cover'
 const Wrapper = styled.div`
   
 `;

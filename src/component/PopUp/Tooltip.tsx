@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {Transition} from 'react-transition-group';
 import React, {FC, memo} from 'react';
-import Icon from './Icon';
+import Icon from '../Icon';
 
 const duration = 300;
 const defaultStyle = {

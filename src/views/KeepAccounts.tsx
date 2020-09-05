@@ -9,7 +9,7 @@ import SelectInfo from 'component/accountsComponent/SelectInfo';
 import OpenNotePanel from 'component/accountsComponent/OpenNotePanel';
 import {useTags} from '../hooks/useTags';
 import useRecords from 'hooks/useRecords';
-import PopUp from 'component/PopUp/PopUp'
+import PopUp from 'component/PopUp/popUpRootComponent/PopUp'
 import styled from 'styled-components';
 
 const Options = styled.div`

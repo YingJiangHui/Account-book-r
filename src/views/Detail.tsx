@@ -1,13 +1,13 @@
 import React, {FC, memo, useCallback, useEffect, useState} from 'react';
 import Layout from '../component/Layout';
-import OpenRecordButton from '../component/OpenRecordButton';
+import OpenRecordButton from '../component/Detail/OpenRecordButton';
 import KeepAccounts from 'views/KeepAccounts';
-import Records from 'component/Records';
+import Records from 'component/Detail/Records';
 import {Header, Wrapper} from 'component/Detail/style';
 import useRecords from 'hooks/useRecords';
-import Tooltip from '../component/Tooltip';
+import Tooltip from '../component/PopUp/Tooltip';
 import dayjs from 'dayjs';
-import PopUpMonthBox from '../component/PopUpMonthBox';
+import PopUpMonthBox from '../component/PopUp/PopUpMonthBox';
 import PopUpTagBox from '../component/PopUp/PopUpTagBox';
 import {useTags} from '../hooks/useTags';
 import 'style/animation.scss';

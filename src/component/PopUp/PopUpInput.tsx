@@ -2,7 +2,7 @@ import {FC, memo, useEffect, useState} from 'react';
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
-import Xx from 'component/PopUp/Xx';
+import PopUpHasSure from 'component/PopUp/popUpBoxComponent/PopUpHasSure';
 
 const Container = styled.div`
   padding: 16px;
@@ -56,13 +56,13 @@ const PopUpInput: FC<Props> = memo((props) => {
       setOutput((e.target as HTMLInputElement).value);
   };
   return (
-    <Xx close={close} title={props.title} show={props.show} onEnsure={onEnsure}
-        disable={output.length === 0 ? true : false}>
+    <PopUpHasSure close={close} title={props.title} show={props.show} onEnsure={onEnsure}
+                  disable={output.length === 0 ? true : false}>
       <Container>
         <input ref={refInput} onChange={onChange} value={output} type="text" placeholder={props.placeholder}/>
         <p>{output.length}/{props.maxLen}</p>
       </Container>
-    </Xx>
+    </PopUpHasSure>
   );
 });
 export default PopUpInput;

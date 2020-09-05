@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import theme from '../theme';
-import PopUpMonthBox from 'component/PopUpMonthBox';
+import PopUpMonthBox from 'component/PopUp/PopUpMonthBox';
 import useRecords from 'hooks/useRecords';
 import dayjs from 'dayjs';
 

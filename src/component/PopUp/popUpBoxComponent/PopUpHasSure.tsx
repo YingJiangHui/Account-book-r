@@ -1,8 +1,8 @@
-import PopUp from './PopUp';
+import PopUp from '../popUpRootComponent/PopUp';
 import React, {FC, useEffect, useState} from 'react';
 import Icon from 'component/Icon';
 import styled from 'styled-components';
-import theme from '../../theme';
+import theme from '../../../theme';
 
 const Control = styled.ol`
     padding: 16px;
@@ -36,7 +36,7 @@ type Props = {
   disable:boolean
   close:()=>void
 }
-const Xx:FC <Props> = ({show,title,onEnsure,disable,children,close})=>{
+const PopUpHasSure:FC <Props> = ({show,title,onEnsure,disable,children,close})=>{
   const [visible,setVisible] = useState(false)
   useEffect(()=>{
     setVisible(show)
@@ -52,4 +52,4 @@ const Xx:FC <Props> = ({show,title,onEnsure,disable,children,close})=>{
     </PopUp>
   )
 }
-export default Xx
+export default PopUpHasSure

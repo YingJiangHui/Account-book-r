@@ -6,7 +6,7 @@ import Icon from '../component/Icon';
 import {useTags} from '../hooks/useTags';
 import dayjs from 'dayjs';
 import KeepAccounts from 'views/KeepAccounts';
-import Tooltip from 'component/Tooltip';
+import Tooltip from 'component/PopUp/Tooltip';
 import {Amount, Control, Info, TagIcon, View, Wrapper} from '../component/RecordItem/style';
 import cn from 'classnames';
 import AlertSelectBox from '../component/PopUp/AlertSelectBox';

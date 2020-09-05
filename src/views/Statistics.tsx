@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Layout from '../component/Layout';
 import CollectAccounts from '../component/CollectAccounts';
-import AccountsRateOfTag from '../component/AccountsRateOfTag';
+import AccountsRateOfTag from '../component/statisticsComponent/AccountsRateOfTag';
 import useTagsuseTags from 'hooks/useRecords';
 
 function Statistics() {
