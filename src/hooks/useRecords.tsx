@@ -37,8 +37,9 @@ const useRecords = () => {
   }, [Records]);
 
   const filterRecordUsedMonth = (month: string) => {
-    return recordList.filter((record) => dayjs(record.createAt).format('MM月') === month);
+    return recordList.filter((record) => dayjs(record.createAt).format('YYYY年MM月') === month);
   };
+
   const filterRecordUsedTag = (TagId: number, records?: RecordItem[]) => {
     if (records) {
       return records.filter((record) => record.tagIndex === TagId);
@@ -50,7 +51,6 @@ const useRecords = () => {
     category ?
       records.reduce((sum, record) => category === record.category ? sum + record.amount : sum, 0)
       : records.reduce((sum, record) => sum + record.amount, 0);
-
 
 
 

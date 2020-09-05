@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Layout from '../component/Layout';
-import AlertSelectBox from 'component/PopUp/AlertSelectBox'
-function Statistics() {
-  const [count,setCount] = useState(0)
-  return (
+import CollectAccounts from '../component/CollectAccounts';
 
-      <Layout>
-        <h2>Statistics</h2>
+function Statistics() {
+  return (
+    <Layout>
+      <CollectAccounts />
     </Layout>
   );
 }

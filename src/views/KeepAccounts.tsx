@@ -14,6 +14,7 @@ import styled from 'styled-components';
 
 const Options = styled.div`
   padding: 16px;
+  padding-bottom:0;
 `;
 
 type Props = {
@@ -74,6 +75,10 @@ const KeepAccounts: FC<Props> =memo( (props) => {
     if(defaultRecord)
       setRecord(defaultRecord)
   },[defaultRecord])
+
+  useEffect(()=>{
+
+  },[record.tagIndex])
   return (
 <>
       <PopUp show={visibleThis} >
@@ -100,7 +105,7 @@ const KeepAccounts: FC<Props> =memo( (props) => {
               props.isVisible(false);
               id ? setUpdateTagId(id) : setVisibleAddTag(true);
             }}
-            defaultIndex={defaultRecord?.tagIndex}
+            defaultIndex={(defaultRecord?.tagIndex)}
             className={record.category === '+' ? 'special' : 'base'}
             onChange={(value: number) => onChange({tagIndex: value})}
           />

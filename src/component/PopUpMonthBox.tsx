@@ -3,7 +3,7 @@ import React, {FC, memo, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import theme from '../theme';
 import dayjs from 'dayjs';
-
+import cs from 'classnames'
 const Container = styled.div`
   padding: 16px 12px 16px 12px;
 p{
@@ -23,6 +23,10 @@ p{
     align-items: center;
     background-color: #fff;
     width: 25%;
+    &.selected{
+      background: ${theme.themeColor};
+      color: #fff;
+    }
   }
 }
 
@@ -30,21 +34,25 @@ p{
 type Props = {
   onChange: (value: string) => void
   show: boolean,
-  close: () => void
+  close: () => void,
 }
-const PopUpMonthBox: FC<Props> =memo( ({close, onChange, show}) => {
+const PopUpMonthBox: FC<Props> = memo(({close, onChange,show}) => {
   const [visible, setVisible] = useState(show);
   useEffect(() => {
     setVisible(show);
   }, [show]);
+  const [selected,setSelected] = useState(0)
+  const now = dayjs(new Date()).format('YYYY年')
+
   return (
     <PopUpSelect close={close} show={visible} title='选择月份'>
       <Container>
-        <p>{dayjs(new Date()).format('YYYY年')}</p>
+        <p>{now}</p>
         <ol
-          onClick={(e: React.MouseEvent) =>
-            onChange(((e.target as Element).nodeName === 'LI' ? (e.target as Element).textContent : '') || '')}>
-          {[0, 1, 2, 3, 4, 5, 6].map((month) => <li
+          onClick={(e: React.MouseEvent) => {
+            onChange(now+((e.target as Element).nodeName.toUpperCase() === 'LI' ? (e.target as Element).textContent : '') || '');
+          }}>
+          {[0, 1, 2, 3, 4, 5, 6].map((month) => <li className={cs(selected===month?'selected':'')} onClick={()=>setSelected(month)}
             key={month}>{dayjs(new Date()).subtract(month, 'month').format('MM月')}</li>)}
         </ol>
       </Container>

@@ -19,12 +19,12 @@ const Header = styled.header`
   >ol{
     margin-top: 20px;
     display: flex;
-    width: 300px;
+    min-width: 300px;
     >li{
     color: rgba(255,255,255,0.8);
     &:nth-child(1){
     color: #fafafa;
-      width: 50px;
+      width: 90px;
       position: relative;
       &::after{
         position: absolute;

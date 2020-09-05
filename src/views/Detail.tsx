@@ -10,9 +10,9 @@ import dayjs from 'dayjs';
 import PopUpMonthBox from '../component/PopUpMonthBox';
 import PopUpTagBox from '../component/PopUp/PopUpTagBox';
 import {useTags} from '../hooks/useTags';
-import 'style/animation.scss'
+import 'style/animation.scss';
 
-const nowMonth = dayjs(new Date()).format('MM月');
+const nowMonth = dayjs(new Date()).format('YYYY年MM月');
 const Detail: FC = memo(() => {
   const {tags, findId} = useTags();
 
@@ -25,7 +25,7 @@ const Detail: FC = memo(() => {
   const [appearMonth, setAppearMonth] = useState(nowMonth);
   const [record, setRecord] = useState<RecordItem[]>([]);
   const [tagId, setTagId] = useState<number>(0);
-  const [recordGroup,setRecordGroup] = useState<any[]>([])
+  const [recordGroup, setRecordGroup] = useState<any[]>([]);
 
   useEffect(() => {
     const newRecords = filterRecordUsedMonth(appearMonth);
@@ -36,30 +36,30 @@ const Detail: FC = memo(() => {
     }
   }, [recordList, appearMonth, tagId]);
 
-  useEffect(()=>{
-    setRecordGroup(records())
-  },[record])
+  useEffect(() => {
+    setRecordGroup(records());
+  }, [record]);
 
-  const records = useCallback( () => {
-    if(record.length===0)return[]
+  const records = useCallback(() => {
+    //TODO
+    if (record.length === 0) return [];
     let recordsOfDay: RecordItem[] = [];
-    const recordGroup = []
+    const recordGroup = [];
     for (let i = 0; i < record.length; i++) {
-      if (i>0&&dayjs(record[i-1].createAt).format('YYYY-MM-DD') === dayjs(record[i].createAt).format('YYYY-MM-DD')) {
+      if (i > 0 && dayjs(record[i - 1].createAt).format('YYYY-MM-DD') === dayjs(record[i].createAt).format('YYYY-MM-DD')) {
         recordsOfDay.push(record[i]);
       } else {
-        if(recordsOfDay.length>0)
-        recordGroup.push(<Records key={i} records={recordsOfDay}/>);
+        if (recordsOfDay.length > 0)
+          recordGroup.push(<Records key={i} records={recordsOfDay}/>);
         recordsOfDay = [record[i]];
       }
     }
-    if(recordsOfDay.length>0)
+    if (recordsOfDay.length > 0)
       recordGroup.push(<Records key={-1} records={recordsOfDay}/>);
     return (
       recordGroup
-    )
-
-  },[record]);
+    );
+  }, [record]);
 
   return (
     <>
@@ -69,12 +69,12 @@ const Detail: FC = memo(() => {
           <button onClick={() => {setVisibleTag(true);}}>{tagName}</button>
           <ol>
             <li onClick={() => {setVisibleMonth(true);}}>{appearMonth}</li>
-              <li>总支出￥{totalAmount(record, '-')}</li>
-              <li>总收入￥{totalAmount(record, '+')}</li>
-            </ol>
+            <li>总支出￥{totalAmount(record, '-')}</li>
+            <li>总收入￥{totalAmount(record, '+')}</li>
+          </ol>
         </Header>
         <Wrapper>
-            {recordGroup}
+          {recordGroup}
         </Wrapper>
       </Layout>
       <OpenRecordButton onClick={() => setVisibleAccounts(true)}/>
@@ -85,7 +85,7 @@ const Detail: FC = memo(() => {
           setVisibleTip(true);
           setTimeout(() => {setVisibleTip(false);}, 2000);
         }}
-        isVisible={(value:boolean)=>{setVisibleAccounts(value)}}
+        isVisible={(value: boolean) => {setVisibleAccounts(value);}}
         show={visibleAccounts}
       />
       <PopUpMonthBox
