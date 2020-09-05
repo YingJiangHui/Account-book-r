@@ -38,7 +38,7 @@ const now = dayjs(new Date()).format('YYYY年MM月');
 
 type Props = {
   onChange: (value:string) => void
-  stream:(income:number,outgoings:number)=>void
+  stream:({}:{'+':number,'-':number})=>void
   monthRecord:(record:RecordItem[])=>void
 }
 
@@ -50,7 +50,7 @@ const CollectAccounts: FC<Props> = ({onChange,stream,monthRecord}) => {
   const outgoings = totalAmount(record, '-');
   const income = totalAmount(record, '+');
   useEffect(()=>{
-    stream(outgoings,income)
+    stream({'-':outgoings,'+':income})
     monthRecord(record)
   },[outgoings,income])
   return (

@@ -52,13 +52,13 @@ const useRecords = () => {
       records.reduce((sum, record) => category === record.category ? sum + record.amount : sum, 0)
       : records.reduce((sum, record) => sum + record.amount, 0);
 
-  const amountByTag = (record: RecordItem[],type:string) => {
+  const amountByTag = (record: RecordItem[],type:string):{ [key: string]: number } => {
     const hashMap: { [key: string]: string } = {
       'day':'DD日',
       'month':'MM月',
       'year':'YYYY年',
     }
-    const obj: { [key:string]: number } = {};
+    const obj: { [key:string]: number } = {} ;
     let key:string;
       for (let i = 0; i < record.length; i++) {
         if(type === 'tag'){
@@ -68,7 +68,7 @@ const useRecords = () => {
           const {createAt} = record[i]
           key = dayjs(createAt).format(hashMap[type])
         }else{
-          return;
+          return {} ;
         }
           obj[key]
           ?
