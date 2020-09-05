@@ -2,31 +2,31 @@ import {useEffect, useState} from 'react';
 import useUpdate from './useUpdate';
 import dayjs from 'dayjs';
 import clone from '../lib/clone';
-import generator from 'lib/createId'
+import generator from 'lib/createId';
 import RecordItem from '../views/RecordItem';
-const {createId} =  generator('recordMaxId')
+const {createId} = generator('recordMaxId');
 
-const Records:RecordItem[] = JSON.parse(window.localStorage.getItem('record') || '[]')
+const Records: RecordItem[] = JSON.parse(window.localStorage.getItem('record') || '[]');
 const useRecords = () => {
 
   const [recordList, setRecordList] = useState<RecordItem[]>([]);
-  const editRecord = (record:RecordItem,id:number)=>{
+  const editRecord = (record: RecordItem, id: number) => {
     removeRecord(id);
-    addRecord(record,id)
-  }
-  const addRecord = (record: RecordItem,id?:number) => {
+    addRecord(record, id);
+  };
+  const addRecord = (record: RecordItem, id?: number) => {
     if (record.createAt === '')
       record.createAt = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
-    record.id = id?id:createId()
+    record.id = id ? id : createId();
     setRecordList((recordList) => [...recordList, record]);
   };
 
-  const findRecord = (id:number)=>{
-    return recordList.find((record)=>record.id ===id);
-  }
-  const removeRecord = (id:number)=>{
-    setRecordList((recordList)=>recordList.filter((record)=>record.id!==id))
-  }
+  const findRecord = (id: number) => {
+    return recordList.find((record) => record.id === id);
+  };
+  const removeRecord = (id: number) => {
+    setRecordList((recordList) => recordList.filter((record) => record.id !== id));
+  };
 
   useUpdate(() => {
     window.localStorage.setItem('record', JSON.stringify(sortRecord()));
@@ -52,8 +52,32 @@ const useRecords = () => {
       records.reduce((sum, record) => category === record.category ? sum + record.amount : sum, 0)
       : records.reduce((sum, record) => sum + record.amount, 0);
 
-
-
+  const amountByTag = (record: RecordItem[],type:string) => {
+    const hashMap: { [key: string]: string } = {
+      'day':'DD日',
+      'month':'MM月',
+      'year':'YYYY年',
+    }
+    const obj: { [key:string]: number } = {};
+    let key:string;
+      for (let i = 0; i < record.length; i++) {
+        if(type === 'tag'){
+          const {tagIndex} = record[i]
+          key = tagIndex.toString()
+        }else if(Object.keys(hashMap).indexOf(type)>=0){
+          const {createAt} = record[i]
+          key = dayjs(createAt).format(hashMap[type])
+        }else{
+          return;
+        }
+          obj[key]
+          ?
+          obj[key] += record[i].amount
+          :
+          obj[key] = record[i].amount;
+      }
+    return obj
+  };
   const sortRecord = (): RecordItem[] => {
     return (clone(recordList) as RecordItem[]).sort((a, b) => a.createAt > b.createAt ? -1 : 1);
   };
@@ -62,7 +86,18 @@ const useRecords = () => {
     setTimeout(() => setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]')));
   };
 
-  return {recordList, findRecord,addRecord, fetchRecord,editRecord,removeRecord, filterRecordUsedMonth, totalAmount, filterRecordUsedTag};
+  return {
+    recordList,
+    findRecord,
+    addRecord,
+    fetchRecord,
+    editRecord,
+    removeRecord,
+    filterRecordUsedMonth,
+    totalAmount,
+    filterRecordUsedTag,
+    amountByTag
+  };
 };
 
 
