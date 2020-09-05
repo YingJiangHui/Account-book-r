@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React, {FC, useEffect, useState} from 'react';
 import TagItemChart from '../AccountsRateOfTag/TagItemChart';
 import Category from 'component/Category'
+import StatisticsChartTitle from './StatisticsChartTitle';
 const Wrapper = styled.section`
   
   background: #fff;
@@ -12,11 +13,6 @@ const Wrapper = styled.section`
     margin-bottom: 20px;
   }
 `;
-const Title = styled.div`
-  display: flex;
-  justify-content: space-between;
-  
-`
 type Props = {
   value: { [key: string]: number }
   totalAmount: { '+': number; '-': number }
@@ -38,10 +34,8 @@ const AccountsRateOfTag: FC<Props> = ({value, totalAmount}) => {
   }, [value]);
   return (
     <Wrapper>
-      <Title>
-        <p>收支构成</p>
-        <Category onChange={(value:Category)=>{setCategory(value)}} value={category}/>
-      </Title>
+      <StatisticsChartTitle onChange={(value:Category)=>{setCategory(value)}} value={category}>收支构成</StatisticsChartTitle>
+
       {group()}
     </Wrapper>
   );
