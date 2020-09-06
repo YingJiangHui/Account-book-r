@@ -22,11 +22,11 @@ type Props = {
   title:string
   startDate:dayjs.Dayjs
 }
-type Params= {num:number,format:string,name:string,width:string}
+type Params= {num:number,format:string,name:string,width:string,barWidth:number}
 
 const DateMap:{[key:string]:Params}  = {
-  'day':{num:29,format:'YYYY年MM月DD日',name:'DD',width:'400%'},
-  'month':{num:11,format:'YYYY年MM月',name:'MM',width:'200%'}
+  'day':{num:29,format:'YYYY年MM月DD日',name:'DD',width:'400%',barWidth:10},
+  'month':{num:11,format:'YYYY年MM月',name:'MM',width:'200%',barWidth:20}
 }
 
 const AccountsCompareChart: FC<Props> = ({value,unitTime,title,startDate}) => {
@@ -100,7 +100,7 @@ const AccountsCompareChart: FC<Props> = ({value,unitTime,title,startDate}) => {
       },
 
       color:[themeColor],
-      barWidth : 10,
+      barWidth : map.barWidth,
     }],
     grid: {
       left: 0,

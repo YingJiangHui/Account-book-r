@@ -1,6 +1,6 @@
 import React, {FC, memo, useEffect, useState} from 'react';
 import Layout from '../component/Layout';
-import {useParams, HashRouter as router, useHistory} from "react-router-dom";
+import {useParams,  useHistory} from "react-router-dom";
 import useRecords from 'hooks/useRecords';
 import Icon from '../component/Icon';
 import {useTags} from '../hooks/useTags';
@@ -64,7 +64,6 @@ const RecordItem: FC = memo(() => {
         ensure={() => {
           fetchRecord();
           setVisibleTip(true);
-          setTimeout(() => {setVisibleTip(false);}, 2000);
         }}
         isVisible={(value: boolean) => {setVisibleAccounts(value);}}
         show={visibleAccounts}

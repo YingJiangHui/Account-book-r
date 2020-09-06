@@ -1,20 +1,9 @@
 import styled from 'styled-components';
-import {Transition} from 'react-transition-group';
-import React, {FC, memo} from 'react';
+import {CSSTransition} from 'react-transition-group';
+import React, {FC, memo, useEffect, useState} from 'react';
 import Icon from '../Icon';
+import 'style/animation.scss'
 
-const duration = 300;
-const defaultStyle = {
-  transition: `opacity ${duration}ms ease-in-out`,
-  opacity: 0,
-};
-
-const transitionStyles = {
-  entering: {opacity: 1},
-  entered: {opacity: 1},
-  exiting: {opacity: 0},
-  exited: {opacity: 0},
-};
 const Wrapper = styled.div`
   position: fixed;
   top: 50%;
@@ -40,19 +29,19 @@ type Props = {
   value: string
 }
 const Tooltip: FC<Props> =memo( ({value, inProp}) => {
+  const [visible,setVisible] = useState(false)
+  useEffect(()=>{
+    setVisible(inProp)
+    setTimeout(()=>setVisible(false),3000)
+  },[inProp])
   return (
     <div>
-    <Transition unmountOnExit={true}  in={inProp} timeout={duration}>
-      {(state: keyof typeof transitionStyles) => (
-        <Wrapper style={{
-          ...defaultStyle,
-          ...transitionStyles[state]
-        }}>
+    <CSSTransition unmountOnExit={true} classNames={'fade'}  in={visible} timeout={200}>
+        <Wrapper >
           <Icon name='true2'/>
           {value}
         </Wrapper>
-      )}
-    </Transition>
+    </CSSTransition>
     </div>
   );
 });

@@ -1,6 +1,5 @@
 import React from 'react';
 import Layout from '../component/Layout';
-
 function Setting() {
   return (
     <Layout>

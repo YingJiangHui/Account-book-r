@@ -1,44 +1,46 @@
 .popUp-enter{
-  transform: translateY(0);
+  transform: translateY(100%);
 }
 .popUp-enter-active{
-  transform: translateY(-100%);
+  transform: translateY(0);
   transition: transform 300ms;
 }
-.popUp-enter-done{
-  transform: translateY(-100%);
-}
+
 .popUp-exit{
-  transform: translateY(-100%);
+  transform: translateY(0);
 }
 .popUp-exit-active{
-  transform: translateY(0);
+  transform: translateY(100%);
   transition: transform 300ms;
 }
-.popUp-exit-done{
-  transform: translateY(0);
 
-}
 .popUp{
   height: 100vh;
   width: 100vw;
   position: absolute;
   left: 0;
-  top:100%;
+  bottom:0;
 }
 
 
-.recordItem-enter {
+
+
+
+
+
+
+.fade-enter {
   opacity: 0;
 }
-.recordItem-active {
+.fade-enter-active {
   opacity: 1;
   transition: opacity 500ms ease-in;
 }
-.recordItem-exit {
+
+.fade-exit {
   opacity: 1;
 }
-.recordItem-exit-active {
+.fade-exit-active {
   opacity: 0;
   transition: opacity 500ms ease-in;
 }

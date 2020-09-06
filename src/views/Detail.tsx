@@ -83,7 +83,6 @@ const Detail: FC = memo(() => {
         ensure={() => {
           fetchRecord();
           setVisibleTip(true);
-          setTimeout(() => {setVisibleTip(false);}, 2000);
         }}
         isVisible={(value: boolean) => {setVisibleAccounts(value);}}
         show={visibleAccounts}
