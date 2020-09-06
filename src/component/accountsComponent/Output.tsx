@@ -18,23 +18,21 @@ const Wrapper = styled.section`
       font-size: 36px;
     }
 `;
+
 type Props = {
   defaultValue?:string;
   value: string,
   onChange: (value: number) => void,
   onSubmit: () => void
 }
+
 const Output: FC<Props> =memo( (props) => {
   const {defaultValue}= props
-  const [output, _setOutput] = React.useState('0');
-  const setOutput = (value: string) => {
-    if (output.length < 16) {
-      _setOutput(value);
-    }
-  };
+  const [output, setOutput] = React.useState('0');
+
   useEffect(()=>{
     if(defaultValue)
-    _setOutput(defaultValue)
+    setOutput(defaultValue)
   },[defaultValue])
   React.useEffect(() => {
     props.onChange(parseFloat(output));
@@ -49,6 +47,10 @@ const Output: FC<Props> =memo( (props) => {
       case '7':
       case '8':
       case '9':
+        const num= output.split('.')
+        //不超过百万 小数点不过两位判断条件
+        if((num[0].length===6&&output.indexOf('.') === -1)||(num[1]&&num[1].length===2))
+          break;
         if (output === '0') {
           setOutput(props.value);
         } else {

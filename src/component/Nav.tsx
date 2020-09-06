@@ -8,6 +8,7 @@ import theme from 'theme'
 
 const NavStyle = styled.nav`
   background: #fff;
+  border-top: 1px solid rgba(0,0,0,0.1);
   box-shadow: 0 0 3px rgba(0,0,0,0.1);
   height: 68px;
   font-size: 14px;

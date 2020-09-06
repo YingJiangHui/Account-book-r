@@ -15,15 +15,12 @@ const Wrapper = styled.div`
 const Container = styled.div`
   margin-left: 18px;
   margin-right: 18px;
-  
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-  
 `
 type Props = {
   unitTime:OpUnitType
   value: CategoryRecord
   title:string
-  startDate:string
+  startDate:dayjs.Dayjs
 }
 type Params= {num:number,format:string,name:string,width:string}
 
@@ -34,16 +31,20 @@ const DateMap:{[key:string]:Params}  = {
 
 const AccountsCompareChart: FC<Props> = ({value,unitTime,title,startDate}) => {
   const [category, setCategory] = useState<Category>('-');
-
-  let now = startDate?dayjs(startDate):dayjs(new Date())
+  if(startDate){
+    startDate = dayjs(startDate.format('YYYY-MM-01')).subtract(1,'day').add(1,'month')
+  }
+  console.log(startDate.format('YYYY年MM月'))
+  let now = dayjs(new Date())
+  let currentDate = startDate.format('YYYY年MM月')===now.format('YYYY年MM月')?now:startDate
 
   const dateList = [];
   const amountList = [];
-  console.log(now.format('YYYY-MM'))
+  console.log(currentDate.format('YYYY-MM'))
   const map =  DateMap[unitTime]
   for (let i = map.num; i >=0 ; i--) {
-    const dateDay = now.subtract(i, unitTime).format(map.format);
-    const dateStr = now.subtract(i, unitTime).format(map.name);
+    const dateDay = currentDate.subtract(i, unitTime).format(map.format);
+    const dateStr = currentDate.subtract(i, unitTime).format(map.name);
 
     if (value[category][dateDay]) {
       amountList.push(value[category][dateDay]);
@@ -113,10 +114,10 @@ const AccountsCompareChart: FC<Props> = ({value,unitTime,title,startDate}) => {
     <Wrapper>
       <Container>
         <StatisticsChartTitle value={category} onChange={(value: Category) => {setCategory(value)}}>{title}</StatisticsChartTitle>
+      </Container>
 
 
   <EChart option={ops} width={map.width}/>
-      </Container>
     </Wrapper>
   );
 };

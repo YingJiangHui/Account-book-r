@@ -32,7 +32,7 @@ p{
 
 `;
 type Props = {
-  onChange: (value: string) => void
+  onChange: (value: dayjs.Dayjs) => void
   show: boolean,
   close: () => void,
 }
@@ -42,17 +42,20 @@ const PopUpMonthBox: FC<Props> = memo(({close, onChange,show}) => {
     setVisible(show);
   }, [show]);
   const [selected,setSelected] = useState(0)
-  const now = dayjs(new Date()).format('YYYY年')
+  const now = dayjs(new Date())
+
+  const prevNum = [0, 1, 2, 3, 4, 5, 6]
+const onClick = (e: React.MouseEvent,month:number)=>{
+  onChange(now.subtract(month,'month'))
+  setSelected(month)
+}
 
   return (
     <PopUpNoSure close={close} show={visible} title='选择月份'>
       <Container>
-        <p>{now}</p>
-        <ol
-          onClick={(e: React.MouseEvent) => {
-            onChange(now+((e.target as Element).nodeName.toUpperCase() === 'LI' ? (e.target as Element).textContent : '') || '');
-          }}>
-          {[0, 1, 2, 3, 4, 5, 6].map((month) => <li className={cs(selected===month?'selected':'')} onClick={()=>setSelected(month)}
+        <p>{now.format('YYYY年')}</p>
+        <ol>
+          {[0, 1, 2, 3, 4, 5, 6].map((month) => <li className={cs(selected===month?'selected':'')} onClick={(e: React.MouseEvent)=>onClick(e,month)}
             key={month}>{dayjs(new Date()).subtract(month, 'month').format('MM月')}</li>)}
         </ol>
       </Container>

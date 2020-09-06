@@ -3,7 +3,6 @@ import React, {FC, useEffect, useState} from 'react';
 import TagItemChart from '../AccountsRateOfTag/TagItemChart';
 import Category from 'component/Category';
 import StatisticsChartTitle from './StatisticsChartTitle';
-
 const Wrapper = styled.section`
   background: #fff;
   padding: 18px;

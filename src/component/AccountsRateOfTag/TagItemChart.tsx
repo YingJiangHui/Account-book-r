@@ -4,7 +4,7 @@ import Icon from '../Icon';
 import theme from '../../theme';
 import cs from 'classnames';
 import {useTags} from 'hooks/useTags';
-import {taggedTemplateExpression} from '@babel/types';
+import monetaryUnit from '../../lib/monetaryUnitFormat';
 
 const Wrapper = styled.div`
   background: #ffffff;
@@ -17,6 +17,8 @@ const ProgressBar = styled.div`
     border-radius: 2.5px;
     height: 5px;
   >p{
+  transition: .5s;
+    width:0%;
     border-radius: 2.5px;
     height: 100%;
     background: ${theme.themeColor};
@@ -29,17 +31,21 @@ const Label = styled.div`
   display: flex;
   align-items: center;
   min-width: 110px;
+  
   >span{
     font-size: 14px;
   }
   >.icon{
+    transition: .3s;
     border-radius: 50%;
     fill:#fff;
-    background: ${theme.themeColor};
     width: 32px;
     height: 32px;
     padding: 5.5px;
     margin-right: 8px;
+      &.base{
+      background: ${theme.themeColor};
+      }
       &.special{
       background: ${theme.special.themeColor};
     }
@@ -66,27 +72,26 @@ const TagItemChart: FC<Props> = ({value, totalAmount, index}) => {
   const {findTag} = useTags();
   const [rate, setRate] = useState('');
   const [tag, setTag] = useState<TagItem>({} as TagItem);
-
   const tmpTag = findTag(indexTag);
 
   useEffect(() => {
     if (tmpTag) {
       setTag(tmpTag);
-      setRate(Math.round(value / totalAmount[tmpTag.category] * 100).toString() + '%');
+      setRate((value / totalAmount[tmpTag.category] * 100).toFixed(2).toString() + '%');
     }
   }, [tmpTag]);
   return (
     <Wrapper>
       <Label>
-        <Icon className={cs(tag.category === '+' ? 'special' : '')} name={tag.icon}/>
+        <Icon className={cs(tag.category === '+' ? 'special' : 'base')} name={tag.icon}/>
         <span>{tag.text}</span>
       </Label>
       <Rate>{rate}</Rate>
       <ProgressBar>
-        <p className={cs(tag.category === '+' ? 'special' : '')} style={{width: rate}}></p>
+        <p className={cs(tag.category === '+' ? 'special' : 'base')} style={{width: rate}}></p>
       </ProgressBar>
       <Amount>
-        ￥{value}
+        ￥{monetaryUnit(value)}
       </Amount>
     </Wrapper>
   );

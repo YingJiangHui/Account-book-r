@@ -91,8 +91,8 @@ const Detail: FC = memo(() => {
       <PopUpMonthBox
         show={visibleMonth}
         close={() => setVisibleMonth(false)}
-        onChange={(value: string) => {
-          setAppearMonth(value);
+        onChange={(value: dayjs.Dayjs) => {
+          setAppearMonth(value.format('YYYY年MM月'));
           setVisibleMonth(false);
         }}
       />

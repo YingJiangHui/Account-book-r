@@ -34,10 +34,10 @@ const zero = (num: number) => {
   return num === 0 ? '0.00' : num;
 };
 
-const now = dayjs(new Date()).format('YYYY年MM月');
+const now = dayjs(new Date());
 
 type Props = {
-  onChange: (value:string) => void
+  onChange: (value:dayjs.Dayjs) => void
   stream:({}:{'+':number,'-':number})=>void
   monthRecord:(record:RecordItem[])=>void
 }
@@ -46,7 +46,7 @@ const CollectAccounts: FC<Props> = ({onChange,stream,monthRecord}) => {
   const [visible, setVisible] = useState(false);
   const [month, setMonth] = useState(now);
   const {totalAmount, filterRecordUsedMonth} = useRecords();
-  const record = filterRecordUsedMonth(month);
+  const record = filterRecordUsedMonth(month.format('YYYY年MM月'));
   const outgoings = totalAmount(record, '-');
   const income = totalAmount(record, '+');
   useEffect(()=>{
@@ -56,7 +56,7 @@ const CollectAccounts: FC<Props> = ({onChange,stream,monthRecord}) => {
   return (
     <>
       <Wrapper>
-        <button onClick={() => {setVisible(true);}}>{month}</button>
+        <button onClick={() => {setVisible(true);}}>{month.format('YYYY年MM月')}</button>
         <Income>
           <p>共支出</p>
           <p>￥{zero(outgoings)}</p>
