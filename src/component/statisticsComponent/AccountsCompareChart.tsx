@@ -1,39 +1,60 @@
 import React, {FC, useState} from 'react';
 import styled from 'styled-components';
 import StatisticsChartTitle from './StatisticsChartTitle';
-import dayjs from 'dayjs';
+import dayjs, {OpUnitType} from 'dayjs';
 import theme from '../../theme';
 import EChart from '../EChart';
 
 const Wrapper = styled.div`
+  padding-top: 20px;
+  padding-bottom: 20px;
+
   background: #fff;
-  overflow: hidden;
 `;
 
 const Container = styled.div`
-  padding: 18px;
+  margin-left: 18px;
+  margin-right: 18px;
+  
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  
 `
 type Props = {
-  value: { [key: string]: number }
+  unitTime:OpUnitType
+  value: CategoryRecord
+  title:string
+  startDate:string
 }
-const AccountsCompareChart: FC<Props> = ({value}) => {
+type Params= {num:number,format:string,name:string,width:string}
+
+const DateMap:{[key:string]:Params}  = {
+  'day':{num:29,format:'YYYY年MM月DD日',name:'DD',width:'400%'},
+  'month':{num:11,format:'YYYY年MM月',name:'MM',width:'200%'}
+}
+
+const AccountsCompareChart: FC<Props> = ({value,unitTime,title,startDate}) => {
   const [category, setCategory] = useState<Category>('-');
-  const now = dayjs(new Date());
+
+  let now = startDate?dayjs(startDate):dayjs(new Date())
+
   const dateList = [];
   const amountList = [];
-  console.log(value)
-  for (let i = 29; i >=0 ; i--) {
-    const dateDay = now.subtract(i, 'day').format('YYYY年MM月DD日');
-    const dateStr = now.subtract(i, 'day').format('DD');
+  console.log(now.format('YYYY-MM'))
+  const map =  DateMap[unitTime]
+  for (let i = map.num; i >=0 ; i--) {
+    const dateDay = now.subtract(i, unitTime).format(map.format);
+    const dateStr = now.subtract(i, unitTime).format(map.name);
 
-    if (value[dateDay]) {
-      amountList.push(value[dateDay]);
+    if (value[category][dateDay]) {
+      amountList.push(value[category][dateDay]);
     } else {
       amountList.push(0);
     }
     dateList.push(dateStr);
   }
 
+
+  const themeColor = category==='+'?theme.special.themeColor:theme.themeColor;
   const ops = {
     xAxis: {
       axisLine:{
@@ -56,7 +77,7 @@ const AccountsCompareChart: FC<Props> = ({value}) => {
       trigger: 'item',
       position: 'top',
       textStyle:{
-        color:theme.themeColor
+        color:themeColor
       }
     },
 
@@ -74,10 +95,10 @@ const AccountsCompareChart: FC<Props> = ({value}) => {
       data: amountList,
       type: 'bar',
       itemStyle:{
-        opacity:0.5,
+        opacity:0.3,
       },
 
-      color:['#3eb575','#3eb575','#3eb575'],
+      color:[themeColor],
       barWidth : 10,
     }],
     grid: {
@@ -88,15 +109,14 @@ const AccountsCompareChart: FC<Props> = ({value}) => {
     }
   };
 
-
-
   return (
     <Wrapper>
       <Container>
-        <StatisticsChartTitle value={category} onChange={(value: Category) => {setCategory(value)}}>每日对比</StatisticsChartTitle>
-      </Container>
+        <StatisticsChartTitle value={category} onChange={(value: Category) => {setCategory(value)}}>{title}</StatisticsChartTitle>
 
-  <EChart option={ops}/>
+
+  <EChart option={ops} width={map.width}/>
+      </Container>
     </Wrapper>
   );
 };

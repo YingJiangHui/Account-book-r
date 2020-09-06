@@ -7,9 +7,10 @@ overflow: auto;
 
 `
 type Props = {
-  option:{}
+  option:{},
+  width:string
 }
-const EChart:FC<Props> = ({option})=>{
+const EChart:FC<Props> = ({option,width})=>{
   const onChartReadyCallback = () => {
 
   };
@@ -33,7 +34,7 @@ const EChart:FC<Props> = ({option})=>{
           theme={"theme_name"}
           onChartReady={onChartReadyCallback}
           onEvents={EventsDict}
-          style={{height: '300px', width: '300%'}}
+          style={{height: '300px', width: width}}
           opts={{}}/>
     </Wrapper>
   )

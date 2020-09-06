@@ -15,3 +15,5 @@ type RecordItem = {
   note: string
   createAt: string
 }
+
+type CategoryRecord={'+':{[key:string]:number},'-':{[key:string]:number}}

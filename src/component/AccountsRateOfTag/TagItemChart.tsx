@@ -59,10 +59,9 @@ type Props = {
   index: string
   value: number,
   totalAmount: { '+': number, '-': number },
-  category: Category
 }
 
-const TagItemChart: FC<Props> = ({value, totalAmount, index, category}) => {
+const TagItemChart: FC<Props> = ({value, totalAmount, index}) => {
   const indexTag = parseInt(index);
   const {findTag} = useTags();
   const [rate, setRate] = useState('');
@@ -76,8 +75,6 @@ const TagItemChart: FC<Props> = ({value, totalAmount, index, category}) => {
       setRate(Math.round(value / totalAmount[tmpTag.category] * 100).toString() + '%');
     }
   }, [tmpTag]);
-  if (tmpTag?.category !== category)
-    return (<></>);
   return (
     <Wrapper>
       <Label>

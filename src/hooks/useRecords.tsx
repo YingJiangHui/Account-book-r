@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import clone from '../lib/clone';
 import generator from 'lib/createId';
 import RecordItem from '../views/RecordItem';
+
 const {createId} = generator('recordMaxId');
 
 const Records: RecordItem[] = JSON.parse(window.localStorage.getItem('record') || '[]');
@@ -52,31 +53,34 @@ const useRecords = () => {
       records.reduce((sum, record) => category === record.category ? sum + record.amount : sum, 0)
       : records.reduce((sum, record) => sum + record.amount, 0);
 
-  const amountByTag = (record: RecordItem[],type:string):{ [key: string]: number } => {
+  const amountByTag = (record: RecordItem[], type: string):CategoryRecord=> {
     const hashMap: { [key: string]: string } = {
-      'day':'YYYY年MM月DD日',
-      'month':'YYYY年MM月',
-      'year':'YYYY年',
-    }
-    const obj: { [key:string]: number } = {} ;
-    let key:string;
-      for (let i = 0; i < record.length; i++) {
-        if(type === 'tag'){
-          const {tagIndex} = record[i]
-          key = tagIndex.toString()
-        }else if(Object.keys(hashMap).indexOf(type)>=0){
-          const {createAt} = record[i]
-          key = dayjs(createAt).format(hashMap[type])
-        }else{
-          return {} ;
-        }
-          obj[key]
-          ?
-          obj[key] += record[i].amount
-          :
-          obj[key] = record[i].amount;
+      'day': 'YYYY年MM月DD日',
+      'month': 'YYYY年MM月',
+      'year': 'YYYY年',
+    };
+    const obj:CategoryRecord= {
+      '+':{},
+      '-':{}
+    };
+    let key: string;
+    for (let i = 0; i < record.length; i++) {
+      if (type === 'tag') {
+        const {tagIndex} = record[i];
+        key = tagIndex.toString();
+      } else if (Object.keys(hashMap).indexOf(type) >= 0) {
+        const {createAt} = record[i];
+        key = dayjs(createAt).format(hashMap[type]);
+      } else {
+        return obj
       }
-    return obj
+      obj[record[i].category][key]
+        ?
+        obj[record[i].category][key] += record[i].amount
+        :
+        obj[record[i].category][key] = record[i].amount;
+    }
+    return obj;
   };
   const sortRecord = (): RecordItem[] => {
     return (clone(recordList) as RecordItem[]).sort((a, b) => a.createAt > b.createAt ? -1 : 1);
