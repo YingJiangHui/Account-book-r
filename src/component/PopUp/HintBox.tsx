@@ -1,8 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {CSSTransition} from 'react-transition-group';
 import 'style/animation.scss';
-
+import Tip from 'component/PopUp/Tip';
 const Wrapper = styled.div`
 background: rgba(0,0,0,0.4);
 color: #fff;
@@ -17,20 +16,16 @@ transform: translate(-50%,-50%);
 
 type Props = {
   text: string,
-  show: boolean
+  show: boolean,
+  onChange:(value:boolean)=>void
 }
-const HintBox: FC<Props> = ({show, text}) => {
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    setVisible(show);
-    setTimeout(()=>setVisible(false),3000)
-  }, [show]);
+const HintBox: FC<Props> = ({show, text,onChange}) => {
   return (
-    <CSSTransition in={visible}  classNames={'fade'} timeout={200} unmountOnExit={true} className={'fade'}>
-      <Wrapper>
-        <span>{text}</span>
-      </Wrapper>
-    </CSSTransition>
+      <Tip onChange={(value)=>onChange(value)} inProp={show} >
+        <Wrapper>
+          <span>{text}</span>
+        </Wrapper>
+      </Tip>
 
   );
 };

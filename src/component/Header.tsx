@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import theme from 'theme';
 
 const HeaderStyle = styled.header`
-  line-height: 48px;
+  padding: 18px;
   display: flex;
   justify-content: center;
   background: ${theme.themeColor};

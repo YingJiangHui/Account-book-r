@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import {CSSTransition} from 'react-transition-group';
 import React, {FC, memo, useEffect, useState} from 'react';
 import Icon from '../Icon';
 import 'style/animation.scss'
-
+import Tip from 'component/PopUp/Tip'
 const Wrapper = styled.div`
   position: fixed;
   top: 50%;
@@ -27,22 +26,16 @@ const Wrapper = styled.div`
 type Props = {
   inProp: boolean
   value: string
+  onChange:(value:boolean)=>void
 }
-const Tooltip: FC<Props> =memo( ({value, inProp}) => {
-  const [visible,setVisible] = useState(false)
-  useEffect(()=>{
-    setVisible(inProp)
-    setTimeout(()=>setVisible(false),3000)
-  },[inProp])
+const Tooltip: FC<Props> =memo( ({value,onChange, inProp}) => {
   return (
-    <div>
-    <CSSTransition unmountOnExit={true} classNames={'fade'}  in={visible} timeout={200}>
-        <Wrapper >
+      <Tip onChange={(value)=>onChange(value)} inProp={inProp} >
+        <Wrapper>
           <Icon name='true2'/>
           {value}
         </Wrapper>
-    </CSSTransition>
-    </div>
+      </Tip>
   );
 });
 export default Tooltip;

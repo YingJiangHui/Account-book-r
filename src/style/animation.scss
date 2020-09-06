@@ -45,3 +45,20 @@
   transition: opacity 500ms ease-in;
 }
 
+
+.xxx-enter{
+  transform: translateX(-100%);
+}
+.xxx-exit{
+  transform: translateX(0);
+}
+.xxx-enter-active{
+  transform: translateX(0);
+}
+.xxx-exit-active{
+  transform: translateX(100%);
+}
+.xxx-enter-active,
+.xxx-exit-active{
+  transition: transform 500ms;
+}

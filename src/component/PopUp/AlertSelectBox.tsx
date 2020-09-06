@@ -41,7 +41,6 @@ type Props = {
 }
 const AlertSelectBox: FC<Props> = memo(({value, children,ensure,cancel}) => {
   return (
-    <>
       <Cover>
         <Wrapper>
           <View>{value}</View>
@@ -51,7 +50,6 @@ const AlertSelectBox: FC<Props> = memo(({value, children,ensure,cancel}) => {
           </Control>
         </Wrapper>
       </Cover>
-    </>
   );
 });
 

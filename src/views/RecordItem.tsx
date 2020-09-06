@@ -1,6 +1,6 @@
 import React, {FC, memo, useEffect, useState} from 'react';
 import Layout from '../component/Layout';
-import {useParams,  useHistory} from "react-router-dom";
+import {useParams, useHistory} from "react-router-dom";
 import useRecords from 'hooks/useRecords';
 import Icon from '../component/Icon';
 import {useTags} from '../hooks/useTags';
@@ -29,6 +29,7 @@ const RecordItem: FC = memo(() => {
   const [visibleTip, setVisibleTip] = useState(false);
   const [visibleAccounts, setVisibleAccounts] = useState(false);
   const history = useHistory();
+  const [tipText, setTipText] = useState('');
   return (
     <>
       <Layout>
@@ -51,18 +52,27 @@ const RecordItem: FC = memo(() => {
           </Control>
         </Wrapper>
       </Layout>
-      <Tooltip value='改一笔' inProp={visibleTip}/>
-      {visibleAlert ? <AlertSelectBox value='删除后无法恢复，是否删除' ensure={() => {
-        history.goBack();
-        removeRecord(id);
-        setVisibleAlert(false);
-      }}
-                                      cancel={() => {setVisibleAlert(false);}}/> : ''}
+      <Tooltip onChange={(value: boolean) => setVisibleTip(value)} value={tipText} inProp={visibleTip}/>
+      {visibleAlert
+        ?
+        <AlertSelectBox
+          value='删除后无法恢复，是否删除'
+          ensure={() => {
+            setTipText('删一笔');
+            setVisibleTip(true);
+            removeRecord(id);
+            setVisibleAlert(false);
+            setTimeout(()=>{
+              history.goBack();
+            },500)
+          }} cancel={() => {setVisibleAlert(false);}}/>
+        : ''}
       <KeepAccounts
         id={id}
         defaultRecord={record}
         ensure={() => {
           fetchRecord();
+          setTipText('改一笔');
           setVisibleTip(true);
         }}
         isVisible={(value: boolean) => {setVisibleAccounts(value);}}

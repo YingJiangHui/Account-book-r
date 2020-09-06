@@ -63,7 +63,7 @@ const Detail: FC = memo(() => {
 
   return (
     <>
-      <Tooltip value='记一笔' inProp={visibleTip}/>
+      <Tooltip onChange={(value:boolean)=>setVisibleTip(value)} value='记一笔' inProp={visibleTip}/>
       <Layout>
         <Header>
           <button onClick={() => {setVisibleTag(true);}}>{tagName}</button>
