@@ -1,4 +1,4 @@
-import {FC, memo, useEffect, useState} from 'react';
+import {FC, memo, useEffect, useRef, useState} from 'react';
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
@@ -33,33 +33,36 @@ type Props = {
 }
 const PopUpInput: FC<Props> = memo((props) => {
   const {close} = props;
-  const [output, setOutput] = React.useState(props.value);
-  const [visible, setVisible] = useState(false);
+  const [output, setOutput] = React.useState('');
+  const inputEl = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    setVisible(props.show);
-  }, [props.show]);
-
-  const refInput = React.useRef<HTMLInputElement>(null);
-
+  useEffect(()=>{
+    setOutput(props.value)
+  },[props.value])
   const onEnsure = () => {
     if (output.length === 0) return;
-    const value = refInput.current?.value || '';
+    const value = inputEl.current?.value || '';
     props.onChange(value);
     close()
   };
-  React.useEffect(() => {
-    refInput.current?.focus();
-  },[]);
+  useEffect(()=>{
+    if(props.show)
+      setTimeout(()=>{
+        inputEl.current?.focus();
+      })
+    else
+      inputEl.current?.blur();
+  },[props.show])
   const onChange = (e: React.ChangeEvent) => {
     if (output.length < props.maxLen)
       setOutput((e.target as HTMLInputElement).value);
   };
+
   return (
     <PopUpHasSure close={close} title={props.title} show={props.show} onEnsure={onEnsure}
                   disable={output.length === 0 ? true : false}>
       <Container>
-        <input ref={refInput} onChange={onChange} value={output} type="text" placeholder={props.placeholder}/>
+        <input ref={inputEl} onChange={onChange} value={output} type="text" placeholder={props.placeholder}/>
         <p>{output.length}/{props.maxLen}</p>
       </Container>
     </PopUpHasSure>

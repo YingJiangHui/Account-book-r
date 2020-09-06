@@ -13,10 +13,11 @@ const Wrapper = styled.div`
 
 type Props={
   className?:string
+  onChange?:()=>void
 }
-const Cover:FC<Props> =({className,children})=>{
+const Cover:FC<Props> =({className,children,onChange})=>{
   return(
-    <Wrapper className={className}>
+    <Wrapper className={className} onClick={onChange}>
       {children}
     </Wrapper>
   )

@@ -3,7 +3,7 @@ import React, {FC, memo} from 'react';
 import Header from 'component/Header'
 import Nav from 'component/Nav'
 
-const LayoutStyle = styled.div`
+const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -13,14 +13,17 @@ const Main = styled.main`
   overflow: auto;
 `;
 const Layout:FC =memo((props)=>{
+  console.log(window.screen.height);
+
   return(
-    <LayoutStyle>
+
+    <Wrapper>
       <Header />
       <Main>
           {props.children}
       </Main>
       <Nav />
-    </LayoutStyle>
+    </Wrapper>
   )
 })
 

@@ -24,17 +24,18 @@ type Props = {
 
 const PopUp: FC<Props> = ({show, children, style, className}) => {
   const [visible, setVisible] = useState(false);
-
+  const [_visible,_setVisible] = useState();
   useEffect(() => {
     setVisible(show);
+    _setVisible(true);
   }, [show]);
 
 
   return (
 
-    <CSSTransition classNames='popUp' className='popUp' timeout={300} unmountOnExit={true} in={visible}>
+    <CSSTransition classNames='fade' className='popUp' timeout={300} unmountOnExit={true} in={visible&&_visible}>
       <Wrapper>
-        <Cover />
+        <Cover onChange={()=>{_setVisible(false)}}/>
           <Container className={cn(className)} style={style}>
 
             {children}

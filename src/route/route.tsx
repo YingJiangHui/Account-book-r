@@ -8,6 +8,8 @@ const route = [
   {path: '/detail/record/:id', exact: true,component:RecordItem},
   {path: '/statistics', exact: true,component:Statistics},
   {path: '/setting', exact: true,component:Setting},
+  {path: '/', exact: true,component:Detail},
+
 ];
 
 export default route;

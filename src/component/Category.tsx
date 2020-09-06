@@ -3,8 +3,7 @@ import React, {FC, useEffect, useState} from 'react';
 import theme from '../theme';
 import cs from 'classnames'
 const Wrapper = styled.div`
-    >ol{
-    >li{
+    >button{
       background:#f1f1f1;
       color: #a9a9a9;
       font-size: 14px;
@@ -27,7 +26,6 @@ const Wrapper = styled.div`
         box-shadow: 0 0 2px ${theme.special.themeColor};
       }
     }
-  }
 `;
 
 type Props = {
@@ -44,11 +42,9 @@ const Category: FC<Props> = ({value, onChange}) => {
   },[value])
   return (
     <Wrapper>
-      <ol>
         {categoryList.map(category =>
-          <li className={cs(category===selected?styleMap[selected]:'')} key={category} onClick={()=>{onChange(category);}}>{categoryMap[category]}</li>
+          <button className={cs(category===selected?styleMap[selected]:'')} key={category} onClick={()=>{onChange(category);}}>{categoryMap[category]}</button>
         )}
-      </ol>
     </Wrapper>
   );
 };

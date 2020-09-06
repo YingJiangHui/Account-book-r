@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import 'style/animation.scss';
 import Tip from 'component/PopUp/Tip';
 const Wrapper = styled.div`
-background: rgba(0,0,0,0.4);
+background: rgba(0,0,0,0.66);
 color: #fff;
 padding: 6px 12px;
 border-radius: 5px;

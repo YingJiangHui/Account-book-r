@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, {FC, memo, useEffect, useState} from 'react';
+import React, {FC, memo} from 'react';
 import Icon from '../Icon';
 import 'style/animation.scss'
 import Tip from 'component/PopUp/Tip'

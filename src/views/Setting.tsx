@@ -5,7 +5,7 @@ function Setting() {
   const [state, setState] = useState(false);
   return (
     <Layout>
-
+      <input type="text"/>
     </Layout>
   );
 }

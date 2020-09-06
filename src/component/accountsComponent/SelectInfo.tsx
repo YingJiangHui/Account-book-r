@@ -4,6 +4,7 @@ import React from 'react';
 import theme from 'theme';
 import dayjs from 'dayjs';
 import Category from 'component/Category'
+import HintBox from '../PopUp/HintBox';
 const Wrapper = styled.section`
   display: flex;
   justify-content: space-between;
@@ -44,25 +45,40 @@ type Props = {
   onChangeDate: (value: string) => void
   defaultDate?: string
 }
-const nowDate = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
+const nowDate = dayjs(new Date());
 
 const SelectInfo: FC<Props> = memo((props) => {
   const {onChangeCategory,defaultDate} = props
-  const [date, setDate] = useState(nowDate);
+  const [date, setDate] = useState(nowDate.format('YYYY-MM-DDTHH:mm'));
   const [category,setCatecory] = useState('-')
+  const [hintVisible,setHintVisible] = useState(false)
   useEffect(()=>{
-    setCatecory(props.category)
-  },[props.category])
+    if(defaultDate)
+    setDate(dayjs(defaultDate).format('YYYY-MM-DDTHH:mm'))
+  },[defaultDate])
+
   useEffect(() => {
     props.onChangeDate(date);
   }, [date]);
   return (
+    <>
     <Wrapper>
       <Category value={category} onChange={(value)=>onChangeCategory(value)}/>
       <input type="dateTime-local"
-             value={defaultDate ? dayjs(defaultDate).format('YYYY-MM-DDTHH:mm') : dayjs(date).format('YYYY-MM-DDTHH:mm')}
-             onChange={(e) => {setDate(e.target.value + dayjs(new Date()).format(':ss'));}}/>
+             value={date}
+             onChange={(e) => {
+               const now = new Date()
+               const date = e.target.value + dayjs(now).format(':ss')
+               if(dayjs(date).format('YYYY-MM-DDT-HH:mm:ss')>dayjs(now).format('YYYY-MM-DDT-HH:mm:ss')){
+                 setHintVisible(true)
+                 setDate((d)=>d)
+               }else{
+                 setDate(e.target.value + dayjs(new Date()).format(':ss'));
+               }
+             }}/>
     </Wrapper>
+      <HintBox show={hintVisible} onChange={(value:boolean)=>{setHintVisible(false)}} text={'不能设置时间为将来'}/>
+      </>
   );
 });
 
