@@ -6,7 +6,7 @@ import StatisticsChartTitle from './StatisticsChartTitle';
 import NotData from '../NotData';
 const Wrapper = styled.section`
   background: #fff;
-  padding: 18px;
+  padding: 22px 18px;
   margin-top: 6px;
 
 `;
@@ -45,7 +45,7 @@ const AccountsRateOfTag: FC<Props> = ({value, totalAmount}) => {
       <Container>
         <StatisticsChartTitle onChange={(value: Category) => {setCategory(value);}}
                               value={category}>收支构成</StatisticsChartTitle>
-        {recordList.length===0?<NotData text={'暂无数据'}/>:recordList}
+        {recordList.length===0?<NotData text={category==='-'?'暂无支出数据...':'暂无收入数据...'}/>:recordList}
       </Container>
 
     </Wrapper>

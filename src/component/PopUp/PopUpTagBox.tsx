@@ -6,13 +6,12 @@ import theme from '../../theme';
 import cn from 'classnames';
 
 const Container = styled.main`
-  padding: 16px;
+  padding:  16px;
   display: flex;
   flex-direction: column;
    >p{
    margin-top: 10px;
    margin-bottom: 10px;
-
    color: ${theme.tingeFontColor};
    font-size: 14px;
    }

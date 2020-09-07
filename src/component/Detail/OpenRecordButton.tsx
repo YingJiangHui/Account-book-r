@@ -4,7 +4,7 @@ import Icon from '../Icon';
 import theme from 'theme';
 
 const RecordButton = styled.div`
-   box-shadow: 0 0 4px rgba(0,0,0,0.2);
+   box-shadow: 0 0 4px rgba(0,0,0,0.33);
    position: fixed;
    right: 8%;
    bottom: 20%;
@@ -16,8 +16,8 @@ const RecordButton = styled.div`
    align-items: center;
   .icon{
     fill:${theme.themeColor};
-      width: 25px;
-      height: 25px;
+      width: 34px;
+      height: 34px;
 
   }
 `;

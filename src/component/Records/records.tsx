@@ -40,24 +40,30 @@ const Main = styled.main`
      justify-content: space-between;
      align-items: center;
     >ol{
-    
           width: 100%;
-      >a>li{
-      position: relative;
-      left: 0;
-       //TODO
-      display: flex;
-      align-items: center;        
+      >a{
+      &.info{
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+      }      
       &:last-child{
         .info{
           border: none;
         }
-      }    
+      }
+      >li{
+        position: relative;
+        left: 0;
+         //TODO
+        display: flex;
+        align-items: center;  
+      
+        }
       }
     }
 `;
 const Amount = styled.div`
-
+  min-width: 68px;
+  text-align: end;
 `;
 const Do = styled.ol`
 display: flex;
@@ -99,4 +105,4 @@ const IconWrapper = styled.div`
         }
 `;
 
-export {Info,IconWrapper,Do,Amount,Main,Wrapper}
+export {Info, IconWrapper, Do, Amount, Main, Wrapper};

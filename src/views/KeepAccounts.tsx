@@ -38,7 +38,6 @@ const KeepAccounts: FC<Props> =memo( (props) => {
 
   const {addRecord,editRecord} = useRecords();
   const {fetchTags,tags, updateTags, removeTag, editTag, findTag} = useTags();
-  console.log(tags)
   const [visibleRemark, setVisibleRemark] = useState(false);
   const [visibleAddTag, setVisibleAddTag] = useState(false);
   const [updateTagId, setUpdateTagId] = useState(-1);

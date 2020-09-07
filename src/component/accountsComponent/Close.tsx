@@ -7,8 +7,8 @@ const Wrapper = styled.button`
   background: #fff;
   border: none;
   .icon{
-  width: 17px;
-  height: 17px;
+  width: 24px;
+  height: 24px;
   fill:${theme.tingeFontColor};
   }
 `;

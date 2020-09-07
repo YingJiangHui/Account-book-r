@@ -83,7 +83,9 @@ const TagItemChart: FC<Props> = ({value, totalAmount, index}) => {
   useEffect(() => {
     if (tmpTag) {
       setTag(tmpTag);
-      setRate((value / totalAmount[tmpTag.category] * 100).toFixed(2).toString() + '%');
+      let rate = (value / totalAmount[tmpTag.category] * 100).toFixed(2).toString() + '%'
+
+      setRate(rate);
     }
   }, [tmpTag]);
   return (

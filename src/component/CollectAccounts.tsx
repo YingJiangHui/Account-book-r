@@ -28,6 +28,7 @@ const Income = styled.div`
   align-items: center;
   color:${theme.themeColor};
   >p:last-child{
+    min-width: 98px;
     margin-top: 16px;
     font-size: 36px;
   }
@@ -62,7 +63,7 @@ const CollectAccounts: FC<Props> = ({onChange,stream,monthRecord}) => {
         <button onClick={() => {setVisible(true);}}>{month.format('YYYY年MM月')}</button>
         <Income>
           <p>共支出</p>
-          <p>￥{zero(outgoings)}</p>
+          <p>￥{outgoings!==0?zero(outgoings):''}</p>
         </Income>
         <p className={'outgoings'}>共收入￥{zero(income)}</p>
       </Wrapper>
