@@ -102,7 +102,7 @@ const TagItemChart: FC<Props> = ({value, totalAmount, index}) => {
       </ProgressBar>
       </Grow>
       <Amount>
-        {monetaryUnit(value)}
+        {monetaryUnit(value,true)}
       </Amount>
     </Wrapper>
   );

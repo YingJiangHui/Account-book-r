@@ -6,6 +6,7 @@ import cn from 'classnames';
 import useRecords from 'hooks/useRecords';
 import {Wrapper, Amount, Do, IconWrapper, Info, Main} from 'component/Records/records';
 import {NavLink} from 'react-router-dom';
+import monetaryUnit from '../../lib/monetaryUnitFormat';
 
 type Props = {
   records: RecordItem[]
@@ -29,8 +30,8 @@ const Records: FC<Props> = (props) => {
       <header>
         <div className="date">{dayjs(records[0].createAt).format('MM月DD日')} {recently(records[0].createAt)}</div>
         <ol>
-          <li><span>支</span> {totalAmount(records, '-')}</li>
-          <li><span>收</span> {totalAmount(records, '+')}</li>
+          <li><span>支</span> {monetaryUnit(totalAmount(records, '-'),true)}</li>
+          <li><span>收</span> {monetaryUnit(totalAmount(records, '+'),true)}</li>
         </ol>
       </header>
       <Main>
@@ -49,7 +50,7 @@ const Records: FC<Props> = (props) => {
                     {dayjs(record.createAt).format('HH:mm')} {record.note ? '| ' + record.note : ''}
                   </li>
                 </Do>
-                <Amount>{(record.category === "+" ? '+' : '-') + record.amount}</Amount>
+                <Amount>{(record.category === "+" ? '+' : '-') + monetaryUnit(record.amount,true)}</Amount>
               </Info>
 
             </li>

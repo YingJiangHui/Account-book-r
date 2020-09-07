@@ -12,11 +12,10 @@ import PopUpTagBox from '../component/PopUp/PopUpTagBox';
 import {useTags} from '../hooks/useTags';
 import 'style/animation.scss';
 import NotData from '../component/common/NotData';
-
+import monetaryUnit from 'lib/monetaryUnitFormat'
 const nowMonth = dayjs(new Date()).format('YYYY年MM月');
 const Detail: FC = memo(() => {
   const {tags, findId} = useTags();
-
   const [visibleAccounts, setVisibleAccounts] = useState<boolean>(false);
   const [visibleMonth, setVisibleMonth] = useState(false);
   const [visibleTip, setVisibleTip] = useState(false);
@@ -70,8 +69,8 @@ const Detail: FC = memo(() => {
           <button onClick={() => {setVisibleTag(true);}}>{tagName}</button>
           <ol>
             <li onClick={() => {setVisibleMonth(true);}}>{appearMonth}</li>
-            <li>总支出￥{totalAmount(record, '-')}</li>
-            <li>总收入￥{totalAmount(record, '+')}</li>
+            <li>总支出￥{monetaryUnit(totalAmount(record, '-'),true)}</li>
+            <li>总收入￥{monetaryUnit(totalAmount(record, '+'),true)}</li>
           </ol>
         </Header>
         <Wrapper>

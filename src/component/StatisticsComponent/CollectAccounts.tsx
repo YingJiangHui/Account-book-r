@@ -4,7 +4,7 @@ import theme from '../../theme';
 import PopUpMonthBox from 'component/PopUp/PopUpMonthBox';
 import useRecords from 'hooks/useRecords';
 import dayjs from 'dayjs';
-
+import monetaryUnit from 'lib/monetaryUnitFormat'
 const Wrapper = styled.section`
   min-height: 220px;
   background: #fff;
@@ -63,9 +63,9 @@ const CollectAccounts: FC<Props> = ({onChange,stream,monthRecord}) => {
         <button onClick={() => {setVisible(true);}}>{month.format('YYYY年MM月')}</button>
         <Income>
           <p>共支出</p>
-          <p>￥{zero(outgoings)}</p>
+          <p>￥{monetaryUnit(outgoings,false)}</p>
         </Income>
-        <p className={'outgoings'}>共收入￥{zero(income)}</p>
+        <p className={'outgoings'}>共收入￥{monetaryUnit(income,false)}</p>
       </Wrapper>
       <PopUpMonthBox show={visible} close={() => setVisible(false)} onChange={(value) => {
         setVisible(false);
