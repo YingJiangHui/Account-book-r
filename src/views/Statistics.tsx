@@ -1,17 +1,18 @@
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 import Layout from '../component/common/Layout';
 import CollectAccounts from '../component/StatisticsComponent/CollectAccounts';
 import AccountsRateOfTag from '../component/StatisticsComponent/AccountsRateOfTag';
 import useRecords from 'hooks/useRecords';
 import AccountsCompareChart from '../component/StatisticsComponent/AccountsCompareChart';
 import  dayjs from 'dayjs';
-
 const now = dayjs(new Date())
 
-function Statistics() {
+
+
+const Statistics = memo(()=> {
+
   const [currentDate, setCurrentDate] = useState<dayjs.Dayjs>(now);
   const {filterRecordUsedTag,amountByTag,recordList} = useRecords();
-
   const [record, setRecord] = useState<RecordItem[]>([]);
   const [amount,setAmount] = useState<{'+':number,'-':number}>({'+':0,'-':0})
 
@@ -27,6 +28,6 @@ function Statistics() {
 
     </Layout>
   );
-}
+})
 
 export default Statistics;

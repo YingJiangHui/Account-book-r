@@ -3,6 +3,7 @@ import React, {FC, useEffect, useState} from 'react';
 import theme from '../../theme';
 import cs from 'classnames'
 const Wrapper = styled.div`
+    min-width: 128px;
     >button{
       background:#f1f1f1;
       color: #a9a9a9;

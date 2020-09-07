@@ -62,6 +62,7 @@ const Amount = styled.div`
   width: 82px;
 `;
 const Rate = styled.span`
+  width: 48px;
   margin-right: 10px;
   font-size: 14px;
   color: ${theme.tingeFontColor};
@@ -101,7 +102,7 @@ const TagItemChart: FC<Props> = ({value, totalAmount, index}) => {
       </ProgressBar>
       </Grow>
       <Amount>
-        ￥{monetaryUnit(value)}
+        {monetaryUnit(value)}
       </Amount>
     </Wrapper>
   );

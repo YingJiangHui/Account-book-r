@@ -9,23 +9,23 @@ import SelectInfo from 'component/KeepAccounts/components/SelectInfo';
 import OpenNotePanel from 'component/KeepAccounts/components/OpenNotePanel';
 import {useTags} from 'hooks/useTags';
 import useRecords from 'hooks/useRecords';
-import PopUp from 'component/PopUp/popUpBoxComponent/popUpRootComponent/PopUp'
+import PopUp from 'component/PopUp/popUpBoxComponent/popUpRootComponent/PopUp';
 import styled from 'styled-components';
 
 const Options = styled.div`
-  padding: 16px;
-  padding-bottom:0;
+  padding: 16px 16px 0 16px;
 `;
 
 type Props = {
-  id?:number
-  defaultRecord?:RecordItem
-  isVisible:(value:boolean)=>void
+  id?: number
+  defaultRecord?: RecordItem
+  isVisible: (value: boolean) => void
   ensure: () => void
-  show:boolean
+  show: boolean
 }
+
 let recordData: RecordItem = {
-  id:0,
+  id: 0,
   category: '-',
   tagIndex: 1,
   amount: 0,
@@ -33,22 +33,19 @@ let recordData: RecordItem = {
   createAt: ''
 };
 
-const KeepAccounts: FC<Props> =memo( (props) => {
-  const {show,ensure,isVisible,defaultRecord,id} = props
-
-  const {addRecord,editRecord} = useRecords();
-  const {fetchTags,tags, updateTags, removeTag, editTag, findTag} = useTags();
+const KeepAccounts: FC<Props> = memo((props) => {
+  const {show, ensure, isVisible, defaultRecord, id} = props;
+  const {addRecord, editRecord} = useRecords();
+  const {fetchTags, tags, updateTags, removeTag, editTag, findTag} = useTags();
   const [visibleRemark, setVisibleRemark] = useState(false);
   const [visibleAddTag, setVisibleAddTag] = useState(false);
   const [updateTagId, setUpdateTagId] = useState(-1);
-
   const [record, setRecord] = useState<RecordItem>(recordData);
-
   const [tagList, setTagList] = useState<TagItem[]>([]);
 
   useEffect(() => {
     setTagList(fetchTags(record.category));
-  }, [record.category, show,tags]);
+  }, [record.category, show, tags]);
 
   const [output, setOutput] = useState<string>('');
 
@@ -59,28 +56,28 @@ const KeepAccounts: FC<Props> =memo( (props) => {
     });
   }, [record]);
   const onSubmit = () => {
-    if(id)
-      editRecord(record,id)
+    if (id)
+      editRecord(record, id);
     else
       addRecord(record);
     setOutput('clear');
-    isVisible(false)
+    isVisible(false);
     ensure();
   };
-  const [visibleThis,setVisibleThis] = useState(false)
-  useEffect(()=>{
-    setVisibleThis(show)
-  },[show,defaultRecord])
-  useEffect(()=>{
-    if(defaultRecord)
-      setRecord(defaultRecord)
-  },[defaultRecord])
+  const [visibleThis, setVisibleThis] = useState(false);
+  useEffect(() => {
+    setVisibleThis(show);
+  }, [show, defaultRecord]);
+  useEffect(() => {
+    if (defaultRecord)
+      setRecord(defaultRecord);
+  }, [defaultRecord]);
 
   return (
-<>
-      <PopUp show={visibleThis} >
+    <>
+      <PopUp show={visibleThis}>
         <Options>
-          <Close onClick={()=>isVisible(false)}/>
+          <Close onClick={() => isVisible(false)}/>
           <SelectInfo
             category={record.category}
             defaultDate={record.createAt}
@@ -159,7 +156,7 @@ const KeepAccounts: FC<Props> =memo( (props) => {
         }}
         value={findTag(updateTagId)?.text || ""}
       />
-      </>
+    </>
   );
 });
 export default KeepAccounts;

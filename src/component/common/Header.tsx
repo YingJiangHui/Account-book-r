@@ -5,9 +5,10 @@ import Icon from './Icon';
 import {useHistory} from 'react-router';
 
 const HeaderStyle = styled.header`
-  padding: 18px;
+  min-height: 48px;
   display: flex;
   justify-content: center;
+  align-items: center;
   background: ${theme.themeColor};
   color: ${theme.defaultFontColor};
   font-weight: 200;
