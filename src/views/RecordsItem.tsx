@@ -10,7 +10,8 @@ import Tooltip from 'component/PopUp/Tooltip';
 import {Amount, Control, Info, TagIcon, View, Wrapper} from '../component/ComponentRecordItem/style';
 import cn from 'classnames';
 import AlertSelectBox from '../component/PopUp/AlertSelectBox';
-const RecordItem: FC = memo(() => {
+
+const RecordsItem: FC = memo(() => {
   const {findRecord, fetchRecord, removeRecord} = useRecords();
   const {findTag} = useTags();
   let {id} = useParams();
@@ -81,4 +82,4 @@ const RecordItem: FC = memo(() => {
   );
 });
 
-export default RecordItem;
+export default RecordsItem;

@@ -3,14 +3,24 @@ import useUpdate from './useUpdate';
 import dayjs from 'dayjs';
 import clone from '../lib/clone';
 import generator from 'lib/createId';
-import RecordItem from '../views/RecordItem';
 
 const {createId} = generator('recordMaxId');
 
-const Records: RecordItem[] = JSON.parse(window.localStorage.getItem('record') || '[]');
-const useRecords = () => {
+let records: RecordItem[] = JSON.parse(window.localStorage.getItem('record') || '[]');
+if(records.length===0){
+  const recordData:RecordItem[] = [
+    {id:createId(), tagIndex:3, category:'-', createAt:'2020-08-15T07:30:00', note:'', amount:100},
+    {id:createId(), tagIndex:3, category:'-', createAt:'2020-08-16T07:30:00', note:'', amount:500},
+    {id:createId(), tagIndex:3, category:'-', createAt:'2020-08-16T07:30:00', note:'', amount:10000},
+    {id:createId(), tagIndex:3, category:'-', createAt:'2020-08-18T07:30:00', note:'', amount:100},
+    {id:createId(), tagIndex:3, category:'-', createAt:'2020-08-20T07:30:00', note:'', amount:200},
+    {id:createId(), tagIndex:3, category:'-', createAt:'2020-08-21T07:30:00', note:'', amount:200},
+    ]
+  records=recordData
+}
 
-  const [recordList, setRecordList] = useState<RecordItem[]>([]);
+const useRecords = () => {
+  const [recordList, setRecordList] = useState<RecordItem[]>(records);
   const editRecord = (record: RecordItem, id: number) => {
     removeRecord(id);
     addRecord(record, id);
@@ -35,7 +45,7 @@ const useRecords = () => {
 
   useEffect(() => {
     setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]'));
-  }, [Records]);
+  }, [records]);
 
   const filterRecordUsedMonth = (month: string) => {
     return recordList.filter((record) => dayjs(record.createAt).format('YYYY年MM月') === month);
@@ -88,7 +98,7 @@ const useRecords = () => {
   };
 
   const fetchRecord = () => {
-    setTimeout(() => setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]')));
+    // setTimeout(() => setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]')));
   };
 
   return {

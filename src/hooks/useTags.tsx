@@ -11,12 +11,26 @@ if (tagList.length === 0) {
     {id: createId(), icon: 'fun', text: '娱乐', category: '-'},
     {id: createId(), icon: 'learn', text: '学习', category: '-'},
     {id: createId(), icon: 'medical', text: '医疗', category: '-'},
-    {id: createId(), icon: 'shopping', text: '购物', category: '-'},
+    {id: createId(), icon: 'shopping2', text: '购物', category: '-'},
     {id: createId(), icon: 'sport', text: '运动健身', category: '-'},
     {id: createId(), icon: 'salary', text: '薪水', category: '-'},
+    {id: createId(), icon: 'house', text: '住房', category: '-'},
+    {id: createId(), icon: 'live', text: '生活缴费', category: '-'},
     {id: createId(), icon: 'transfer', text: '转账', category: '-'},
+    {id: createId(), icon: 'moneyManagement', text: '理财', category: '-'},
+    {id: createId(), icon: 'pet', text:'宠物', category: '-'},
+    {id: createId(), icon: 'rests', text: '其他', category: '-'},
+    {id: createId(), icon: 'travel', text: '旅行', category: '-'},
+
     {id: createId(), icon: 'salary', text: '薪水', category: '+'},
     {id: createId(), icon: 'transfer', text: '转账', category: '+'},
+    {id: createId(), icon: 'moneyManagement', text: '理财', category: '+'},
+    {id: createId(), icon: 'redPacket', text: '红包', category: '+'},
+    {id: createId(), icon: 'rests', text: '其他', category: '+'},
+    {id: createId(), icon: 'bonus', text: '奖金', category: '+'},
+    {id: createId(), icon: 'refund', text: '退款', category: '+'},
+
+
   ];
 }
 const useTags = () => {
