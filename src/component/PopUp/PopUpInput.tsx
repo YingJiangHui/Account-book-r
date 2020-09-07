@@ -40,6 +40,7 @@ const PopUpInput: FC<Props> = memo((props) => {
     setOutput(props.value)
   },[props.value])
   const onEnsure = () => {
+    console.log(inputEl.current?.value)
     if (output.length === 0) return;
     const value = inputEl.current?.value || '';
     props.onChange(value);
@@ -54,13 +55,14 @@ const PopUpInput: FC<Props> = memo((props) => {
       inputEl.current?.blur();
   },[props.show])
   const onChange = (e: React.ChangeEvent) => {
-    if (output.length < props.maxLen)
-      setOutput((e.target as HTMLInputElement).value);
+    const value = (e.target as HTMLInputElement).value
+    if (value.length <= props.maxLen)
+      setOutput(value);
   };
 
   return (
     <PopUpHasSure close={close} title={props.title} show={props.show} onEnsure={onEnsure}
-                  disable={output.length === 0 ? true : false}>
+                  disable={output.length === 0}>
       <Container>
         <input ref={inputEl} onChange={onChange} value={output} type="text" placeholder={props.placeholder}/>
         <p>{output.length}/{props.maxLen}</p>

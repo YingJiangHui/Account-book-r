@@ -72,10 +72,16 @@ const Tags: FC<Props> = memo((props) => {
   const {value, index: defaultIndex, className} = props;
   const [tags, setTags] = useState<TagItem[]>([]);
   const [index, setIndex] = useState(1);
+  //month控制Tags组件被卸载后index不发生变化
+  const [state,setState] = useState(false);
+
+
   const toggle =(i: number) => {
-    props.onChange(i);
     setIndex(i);
   };
+  useEffect(()=>{
+    props.onChange(index);
+  },[index])
   useEffect(() => {
     console.log(defaultIndex)
     setIndex(defaultIndex);
@@ -86,11 +92,18 @@ const Tags: FC<Props> = memo((props) => {
     setTags(value);
   }, [value]);
 
-
+  //className变化表示切换了收入支出index可变化
+  useEffect(()=>{
+    setState(true)
+  },[className])
+//只有监听tags变化才能拿到最新的tags，className则不行它会拿到原来的tags值
   useUpdate(() => {
     count++
     if(count>1){
-      setIndex(tags[0]?.id)
+      if(state){
+        setIndex(tags[0]?.id)
+        setState(false)
+      }
     }
   }, [tags]);
 
