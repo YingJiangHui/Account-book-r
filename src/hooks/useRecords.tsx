@@ -80,6 +80,7 @@ const useRecords = () => {
         :
         obj[record[i].category][key] = record[i].amount;
     }
+    console.log(obj);
     return obj;
   };
   const sortRecord = (): RecordItem[] => {
