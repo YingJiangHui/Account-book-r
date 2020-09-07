@@ -1,8 +1,8 @@
 import {FC, memo} from 'react';
-import Icon from 'component/Icon';
+import Icon from 'component/common/Icon';
 import React from 'react';
 import styled from 'styled-components';
-import theme from '../../theme';
+import theme from '../../../theme';
 
 const Wrapper = styled.section`
   background: #fafafa;

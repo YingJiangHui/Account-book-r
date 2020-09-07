@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 import styled from 'styled-components';
-import Icon from '../Icon';
+import Icon from '../common/Icon';
 import theme from 'theme';
 
 const RecordButton = styled.div`

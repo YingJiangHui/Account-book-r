@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, {FC, memo} from 'react';
-import Icon from 'component/Icon';
+import Icon from 'component/common/Icon';
 import theme from 'theme';
 
 const Wrapper = styled.button`

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, {FC, memo} from 'react';
-import Header from 'component/Header'
-import Nav from 'component/Nav'
+import Header from 'component/common/Header'
+import Nav from 'component/common/Nav'
 
 const Wrapper = styled.div`
   height: 100%;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, {FC, useEffect, useState} from 'react';
-import theme from '../theme';
+import theme from '../../theme';
 import cs from 'classnames'
 const Wrapper = styled.div`
     >button{

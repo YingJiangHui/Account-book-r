@@ -1,7 +1,7 @@
 import React from 'react';
 import {HashRouter as Router} from "react-router-dom";
 import 'reset.scss';
-import Routes from 'component/Routes'
+import Routes from 'component/common/Routes'
 /*Views*/
 const scrollTop = document.body.scrollTop+document.documentElement.scrollTop;
 setTimeout(()=>{

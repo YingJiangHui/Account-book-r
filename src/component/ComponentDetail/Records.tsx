@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import Icon from '../Icon';
+import Icon from '../common/Icon';
 import dayjs from 'dayjs';
 import {useTags} from 'hooks/useTags';
 import cn from 'classnames';

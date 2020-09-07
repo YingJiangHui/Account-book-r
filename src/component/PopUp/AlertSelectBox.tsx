@@ -1,6 +1,6 @@
 import React, {FC, memo, useEffect, useState} from 'react';
 import styled from 'styled-components';
-import Cover from './popUpRootComponent/Cover';
+import Cover from './popUpBoxComponent/popUpRootComponent/Cover';
 import {CSSTransition} from 'react-transition-group';
 import HintBox from './HintBox';
 

@@ -1,10 +1,10 @@
 import React, {FC, useEffect, useState} from 'react';
 import styled from 'styled-components';
-import Icon from '../Icon';
-import theme from '../../theme';
+import Icon from '../../common/Icon';
+import theme from '../../../theme';
 import cs from 'classnames';
 import {useTags} from 'hooks/useTags';
-import monetaryUnit from '../../lib/monetaryUnitFormat';
+import monetaryUnit from '../../../lib/monetaryUnitFormat';
 
 const Wrapper = styled.div`
   background: #ffffff;

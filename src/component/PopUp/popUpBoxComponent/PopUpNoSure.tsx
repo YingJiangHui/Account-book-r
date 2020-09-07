@@ -1,9 +1,9 @@
 import React, {FC, useEffect, useState} from 'react';
 import styled from 'styled-components';
-import Icon from '../../Icon';
+import Icon from '../../common/Icon';
 import {CSSTransition} from 'react-transition-group'; // ES6
 import theme from '../../../theme';
-import PopUp from 'component/PopUp/popUpRootComponent/PopUp'
+import PopUp from 'component/PopUp/popUpBoxComponent/popUpRootComponent/PopUp'
 
 const Control = styled.ol` 
   padding: 16px;

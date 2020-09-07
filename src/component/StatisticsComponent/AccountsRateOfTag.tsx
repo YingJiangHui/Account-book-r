@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React, {FC, useEffect, useState} from 'react';
-import TagItemChart from '../AccountsRateOfTag/TagItemChart';
-import Category from 'component/Category';
+import TagItemChart from './AccountsRateOfTag/TagItemChart';
+import Category from 'component/common/Category';
 import StatisticsChartTitle from './StatisticsChartTitle';
-import NotData from '../NotData';
+import NotData from '../common/NotData';
 const Wrapper = styled.section`
   background: #fff;
   padding: 22px 18px;

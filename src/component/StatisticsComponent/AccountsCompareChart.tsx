@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import StatisticsChartTitle from './StatisticsChartTitle';
 import dayjs, {OpUnitType} from 'dayjs';
 import theme from '../../theme';
-import EChart from '../EChart';
+import EChart from '../common/EChart';
 
 const Wrapper = styled.div`
   padding-top: 20px;

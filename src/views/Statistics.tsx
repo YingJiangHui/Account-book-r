@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import Layout from '../component/Layout';
-import CollectAccounts from '../component/CollectAccounts';
-import AccountsRateOfTag from '../component/statisticsComponent/AccountsRateOfTag';
+import Layout from '../component/common/Layout';
+import CollectAccounts from '../component/StatisticsComponent/CollectAccounts';
+import AccountsRateOfTag from '../component/StatisticsComponent/AccountsRateOfTag';
 import useRecords from 'hooks/useRecords';
-import AccountsCompareChart from '../component/statisticsComponent/AccountsCompareChart';
+import AccountsCompareChart from '../component/StatisticsComponent/AccountsCompareChart';
 import  dayjs from 'dayjs';
 
 const now = dayjs(new Date())

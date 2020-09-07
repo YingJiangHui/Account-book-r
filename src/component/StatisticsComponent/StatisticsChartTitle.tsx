@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 import styled from 'styled-components';
-import Category from '../Category';
+import Category from '../common/Category';
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;

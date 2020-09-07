@@ -1,6 +1,6 @@
-import PopUp from '../popUpRootComponent/PopUp';
+import PopUp from './popUpRootComponent/PopUp';
 import React, {FC, useEffect, useState} from 'react';
-import Icon from 'component/Icon';
+import Icon from 'component/common/Icon';
 import styled from 'styled-components';
 import theme from '../../../theme';
 

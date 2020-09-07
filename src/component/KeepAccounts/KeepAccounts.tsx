@@ -1,15 +1,15 @@
 import React, {FC, memo, useCallback, useEffect, useState} from 'react';
-import '../style/index.scss';
-import Close from 'component/accountsComponent/Close';
-import Pad from 'component/accountsComponent/Pad';
-import Output from 'component/accountsComponent/Output';
-import Tags from 'component/accountsComponent/Tags';
+import 'style/index.scss';
+import Close from 'component/KeepAccounts/components/Close';
+import Pad from 'component/KeepAccounts/components/Pad';
+import Output from 'component/KeepAccounts/components/Output';
+import Tags from 'component/KeepAccounts/components/Tags';
 import PopUpInput from 'component/PopUp/PopUpInput';
-import SelectInfo from 'component/accountsComponent/SelectInfo';
-import OpenNotePanel from 'component/accountsComponent/OpenNotePanel';
-import {useTags} from '../hooks/useTags';
+import SelectInfo from 'component/KeepAccounts/components/SelectInfo';
+import OpenNotePanel from 'component/KeepAccounts/components/OpenNotePanel';
+import {useTags} from 'hooks/useTags';
 import useRecords from 'hooks/useRecords';
-import PopUp from 'component/PopUp/popUpRootComponent/PopUp'
+import PopUp from 'component/PopUp/popUpBoxComponent/popUpRootComponent/PopUp'
 import styled from 'styled-components';
 
 const Options = styled.div`

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, {FC, memo} from 'react';
-import Icon from '../Icon';
+import Icon from '../common/Icon';
 import 'style/animation.scss'
 import Tip from 'component/PopUp/Tip'
 const Wrapper = styled.div`

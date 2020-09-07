@@ -1,13 +1,13 @@
 import React, {FC, memo, useEffect, useState} from 'react';
-import Layout from '../component/Layout';
+import Layout from '../component/common/Layout';
 import {useParams, useHistory} from "react-router-dom";
 import useRecords from 'hooks/useRecords';
-import Icon from '../component/Icon';
+import Icon from '../component/common/Icon';
 import {useTags} from '../hooks/useTags';
 import dayjs from 'dayjs';
-import KeepAccounts from 'views/KeepAccounts';
+import KeepAccounts from 'component/KeepAccounts/KeepAccounts';
 import Tooltip from 'component/PopUp/Tooltip';
-import {Amount, Control, Info, TagIcon, View, Wrapper} from '../component/RecordItem/style';
+import {Amount, Control, Info, TagIcon, View, Wrapper} from '../component/ComponentRecordItem/style';
 import cn from 'classnames';
 import AlertSelectBox from '../component/PopUp/AlertSelectBox';
 

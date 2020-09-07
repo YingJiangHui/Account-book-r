@@ -1,11 +1,11 @@
 import {FC, memo, useCallback, useEffect, useState} from 'react';
-import Icon from 'component/Icon';
+import Icon from 'component/common/Icon';
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
-import PopOptionBox from '../PopUp/PopOptionBox';
+import PopOptionBox from '../../PopUp/PopOptionBox';
 import useUpdate from 'hooks/useUpdate';
-import AlertSelectBox from '../PopUp/AlertSelectBox';
+import AlertSelectBox from '../../PopUp/AlertSelectBox';
 
 const Wrapper = styled.section`
   .view{

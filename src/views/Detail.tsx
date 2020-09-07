@@ -1,9 +1,9 @@
 import React, {FC, memo, useCallback, useEffect, useState} from 'react';
-import Layout from '../component/Layout';
-import OpenRecordButton from '../component/Detail/OpenRecordButton';
-import KeepAccounts from 'views/KeepAccounts';
-import Records from 'component/Detail/Records';
-import {Header, Wrapper} from 'component/Detail/style';
+import Layout from '../component/common/Layout';
+import OpenRecordButton from '../component/ComponentDetail/OpenRecordButton';
+import KeepAccounts from 'component/KeepAccounts/KeepAccounts';
+import Records from 'component/ComponentDetail/Records';
+import {Header, Wrapper} from 'component/ComponentDetail/style';
 import useRecords from 'hooks/useRecords';
 import Tooltip from '../component/PopUp/Tooltip';
 import dayjs from 'dayjs';
@@ -11,7 +11,7 @@ import PopUpMonthBox from '../component/PopUp/PopUpMonthBox';
 import PopUpTagBox from '../component/PopUp/PopUpTagBox';
 import {useTags} from '../hooks/useTags';
 import 'style/animation.scss';
-import NotData from '../component/NotData';
+import NotData from '../component/common/NotData';
 
 const nowMonth = dayjs(new Date()).format('YYYY年MM月');
 const Detail: FC = memo(() => {

@@ -3,8 +3,8 @@ import {FC, memo, useEffect, useRef, useState} from 'react';
 import React from 'react';
 import theme from 'theme';
 import dayjs from 'dayjs';
-import Category from 'component/Category';
-import HintBox from '../PopUp/HintBox';
+import Category from 'component/common/Category';
+import HintBox from '../../PopUp/HintBox';
 
 const Wrapper = styled.section`
   display: flex;
