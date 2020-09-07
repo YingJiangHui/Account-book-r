@@ -6,6 +6,8 @@ import theme from '../../theme';
 import cn from 'classnames';
 
 const Container = styled.main`
+  max-height: 500px;
+  overflow: auto;
   padding:  16px;
   display: flex;
   flex-direction: column;
@@ -52,7 +54,7 @@ const PopUpTagBox: FC<Props> = memo(({close, show, value, onChange}) => {
     setVisible(show);
   }, [show]);
   return (
-    <PopUpNoSure close={close} show={visible} title='选择月份'>
+    <PopUpNoSure close={close} show={visible} title='选择类型'>
       <Container>
         <ol>
           <li

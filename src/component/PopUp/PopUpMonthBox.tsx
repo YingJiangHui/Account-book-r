@@ -5,6 +5,7 @@ import theme from '../../theme';
 import dayjs from 'dayjs';
 import cs from 'classnames'
 const Container = styled.div`
+
   padding: 16px 12px 16px 12px;
 p{
   margin: 8px;

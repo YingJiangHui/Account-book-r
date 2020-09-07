@@ -10,41 +10,42 @@ let records: RecordItem[] = JSON.parse(window.localStorage.getItem('record') || 
 if(records.length===0){
   const recordData:RecordItem[] = [
     {id:createId(), tagIndex:3, category:'-', createAt:'2020-08-15T07:30:00', note:'', amount:100},
-    {id:createId(), tagIndex:3, category:'-', createAt:'2020-08-16T07:30:00', note:'', amount:500},
-    {id:createId(), tagIndex:3, category:'-', createAt:'2020-08-16T07:30:00', note:'', amount:10000},
-    {id:createId(), tagIndex:3, category:'-', createAt:'2020-08-18T07:30:00', note:'', amount:100},
-    {id:createId(), tagIndex:3, category:'-', createAt:'2020-08-20T07:30:00', note:'', amount:200},
-    {id:createId(), tagIndex:3, category:'-', createAt:'2020-08-21T07:30:00', note:'', amount:200},
     ]
-  records=recordData
+  records = recordData
+  console.log(records)
 }
 
 const useRecords = () => {
-  const [recordList, setRecordList] = useState<RecordItem[]>(records);
+  const [recordList, setRecordList] = useState<RecordItem[]>([]);
   const editRecord = (record: RecordItem, id: number) => {
     removeRecord(id);
     addRecord(record, id);
   };
+
   const addRecord = (record: RecordItem, id?: number) => {
     if (record.createAt === '')
       record.createAt = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
     record.id = id ? id : createId();
-    setRecordList((recordList) => [...recordList, record]);
+    const newRecordList = [...recordList, record]
+    setRecordList(newRecordList);
+    updateRecord(newRecordList)
   };
 
   const findRecord = (id: number) => {
     return recordList.find((record) => record.id === id);
   };
   const removeRecord = (id: number) => {
-    setRecordList((recordList) => recordList.filter((record) => record.id !== id));
+    const newReocrdList = recordList.filter((record) => record.id !== id)
+    setRecordList(newReocrdList);
+    updateRecord(newReocrdList)
   };
-
-  useUpdate(() => {
-    window.localStorage.setItem('record', JSON.stringify(sortRecord()));
-  }, [recordList]);
+  const updateRecord = (records:RecordItem[])=>{
+    window.localStorage.setItem('record', JSON.stringify(sortRecord(records)));
+  }
 
   useEffect(() => {
-    setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]'));
+    setRecordList(records)
+    updateRecord(records)
   }, [records]);
 
   const filterRecordUsedMonth = (month: string) => {
@@ -84,7 +85,7 @@ const useRecords = () => {
       } else {
         return obj
       }
-      obj[record[i].category][key]
+      key in obj[record[i].category]
         ?
         obj[record[i].category][key] += record[i].amount
         :
@@ -93,12 +94,13 @@ const useRecords = () => {
     console.log(obj);
     return obj;
   };
-  const sortRecord = (): RecordItem[] => {
-    return (clone(recordList) as RecordItem[]).sort((a, b) => a.createAt > b.createAt ? -1 : 1);
+
+  const sortRecord = (records:RecordItem[]): RecordItem[] => {
+    return (clone(records) as RecordItem[]).sort((a, b) => a.createAt > b.createAt ? -1 : 1);
   };
 
   const fetchRecord = () => {
-    // setTimeout(() => setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]')));
+    setTimeout(() => setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]')));
   };
 
   return {
