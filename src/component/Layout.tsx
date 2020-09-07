@@ -17,7 +17,7 @@ const Layout:FC =memo((props)=>{
   return(
 
     <Wrapper>
-      <Header />
+      <Header showBackBtn={true}/>
       <Main>
           {props.children}
       </Main>

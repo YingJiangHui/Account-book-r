@@ -82,8 +82,8 @@ const Tags: FC<Props> = memo((props) => {
   }, [value]);
 
   useUpdate(() => {
-
-  }, [className]);
+    console.log('fuck')
+  }, [tags]);
   useEffect(() => {
     props.onChange(index);
   }, [index]);

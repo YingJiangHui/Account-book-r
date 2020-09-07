@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
+import Icon from './Icon';
+import {useHistory} from 'react-router';
 
 const HeaderStyle = styled.header`
   padding: 18px;
@@ -10,11 +12,24 @@ const HeaderStyle = styled.header`
   color: ${theme.defaultFontColor};
   font-weight: 200;
   font-size: 17px;
+  position: relative;
+  .icon{
+    width: 24px;
+    height: 24px;
+    fill: #fff;
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 `;
-
-const Header =()=>{
+type Props={
+  showBackBtn?:boolean
+}
+const Header:FC<Props> =({showBackBtn})=>{
+  const history = useHistory()
   return(
-    <HeaderStyle>账本子</HeaderStyle>
+    <HeaderStyle>{showBackBtn?<Icon name={'left'} onClick={()=>{history.goBack()}}/>:''} <span>账本子</span></HeaderStyle>
   )
 }
 

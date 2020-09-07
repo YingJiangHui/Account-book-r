@@ -6,11 +6,12 @@ try {importAll(require.context('icons', true, /\.svg$/));} catch (e) {console.lo
 
 type Props = {
   name?: string
+  onClick?:()=>void
 } & React.SVGAttributes<SVGElement>
 const Icon = (props: Props) => {
-  const {className, ...rest} = props;
+  const {className, onClick,...rest} = props;
   return (
-    <svg className={cs('icon', className)}>
+    <svg onClick={onClick} className={cs('icon', className)}>
       {rest.name ? <use xlinkHref={'#' + rest.name}></use> : ''}
     </svg>
   );
