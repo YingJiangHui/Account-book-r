@@ -1,4 +1,4 @@
-import {FC, memo, useEffect, useState} from 'react';
+import {FC, memo, useCallback, useEffect, useState} from 'react';
 import Icon from 'component/Icon';
 import React from 'react';
 import styled from 'styled-components';
@@ -66,27 +66,34 @@ type Props = {
   value: TagItem[]
   index: number
 }
+let count = 0
+
 const Tags: FC<Props> = memo((props) => {
   const {value, index: defaultIndex, className} = props;
   const [tags, setTags] = useState<TagItem[]>([]);
   const [index, setIndex] = useState(1);
-
-  const toggle = (i: number) => {
+  const toggle =(i: number) => {
+    props.onChange(i);
     setIndex(i);
   };
   useEffect(() => {
+    console.log(defaultIndex)
     setIndex(defaultIndex);
+    count=0
   }, []);
+
   useEffect(() => {
     setTags(value);
   }, [value]);
 
+
   useUpdate(() => {
-    console.log('fuck')
+    count++
+    if(count>1){
+      setIndex(tags[0]?.id)
+    }
   }, [tags]);
-  useEffect(() => {
-    props.onChange(index);
-  }, [index]);
+
 
   let timer = -1;
   const [visiblePop, setVisiblePop] = React.useState(-1);
