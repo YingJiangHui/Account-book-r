@@ -6,7 +6,7 @@ const monetaryUnit=(amount:number)=>{
   if(decimals===0)
     result = result+'.00'
 
-  if(interge/10000>1)
+  if(interge/10000>=1)
     result = Math.floor(interge/10000)+decimals+'万'
 
 

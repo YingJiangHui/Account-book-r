@@ -12,10 +12,12 @@ const Wrapper = styled.section`
     width: 100%;
     overflow: scroll;
     >ol{
-    
     display: flex;
     height: 100px;
     >li{
+    .icon{
+      transition: .3s;
+    }
       &.base-selected{
         color: ${theme.themeColor};
         .icon{
@@ -62,35 +64,26 @@ type Props = {
   className: string,
   onClick: (id?: number) => void,
   value: TagItem[]
-  defaultIndex?:number
+  index: number
 }
 const Tags: FC<Props> = memo((props) => {
-  const {value,defaultIndex} = props;
+  const {value, index: defaultIndex, className} = props;
   const [tags, setTags] = useState<TagItem[]>([]);
   const [index, setIndex] = useState(1);
-  const [firstIndex,setFirstIndex] = useState(0);
 
   const toggle = (i: number) => {
     setIndex(i);
   };
-
+  useEffect(() => {
+    setIndex(defaultIndex);
+  }, []);
   useEffect(() => {
     setTags(value);
   }, [value]);
 
-  useEffect(()=>{
-    if(defaultIndex){
-      setIndex(defaultIndex)
-      setFirstIndex(defaultIndex)
-    }
-
-  },[defaultIndex])
   useUpdate(() => {
-    setFirstIndex(defaultIndex?defaultIndex:tags[0]?.id)
-  }, [tags]);
-  useEffect(()=>{
-      setIndex(firstIndex)
-  },[firstIndex])
+
+  }, [className]);
   useEffect(() => {
     props.onChange(index);
   }, [index]);

@@ -17,6 +17,9 @@ const Wrapper = styled.section`
     padding: 8px 12px;
     background: #f7f7f7;
   }
+  .outgoings{
+    color: #7e7e7e;
+  }
 `;
 const Income = styled.div`
   display: flex;
@@ -61,7 +64,7 @@ const CollectAccounts: FC<Props> = ({onChange,stream,monthRecord}) => {
           <p>共支出</p>
           <p>￥{zero(outgoings)}</p>
         </Income>
-        <p>共收入￥{zero(income)}</p>
+        <p className={'outgoings'}>共收入￥{zero(income)}</p>
       </Wrapper>
       <PopUpMonthBox show={visible} close={() => setVisible(false)} onChange={(value) => {
         setVisible(false);

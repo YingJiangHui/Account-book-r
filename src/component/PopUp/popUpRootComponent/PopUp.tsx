@@ -29,15 +29,11 @@ const PopUp: FC<Props> = ({show, children, style, className}) => {
     setVisible(show);
     _setVisible(true);
   }, [show]);
-
-
   return (
-
     <CSSTransition classNames='fade' className='popUp' timeout={300} unmountOnExit={true} in={visible&&_visible}>
       <Wrapper>
         <Cover onChange={()=>{_setVisible(false)}}/>
           <Container className={cn(className)} style={style}>
-
             {children}
           </Container>
       </Wrapper>

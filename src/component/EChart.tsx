@@ -16,7 +16,6 @@ const EChart:FC<Props> = ({option,width})=>{
   };
   const EventsDict = {
     onClick:()=>{
-      console.log('fuck')
     }
   };
   const chartWrapper = useRef<HTMLDivElement>(null);

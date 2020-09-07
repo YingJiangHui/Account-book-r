@@ -11,6 +11,7 @@ import PopUpMonthBox from '../component/PopUp/PopUpMonthBox';
 import PopUpTagBox from '../component/PopUp/PopUpTagBox';
 import {useTags} from '../hooks/useTags';
 import 'style/animation.scss';
+import NotData from '../component/NotData';
 
 const nowMonth = dayjs(new Date()).format('YYYY年MM月');
 const Detail: FC = memo(() => {
@@ -74,7 +75,7 @@ const Detail: FC = memo(() => {
           </ol>
         </Header>
         <Wrapper>
-          {recordGroup}
+          {recordGroup.length===0?<NotData text={'暂无记录...'}/>:recordGroup}
         </Wrapper>
       </Layout>
       <OpenRecordButton onClick={() => setVisibleAccounts(true)}/>

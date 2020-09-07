@@ -1,6 +1,7 @@
-import React, {FC, memo} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import Cover from './popUpRootComponent/Cover';
+import {CSSTransition} from 'react-transition-group';
 
 const Wrapper = styled.div`
   background: #fff;
@@ -36,20 +37,34 @@ const Control = styled.div`
 `;
 type Props = {
   value: string
-  ensure:()=>void
-  cancel:()=>void
+  ensure: () => void
+  cancel: () => void
+  show: boolean
 }
-const AlertSelectBox: FC<Props> = memo(({value, children,ensure,cancel}) => {
+const AlertSelectBox: FC<Props> = memo(({value, children, ensure, cancel, show}) => {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    setVisible(show);
+  }, [show]);
   return (
+    <CSSTransition timeout={200} classNames={'fade'} in={visible} unmountOnExit={true}>
       <Cover>
         <Wrapper>
           <View>{value}</View>
           <Control>
-            <button onClick={ensure}>确定</button>
-            <button onClick={cancel}>取消</button>
+            <button onClick={
+              () => {
+                ensure();
+              }}>确定
+            </button>
+            <button onClick={() => {
+              cancel();
+            }}>取消
+            </button>
           </Control>
         </Wrapper>
       </Cover>
+    </CSSTransition>
   );
 });
 

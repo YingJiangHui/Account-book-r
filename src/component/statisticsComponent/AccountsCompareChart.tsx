@@ -34,13 +34,11 @@ const AccountsCompareChart: FC<Props> = ({value,unitTime,title,startDate}) => {
   if(startDate){
     startDate = dayjs(startDate.format('YYYY-MM-01')).subtract(1,'day').add(1,'month')
   }
-  console.log(startDate.format('YYYY年MM月'))
   let now = dayjs(new Date())
   let currentDate = startDate.format('YYYY年MM月')===now.format('YYYY年MM月')?now:startDate
 
   const dateList = [];
   const amountList = [];
-  console.log(currentDate.format('YYYY-MM'))
   const map =  DateMap[unitTime]
   for (let i = map.num; i >=0 ; i--) {
     const dateDay = currentDate.subtract(i, unitTime).format(map.format);

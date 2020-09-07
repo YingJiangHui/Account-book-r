@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   background: #ffffff;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 const ProgressBar = styled.div`
     flex-grow: 1;
@@ -51,6 +52,11 @@ const Label = styled.div`
     }
   }
 `;
+const Grow = styled.div`
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+`
 const Amount = styled.div`
   text-align: end;
   width: 82px;
@@ -86,10 +92,12 @@ const TagItemChart: FC<Props> = ({value, totalAmount, index}) => {
         <Icon className={cs(tag.category === '+' ? 'special' : 'base')} name={tag.icon}/>
         <span>{tag.text}</span>
       </Label>
+      <Grow>
       <Rate>{rate}</Rate>
       <ProgressBar>
         <p className={cs(tag.category === '+' ? 'special' : 'base')} style={{width: rate}}></p>
       </ProgressBar>
+      </Grow>
       <Amount>
         ￥{monetaryUnit(value)}
       </Amount>

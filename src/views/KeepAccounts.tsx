@@ -27,7 +27,7 @@ type Props = {
 let recordData: RecordItem = {
   id:0,
   category: '-',
-  tagIndex: 0,
+  tagIndex: 1,
   amount: 0,
   note: '',
   createAt: ''
@@ -76,9 +76,6 @@ const KeepAccounts: FC<Props> =memo( (props) => {
       setRecord(defaultRecord)
   },[defaultRecord])
 
-  useEffect(()=>{
-
-  },[record.tagIndex])
   return (
 <>
       <PopUp show={visibleThis} >
@@ -105,7 +102,7 @@ const KeepAccounts: FC<Props> =memo( (props) => {
               props.isVisible(false);
               id ? setUpdateTagId(id) : setVisibleAddTag(true);
             }}
-            defaultIndex={(defaultRecord?.tagIndex)}
+            index={record.tagIndex}
             className={record.category === '+' ? 'special' : 'base'}
             onChange={(value: number) => onChange({tagIndex: value})}
           />

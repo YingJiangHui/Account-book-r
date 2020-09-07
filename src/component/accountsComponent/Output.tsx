@@ -8,14 +8,14 @@ const Wrapper = styled.section`
     align-items: center;
     border-bottom: 1px solid rgba(0,0,0,0.1);
     span{
-    font-size: 24px;
-    font-weight: bold;
+      font-size: 24px;
+      font-weight: bold;
       margin-right: 10px;
       font-weight: bold;
     }
     .output{
       font-weight: bold;
-      font-size: 36px;
+      font-size: 48px;
     }
 `;
 

@@ -53,10 +53,10 @@ const RecordItem: FC = memo(() => {
         </Wrapper>
       </Layout>
       <Tooltip onChange={(value: boolean) => setVisibleTip(value)} value={tipText} inProp={visibleTip}/>
-      {visibleAlert
-        ?
+
         <AlertSelectBox
           value='删除后无法恢复，是否删除'
+          show={visibleAlert}
           ensure={() => {
             setTipText('删一笔');
             setVisibleTip(true);
@@ -66,7 +66,7 @@ const RecordItem: FC = memo(() => {
               history.goBack();
             },500)
           }} cancel={() => {setVisibleAlert(false);}}/>
-        : ''}
+
       <KeepAccounts
         id={id}
         defaultRecord={record}

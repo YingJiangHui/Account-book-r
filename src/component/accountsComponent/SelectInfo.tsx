@@ -56,7 +56,9 @@ const SelectInfo: FC<Props> = memo((props) => {
     if(defaultDate)
     setDate(dayjs(defaultDate).format('YYYY-MM-DDTHH:mm'))
   },[defaultDate])
-
+  useEffect(()=>{
+    setCatecory(props.category)
+  },[props.category])
   useEffect(() => {
     props.onChangeDate(date);
   }, [date]);
@@ -77,7 +79,7 @@ const SelectInfo: FC<Props> = memo((props) => {
                }
              }}/>
     </Wrapper>
-      <HintBox show={hintVisible} onChange={(value:boolean)=>{setHintVisible(false)}} text={'不能设置时间为将来'}/>
+      <HintBox show={hintVisible} onChange={(value:boolean)=>{setHintVisible(value)}} text={'不能设置时间为将来'}/>
       </>
   );
 });

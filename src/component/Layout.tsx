@@ -13,7 +13,6 @@ const Main = styled.main`
   overflow: auto;
 `;
 const Layout:FC =memo((props)=>{
-  console.log(window.screen.height);
 
   return(
 

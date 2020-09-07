@@ -13,7 +13,7 @@ function Statistics() {
   const {filterRecordUsedTag,amountByTag} = useTagsuseTags();
   const [record, setRecord] = useState<RecordItem[]>([]);
   const [amount,setAmount] = useState<{'+':number,'-':number}>({'+':0,'-':0})
-  console.log(currentDate)
+
   return (
     <Layout>
       <CollectAccounts monthRecord={(record) => setRecord(record)}
