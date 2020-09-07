@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   left: 0;
   background: rgba(0,0,0,0.5);
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   z-index: 8;
 `;
 

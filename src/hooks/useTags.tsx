@@ -43,13 +43,13 @@ const useTags = () => {
     return tags.filter((tag) => category === tag.category);
   };
   const updateTags = (name: string, category: Category) => {
-    setTags([...tags, {id: createId(), icon: 'accounts', text: name, category}]);
+    setTags((tags)=>[...tags, {id: createId(), icon: 'accounts', text: name, category}]);
   };
   const removeTag = (id: number) => {
-    setTags(tags.filter(item => item.id !== id));
+    setTags((tags)=>tags.filter(item => item.id !== id));
   };
   const editTag = (id: number, text: string) => {
-    setTags(tags.map(tag => tag.id === id ? {...tag, text} : tag));
+    setTags((tags)=>tags.map(tag => tag.id === id ? {...tag, text} : tag));
   };
   return {tags, fetchTags, setTags, findId,removeTag, editTag, findTag, updateTags};
 };

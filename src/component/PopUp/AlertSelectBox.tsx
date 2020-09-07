@@ -2,12 +2,13 @@ import React, {FC, memo, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import Cover from './popUpRootComponent/Cover';
 import {CSSTransition} from 'react-transition-group';
+import HintBox from './HintBox';
 
 const Wrapper = styled.div`
   background: #fff;
   border-radius: 15px;
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%,-50%);
   width: 80%;
@@ -40,13 +41,17 @@ type Props = {
   ensure: () => void
   cancel: () => void
   show: boolean
+  beforeTip?:string
 }
-const AlertSelectBox: FC<Props> = memo(({value, children, ensure, cancel, show}) => {
+const AlertSelectBox: FC<Props> = memo(({value, children, ensure, cancel, show,beforeTip}) => {
   const [visible, setVisible] = useState(false);
+  const [hintVisible, setHintVisible] = useState(false);
+
   useEffect(() => {
     setVisible(show);
   }, [show]);
   return (
+    <>
     <CSSTransition timeout={200} classNames={'fade'} in={visible} unmountOnExit={true}>
       <Cover>
         <Wrapper>
@@ -55,6 +60,7 @@ const AlertSelectBox: FC<Props> = memo(({value, children, ensure, cancel, show})
             <button onClick={
               () => {
                 ensure();
+                setHintVisible(true)
               }}>确定
             </button>
             <button onClick={() => {
@@ -65,6 +71,11 @@ const AlertSelectBox: FC<Props> = memo(({value, children, ensure, cancel, show})
         </Wrapper>
       </Cover>
     </CSSTransition>
+      {beforeTip?
+        <HintBox text={beforeTip} show={hintVisible} onChange={(value:boolean)=>{setHintVisible(value)}}/>
+      :''}
+
+      </>
   );
 });
 

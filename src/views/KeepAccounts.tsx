@@ -37,8 +37,8 @@ const KeepAccounts: FC<Props> =memo( (props) => {
   const {show,ensure,isVisible,defaultRecord,id} = props
 
   const {addRecord,editRecord} = useRecords();
-  const {fetchTags, updateTags, removeTag, editTag, findTag} = useTags();
-
+  const {fetchTags,tags, updateTags, removeTag, editTag, findTag} = useTags();
+  console.log(tags)
   const [visibleRemark, setVisibleRemark] = useState(false);
   const [visibleAddTag, setVisibleAddTag] = useState(false);
   const [updateTagId, setUpdateTagId] = useState(-1);
@@ -46,9 +46,10 @@ const KeepAccounts: FC<Props> =memo( (props) => {
   const [record, setRecord] = useState<RecordItem>(recordData);
 
   const [tagList, setTagList] = useState<TagItem[]>([]);
+
   useEffect(() => {
     setTagList(fetchTags(record.category));
-  }, [record.category, show]);
+  }, [record.category, show,tags]);
 
   const [output, setOutput] = useState<string>('');
 

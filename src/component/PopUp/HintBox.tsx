@@ -5,10 +5,11 @@ import Tip from 'component/PopUp/Tip';
 const Wrapper = styled.div`
 background: rgba(0,0,0,0.66);
 color: #fff;
-padding: 6px 12px;
+padding: 8px 16px;
+font-size: 18px;
 border-radius: 5px;
 position: absolute;
-top: 50%;
+top: 30%;
 left: 50%;
 transform: translate(-50%,-50%);
 

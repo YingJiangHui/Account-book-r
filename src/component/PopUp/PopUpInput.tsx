@@ -1,4 +1,4 @@
-import {FC, memo, useEffect, useRef, useState} from 'react';
+import {FC, memo, useEffect, useRef} from 'react';
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
