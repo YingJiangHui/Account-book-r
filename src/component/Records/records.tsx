@@ -57,7 +57,6 @@ const Main = styled.main`
          //TODO
         display: flex;
         align-items: center;  
-      
         }
       }
     }

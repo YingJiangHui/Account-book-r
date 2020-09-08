@@ -21,6 +21,7 @@ const Header = styled.header`
     display: flex;
     min-width: 300px;
     >li{
+     min-width: 78px;
     color: rgba(255,255,255,0.8);
     &:nth-child(1){
     color: #fafafa;
