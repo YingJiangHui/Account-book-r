@@ -40,7 +40,6 @@ const PopUpInput: FC<Props> = memo((props) => {
     setOutput(props.value)
   },[props.value])
   const onEnsure = () => {
-    console.log(inputEl.current?.value)
     if (output.length === 0) return;
     const value = inputEl.current?.value || '';
     props.onChange(value);

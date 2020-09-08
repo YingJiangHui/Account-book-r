@@ -38,7 +38,6 @@ const Detail: FC = memo(() => {
 
   useEffect(() => {
     setRecordGroup(records());
-    console.log(records())
   }, [record]);
 
   const records = useCallback(() => {

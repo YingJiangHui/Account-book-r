@@ -83,7 +83,6 @@ const Tags: FC<Props> = memo((props) => {
     props.onChange(index);
   }, [index]);
   useEffect(() => {
-    console.log(defaultIndex);
     setIndex(defaultIndex);
     count = 0;
   }, []);

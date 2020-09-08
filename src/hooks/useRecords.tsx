@@ -1,51 +1,40 @@
 import {useEffect, useState} from 'react';
+import useUpdate from './useUpdate';
 import dayjs from 'dayjs';
 import clone from '../lib/clone';
 import generator from 'lib/createId';
 
 const {createId} = generator('recordMaxId');
 
-let records: RecordItem[] = JSON.parse(window.localStorage.getItem('record') || '[]');
-if(records.length===0){
-  const recordData:RecordItem[] = [
-    {id:createId(), tagIndex:3, category:'-', createAt:'2020-08-15T07:30:00', note:'', amount:100},
-    ]
-  records = recordData
-  console.log(records)
-}
-
+const Records: RecordItem[] = JSON.parse(window.localStorage.getItem('record') || '[]');
 const useRecords = () => {
+
   const [recordList, setRecordList] = useState<RecordItem[]>([]);
   const editRecord = (record: RecordItem, id: number) => {
     removeRecord(id);
     addRecord(record, id);
   };
-
   const addRecord = (record: RecordItem, id?: number) => {
     if (record.createAt === '')
       record.createAt = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
     record.id = id ? id : createId();
-    const newRecordList = [...recordList, record]
-    setRecordList(newRecordList);
-    updateRecord(newRecordList)
+    setRecordList((recordList) => [...recordList, record]);
   };
 
   const findRecord = (id: number) => {
     return recordList.find((record) => record.id === id);
   };
   const removeRecord = (id: number) => {
-    const newReocrdList = recordList.filter((record) => record.id !== id)
-    setRecordList(newReocrdList);
-    updateRecord(newReocrdList)
+    setRecordList((recordList) => recordList.filter((record) => record.id !== id));
   };
-  const updateRecord = (records:RecordItem[])=>{
-    window.localStorage.setItem('record', JSON.stringify(sortRecord(records)));
-  }
+
+  useUpdate(() => {
+    window.localStorage.setItem('record', JSON.stringify(sortRecord()));
+  }, [recordList]);
 
   useEffect(() => {
-    setRecordList(records)
-    updateRecord(records)
-  }, [records]);
+    setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]'));
+  }, [Records]);
 
   const filterRecordUsedMonth = (month: string) => {
     return recordList.filter((record) => dayjs(record.createAt).format('YYYY年MM月') === month);
@@ -84,7 +73,7 @@ const useRecords = () => {
       } else {
         return obj
       }
-      key in obj[record[i].category]
+      obj[record[i].category][key]
         ?
         obj[record[i].category][key] += record[i].amount
         :
@@ -93,9 +82,8 @@ const useRecords = () => {
     console.log(obj);
     return obj;
   };
-
-  const sortRecord = (records:RecordItem[]): RecordItem[] => {
-    return (clone(records) as RecordItem[]).sort((a, b) => a.createAt > b.createAt ? -1 : 1);
+  const sortRecord = (): RecordItem[] => {
+    return (clone(recordList) as RecordItem[]).sort((a, b) => a.createAt > b.createAt ? -1 : 1);
   };
 
   const fetchRecord = () => {
