@@ -38,27 +38,20 @@ const Detail: FC = memo(() => {
 
   useEffect(() => {
     setRecordGroup(records());
+    console.log(records())
   }, [record]);
 
   const records = useCallback(() => {
-    //TODO
-    if (record.length === 0) return [];
-    let recordsOfDay: RecordItem[] = [];
-    const recordGroup = [];
-    for (let i = 0; i < record.length; i++) {
-      if (i > 0 && dayjs(record[i - 1].createAt).format('YYYY-MM-DD') === dayjs(record[i].createAt).format('YYYY-MM-DD')) {
-        recordsOfDay.push(record[i]);
-      } else {
-        if (recordsOfDay.length > 0)
-          recordGroup.push(<Records key={i} records={recordsOfDay}/>);
-        recordsOfDay = [record[i]];
-      }
-    }
-    if (recordsOfDay.length > 0)
-      recordGroup.push(<Records key={-1} records={recordsOfDay}/>);
-    return (
-      recordGroup
-    );
+    const hash:{[k:string]:RecordItem[]} = {}
+    record.map(item=>{
+      const key = dayjs(item.createAt).format('YYYY-MM-DD')
+     if(key in hash){
+       hash[key] = [...hash[key],item]
+     } else{
+       hash[key] = [item]
+     }
+    })
+    return Object.entries(hash)
   }, [record]);
 
   return (
@@ -74,7 +67,9 @@ const Detail: FC = memo(() => {
           </ol>
         </Header>
         <Wrapper>
-          {recordGroup.length===0?<NotData text={'暂无记录...'}/>:recordGroup}
+          {recordGroup.length===0?<NotData text={'暂无记录...'}/>:recordGroup.map(([date,records])=>
+            <Records records={records} key={date}/>
+          )}
         </Wrapper>
       </Layout>
       <OpenRecordButton onClick={() => setVisibleAccounts(true)}/>

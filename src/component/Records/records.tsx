@@ -34,6 +34,7 @@ const Wrapper = styled.section`
   }
 `;
 const Main = styled.main`
+    min-height: 78px;
     padding: 2px 16px;
      background: #fff;
      display: flex;
@@ -93,6 +94,7 @@ const IconWrapper = styled.div`
         justify-content: space-between;
         align-items: center;
         >.icon{
+          transition: .3s;
           border-radius: 50%;
           padding: 7.5px;
           fill:#fff;
