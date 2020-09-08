@@ -99,7 +99,6 @@ const useRecords = () => {
         :
         obj[record[i].category][key] = record[i].amount;
     }
-    console.log(obj);
     return obj;
   };
   const sortRecord = (records?: RecordItem[]): RecordItem[] => {
@@ -110,7 +109,6 @@ const useRecords = () => {
   };
 
   const fetchRecord = () => {
-    console.log('fuck')
     setTimeout(() => setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]')),);
   };
 

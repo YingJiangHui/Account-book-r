@@ -15,7 +15,6 @@ const Records: FC<Props> = (props) => {
   const {totalAmount} = useRecords();
   const {findTag} = useTags();
   const {records} = props;
-  console.log(records)
   const recently = (date: string) => {
     const day = ['今天', '昨天', '前天'];
     const now = dayjs(new Date());

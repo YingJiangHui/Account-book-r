@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import {FC, memo, useEffect} from 'react';
 import React from 'react';
+import useUpdate from '../../../hooks/useUpdate';
 
 const Wrapper = styled.section`
     margin-top: 20px;
@@ -29,12 +30,12 @@ type Props = {
 const Output: FC<Props> =memo( (props) => {
   const {defaultValue}= props
   const [output, setOutput] = React.useState('0');
-
   useEffect(()=>{
     if(defaultValue)
     setOutput(defaultValue)
   },[defaultValue])
-  React.useEffect(() => {
+
+  useUpdate(() => {
     props.onChange(parseFloat(output));
     switch (props.value) {
       case '0':
@@ -73,7 +74,6 @@ const Output: FC<Props> =memo( (props) => {
           props.onSubmit();
         }
         break;
-
     }
   }, [props.value]);
 

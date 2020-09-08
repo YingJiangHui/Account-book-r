@@ -58,9 +58,10 @@ const KeepAccounts: FC<Props> = memo((props) => {
   const onSubmit = () => {
     if (id)
       editRecord(record, id);
-    else
+    else{
+      setTimeout(()=>setOutput('clear'),310)
       addRecord(record);
-    setOutput('clear');
+    }
     isVisible(false);
     ensure();
   };

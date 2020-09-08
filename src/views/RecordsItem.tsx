@@ -10,6 +10,7 @@ import Tooltip from 'component/PopUp/Tooltip';
 import {Amount, Control, Info, TagIcon, View, Wrapper} from '../component/ComponentRecordItem/style';
 import cn from 'classnames';
 import AlertSelectBox from '../component/PopUp/AlertSelectBox';
+import useUpdate from '../hooks/useUpdate';
 
 const RecordsItem: FC = memo(() => {
   const {findRecord, fetchRecord, removeRecord} = useRecords();
@@ -20,7 +21,7 @@ const RecordsItem: FC = memo(() => {
   const [record, setRecord] = useState<RecordItem>(recordItem as RecordItem);
   const [tag, setTag] = useState<TagItem>({} as TagItem);
   const [visibleAlert, setVisibleAlert] = useState(false);
-  useEffect(() => {
+  useUpdate(() => {
     if (recordItem) {
       setRecord(recordItem);
       setTag(findTag(recordItem.tagIndex)!);

@@ -13,6 +13,7 @@ import {useTags} from '../hooks/useTags';
 import 'style/animation.scss';
 import NotData from '../component/common/NotData';
 import monetaryUnit from 'lib/monetaryUnitFormat'
+import useUpdate from '../hooks/useUpdate';
 
 
 
@@ -30,7 +31,7 @@ const Detail: FC = memo(() => {
   const [tagId, setTagId] = useState<number>(0);
   const [recordGroup, setRecordGroup] = useState<any[]>([]);
 
-  useEffect(() => {
+  useUpdate(() => {
     const newRecords = filterRecordUsedMonth(appearMonth);
     setRecord(() => newRecords);
     // 0表示显示全部
@@ -39,11 +40,12 @@ const Detail: FC = memo(() => {
     }
   }, [recordList, appearMonth, tagId]);
 
-  useEffect(() => {
+  useUpdate(() => {
     setRecordGroup(records());
   }, [record]);
 
   const records = useCallback(() => {
+    console.log('fuck');
     const hash:{[k:string]:RecordItem[]} = {}
     record.map(item=>{
       const key = dayjs(item.createAt).format('YYYY-MM-DD')

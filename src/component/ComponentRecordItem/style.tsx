@@ -21,9 +21,11 @@ const View = styled.div`
 const TagIcon = styled.div`
   display: flex;
   align-items: center;
-  
+  >span{
+    text-align: center;
+    min-width: 82px;
+  }
   .icon{
-    margin-right: 16px;
     background: ${theme.themeColor};
     border-radius: 50%;
     padding: 6px;

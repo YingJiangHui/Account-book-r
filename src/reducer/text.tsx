@@ -5,7 +5,6 @@ interface AccountState {
 const initial:AccountState= {
   n:0
 }
-console.log(initial)
 
 type ReducerAction =
   {
