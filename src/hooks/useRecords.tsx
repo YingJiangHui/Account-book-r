@@ -34,7 +34,6 @@ const useRecords = () => {
 
   const [recordList, setRecordList] = useState<RecordItem[]>([]);
 
-
   const editRecord = (record: RecordItem, id: number) => {
     let newRecord = _removeRecord(id);
     newRecord = _addRecord(record,newRecord,id)
@@ -49,6 +48,7 @@ const useRecords = () => {
   };
 
   const _addRecord = (record: RecordItem,records?:RecordItem[],id?:number) => {
+
     if (record.createAt === '')
       record.createAt = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
     record.id =id?id:createId()
@@ -148,6 +148,4 @@ const useRecords = () => {
     amountByTag
   };
 };
-
-
 export default useRecords;

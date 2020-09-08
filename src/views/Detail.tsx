@@ -1,4 +1,4 @@
-import React, {FC, memo, useCallback, useEffect, useReducer, useState} from 'react';
+import React, {FC, memo, useCallback, useState} from 'react';
 import Layout from '../component/common/Layout';
 import OpenRecordButton from '../component/ComponentDetail/OpenRecordButton';
 import KeepAccounts from 'component/KeepAccounts/KeepAccounts';
