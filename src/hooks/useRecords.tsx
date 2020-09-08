@@ -17,7 +17,9 @@ if(Records.length===0){
     ,{id:createId(),"category":"+",tagIndex:21,amount:600,note:"",createAt:"2020-09-06T17:02:36"}
     ,{id:createId(),"category":"+",tagIndex:16,amount:7000,note:"",createAt:"2020-09-05T17:02:13"}
     ,{id:createId(),"category":"+",tagIndex:17,amount:2000,note:"",createAt:"2020-09-08T17:02:04"}
-    ,{id:createId(),"category":"-",tagIndex:2,amount:500,note:"",createAt:"2020-09-01T17:01:36"}
+    ,{id:createId(),"category":"-",tagIndex:2,amount:500,note:"",createAt:"2020-09-08T15:01:36"}
+    ,{id:createId(),"category":"-",tagIndex:10,amount:5000,note:"",createAt:"2020-09-15T17:01:24"}
+    ,{id:createId(),"category":"-",tagIndex:2,amount:500,note:"",createAt:"2020-09-06T17:01:36"}
     ,{id:createId(),"category":"-",tagIndex:10,amount:5000,note:"",createAt:"2020-08-25T17:01:24"}
     ,{id:createId(),"category":"-",tagIndex:8,amount:1666,note:"",createAt:"2020-08-23T17:00:58"}
     ,{id:createId(),"category":"-",tagIndex:6,amount:200,note:"",createAt:"2020-08-16T17:00:45"}

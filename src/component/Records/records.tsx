@@ -52,6 +52,7 @@ const Main = styled.main`
         }
       }
       >li{
+      transition: .05s;
         position: relative;
         left: 0;
          //TODO
@@ -61,6 +62,17 @@ const Main = styled.main`
       }
     }
 `;
+const DelRecord = styled.div`
+position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: -92px;
+  top: 0;
+  background: #c62f2f;
+  color: white;
+  height: 75px;width: 75px;
+`
 const Amount = styled.div`
   min-width: 68px;
   text-align: end;
@@ -106,4 +118,4 @@ const IconWrapper = styled.div`
         }
 `;
 
-export {Info, IconWrapper, Do, Amount, Main, Wrapper};
+export {Info, IconWrapper, Do, Amount, Main, Wrapper,DelRecord};

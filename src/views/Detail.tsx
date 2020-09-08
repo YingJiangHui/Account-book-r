@@ -25,7 +25,7 @@ const Detail: FC = memo(() => {
   const [visibleTip, setVisibleTip] = useState(false);
   const [visibleTag, setVisibleTag] = useState(false);
   const [tagName, setTagName] = useState('全部类型');
-  const {filterRecordUsedMonth, recordList, fetchRecord, filterRecordUsedTag, totalAmount} = useRecords();
+  const {filterRecordUsedMonth, recordList, fetchRecord, removeRecord,filterRecordUsedTag, totalAmount} = useRecords();
   const [appearMonth, setAppearMonth] = useState(nowMonth);
   const [record, setRecord] = useState<RecordItem[]>([]);
   const [tagId, setTagId] = useState<number>(0);
@@ -71,7 +71,7 @@ const Detail: FC = memo(() => {
         </Header>
           <Wrapper>
           {recordGroup.length===0?<NotData text={'暂无记录...'}/>:recordGroup.map(([date,records])=>
-            <Records records={records} key={date}/>
+            <Records onRemove={(id:number)=>{removeRecord(id);fetchRecord()}} records={records} key={date}/>
           )}
         </Wrapper>
       </Layout>
