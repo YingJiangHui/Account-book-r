@@ -63,7 +63,7 @@ const CollectAccounts: FC<Props> = ({onChange,stream,monthRecord}) => {
         <button onClick={() => {setVisible(true);}}>{month.format('YYYY年MM月')}</button>
         <Income>
           <p>共支出</p>
-          <p>￥{monetaryUnit(outgoings,false)}</p>
+          <p>￥{monetaryUnit(parseFloat(outgoings.toFixed(2)),false)}</p>
         </Income>
         <p className={'outgoings'}>共收入￥{monetaryUnit(income,false)}</p>
       </Wrapper>
