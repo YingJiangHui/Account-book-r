@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 import clone from '../lib/clone';
 import generator from 'lib/createId';
 
+
+
 const {createId} = generator('recordMaxId');
 
 const Records: RecordItem[] = JSON.parse(window.localStorage.getItem('record') || '[]');

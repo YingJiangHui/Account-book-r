@@ -1,4 +1,4 @@
-import React, {FC, memo, useCallback, useEffect, useState} from 'react';
+import React, {FC, memo, useCallback, useEffect, useReducer, useState} from 'react';
 import Layout from '../component/common/Layout';
 import OpenRecordButton from '../component/ComponentDetail/OpenRecordButton';
 import KeepAccounts from 'component/KeepAccounts/KeepAccounts';
@@ -13,6 +13,9 @@ import {useTags} from '../hooks/useTags';
 import 'style/animation.scss';
 import NotData from '../component/common/NotData';
 import monetaryUnit from 'lib/monetaryUnitFormat'
+
+
+
 const nowMonth = dayjs(new Date()).format('YYYY年MM月');
 const Detail: FC = memo(() => {
   const {tags, findId} = useTags();
@@ -65,7 +68,7 @@ const Detail: FC = memo(() => {
             <li>总收入￥{monetaryUnit(totalAmount(record, '+'),true)}</li>
           </ol>
         </Header>
-        <Wrapper>
+          <Wrapper>
           {recordGroup.length===0?<NotData text={'暂无记录...'}/>:recordGroup.map(([date,records])=>
             <Records records={records} key={date}/>
           )}

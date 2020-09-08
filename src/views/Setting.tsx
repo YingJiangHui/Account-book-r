@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Layout from '../component/common/Layout';
 import 'style/animation.scss'
+
+
 function Setting() {
-  const [state, setState] = useState(false);
+
   return (
     <Layout>
-      <input type="text"/>
     </Layout>
   );
 }

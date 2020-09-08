@@ -3,7 +3,6 @@ import { NavLink} from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from './Icon';
 import theme from 'theme'
-
 /*icons*/
 
 const NavStyle = styled.nav`
@@ -56,6 +55,7 @@ const NavStyle = styled.nav`
 `;
 
 const Nav = () => {
+
   return (
     <NavStyle>
       <ul>
@@ -71,12 +71,12 @@ const Nav = () => {
             <span>统计</span>
           </NavLink>
         </li>
-        {/*<li>*/}
-          {/*<NavLink to="/setting" activeClassName='selected'>*/}
-            {/*<Icon name="setting"/>*/}
-            {/*<span>设置</span>*/}
-          {/*</NavLink>*/}
-        {/*</li>*/}
+        <li>
+          <NavLink to="/setting" activeClassName='selected'>
+            <Icon name="setting"/>
+            <span>设置</span>
+          </NavLink>
+        </li>
       </ul>
     </NavStyle>
   );
