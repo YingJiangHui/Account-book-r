@@ -7,8 +7,6 @@ import AccountsCompareChart from '../component/StatisticsComponent/AccountsCompa
 import  dayjs from 'dayjs';
 const now = dayjs(new Date())
 
-
-
 const Statistics = memo(()=> {
 
   const [currentDate, setCurrentDate] = useState<dayjs.Dayjs>(now);

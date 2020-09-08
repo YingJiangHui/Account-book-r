@@ -45,7 +45,6 @@ const Detail: FC = memo(() => {
   }, [record]);
 
   const records = useCallback(() => {
-    console.log('fuck');
     const hash:{[k:string]:RecordItem[]} = {}
     record.map(item=>{
       const key = dayjs(item.createAt).format('YYYY-MM-DD')
