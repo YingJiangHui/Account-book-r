@@ -6,7 +6,28 @@ import generator from 'lib/createId';
 
 const {createId} = generator('recordMaxId');
 
-const Records: RecordItem[] = JSON.parse(window.localStorage.getItem('record') || '[]');
+
+
+let Records: RecordItem[] = JSON.parse(window.localStorage.getItem('record') || '[]');
+
+if(Records.length===0){
+  Records = [
+    {id:createId(),"category":"-",tagIndex:14,amount:2000,note:"",createAt:"2020-09-08T17:03:38"}
+    ,{id:createId(),"category":"+",tagIndex:20,amount:3000,note:"",createAt:"2020-09-07T17:03:18"}
+    ,{id:createId(),"category":"+",tagIndex:21,amount:600,note:"",createAt:"2020-09-06T17:02:36"}
+    ,{id:createId(),"category":"+",tagIndex:16,amount:7000,note:"",createAt:"2020-09-05T17:02:13"}
+    ,{id:createId(),"category":"+",tagIndex:17,amount:2000,note:"",createAt:"2020-09-08T17:02:04"}
+    ,{id:createId(),"category":"-",tagIndex:2,amount:500,note:"",createAt:"2020-09-01T17:01:36"}
+    ,{id:createId(),"category":"-",tagIndex:10,amount:5000,note:"",createAt:"2020-08-25T17:01:24"}
+    ,{id:createId(),"category":"-",tagIndex:8,amount:1666,note:"",createAt:"2020-08-23T17:00:58"}
+    ,{id:createId(),"category":"-",tagIndex:6,amount:200,note:"",createAt:"2020-08-16T17:00:45"}
+    ,{id:createId(),"category":"-",tagIndex:4,amount:100,note:"",createAt:"2020-08-10T17:00:29"}
+    ,{id:createId(),"category":"-",tagIndex:8,amount:1666,note:"",createAt:"2020-07-16T17:00:58"}
+    ,{id:createId(),"category":"-",tagIndex:6,amount:200,note:"",createAt:"2020-08-16T17:00:45"}
+  ]
+  window.localStorage.setItem('record',JSON.stringify(Records)||'[]')
+}
+
 const useRecords = () => {
 
   const [recordList, setRecordList] = useState<RecordItem[]>([]);
@@ -54,7 +75,7 @@ const useRecords = () => {
 
   useEffect(() => {
     setRecordList(JSON.parse(window.localStorage.getItem('record') || '[]'));
-  }, [Records]);
+  }, []);
 
   const filterRecordUsedMonth = (month: string) => {
     return recordList.filter((record) => dayjs(record.createAt).format('YYYY年MM月') === month);
