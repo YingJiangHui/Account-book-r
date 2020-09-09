@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import {useTags} from 'hooks/useTags';
 import cn from 'classnames';
 import useRecords from 'hooks/useRecords';
-import {Wrapper, Amount, Do, IconWrapper, Info, Main, DelRecord} from 'component/Records/records';
+import {Wrapper, Amount, Do, IconWrapper, Info, Main, DelRecord} from 'component/Records/style';
 import {NavLink} from 'react-router-dom';
 import monetaryUnit from '../../lib/monetaryUnitFormat';
 
