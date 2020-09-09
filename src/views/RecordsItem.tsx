@@ -1,4 +1,4 @@
-import React, {FC, memo, useEffect, useState} from 'react';
+import React, {FC, memo, useState} from 'react';
 import Layout from '../component/common/Layout';
 import {useParams, useHistory} from "react-router-dom";
 import useRecords from 'hooks/useRecords';

@@ -46,7 +46,7 @@ const Detail: FC = memo(() => {
 
   const records = useCallback(() => {
     const hash:{[k:string]:RecordItem[]} = {}
-    record.map(item=>{
+    record.forEach(item=>{
       const key = dayjs(item.createAt).format('YYYY-MM-DD')
      if(key in hash){
        hash[key] = [...hash[key],item]

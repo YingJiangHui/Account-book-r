@@ -45,7 +45,7 @@ const KeepAccounts: FC<Props> = memo((props) => {
 
   useEffect(() => {
     setTagList(fetchTags(record.category));
-  }, [record.category, show, tags]);
+  }, [record.category,show, tags]);
 
   const [output, setOutput] = useState<string>('');
 
@@ -55,6 +55,7 @@ const KeepAccounts: FC<Props> = memo((props) => {
       ...value
     });
   }, [record]);
+
   const onSubmit = () => {
     if (id)
       editRecord(record, id);
@@ -65,6 +66,7 @@ const KeepAccounts: FC<Props> = memo((props) => {
     isVisible(false);
     ensure();
   };
+
   const [visibleThis, setVisibleThis] = useState(false);
   useEffect(() => {
     setVisibleThis(show);

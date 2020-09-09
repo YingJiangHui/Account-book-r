@@ -45,7 +45,6 @@ const PopUpMonthBox: FC<Props> = memo(({close, onChange,show}) => {
   const [selected,setSelected] = useState(0)
   const now = dayjs(new Date())
 
-  const prevNum = [0, 1, 2, 3, 4, 5, 6]
 const onClick = (e: React.MouseEvent,month:number)=>{
   onChange(now.subtract(month,'month'))
   setSelected(month)

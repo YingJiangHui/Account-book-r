@@ -38,7 +38,7 @@ const useTags = () => {
 
   React.useEffect(() => {
     setTags(tagList);
-  }, [tagList]);
+  }, []);
 
   useUpdate(() => {
     window.localStorage.setItem('tags', JSON.stringify(tags));
@@ -50,7 +50,7 @@ const useTags = () => {
 
   const findTag = (id: number) => tags.find(tag => id === tag.id);
 
-  const fetchTags = (category: Category, tagList?: TagItem[]) => {
+  const fetchTags =(category: Category, tagList?: TagItem[]) => {
     if (tagList) {
       return tagList.filter((tag) => category === tag.category);
     }

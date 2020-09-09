@@ -10,7 +10,7 @@ const now = dayjs(new Date())
 const Statistics = memo(()=> {
 
   const [currentDate, setCurrentDate] = useState<dayjs.Dayjs>(now);
-  const {filterRecordUsedTag,amountByTag,recordList} = useRecords();
+  const {amountByTag,recordList} = useRecords();
   const [record, setRecord] = useState<RecordItem[]>([]);
   const [amount,setAmount] = useState<{'+':number,'-':number}>({'+':0,'-':0})
 

@@ -1,4 +1,4 @@
-import {FC, memo, useCallback, useEffect, useState} from 'react';
+import {FC, memo, useEffect, useState} from 'react';
 import Icon from 'component/common/Icon';
 import React from 'react';
 import styled from 'styled-components';
@@ -70,7 +70,7 @@ type Props = {
 let count = 0;
 
 const Tags: FC<Props> = memo((props) => {
-  const {value, index: defaultIndex, className} = props;
+  const {value, index: defaultIndex, className,onChange} = props;
   const [tags, setTags] = useState<TagItem[]>([]);
   const [index, setIndex] = useState(1);
   //month控制Tags组件被卸载后index不发生变化
@@ -80,7 +80,7 @@ const Tags: FC<Props> = memo((props) => {
     setIndex(i);
   };
   useEffect(() => {
-    props.onChange(index);
+    onChange(index);
   }, [index]);
   useEffect(() => {
     setIndex(defaultIndex);

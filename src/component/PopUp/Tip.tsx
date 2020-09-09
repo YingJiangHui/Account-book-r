@@ -9,9 +9,13 @@ const Tip: FC<Props> =memo( ({inProp,onChange,children}) => {
   const [visible,setVisible] = useState(false)
   useEffect(()=>{
     setVisible(inProp)
+    let timer:number;
     if(inProp)
-      setTimeout(()=>onChange(false),3000)
-  },[inProp])
+      timer = setTimeout(()=>{onChange(false)},3000)
+    return ()=>{
+      clearTimeout(timer)
+    }
+  },[inProp,onChange])
   return (
     <div>
       <CSSTransition unmountOnExit={true} classNames={'fade'}  in={visible} timeout={200}>

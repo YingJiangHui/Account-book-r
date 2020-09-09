@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import Icon from '../common/Icon';
 import dayjs from 'dayjs';
 import {useTags} from 'hooks/useTags';
@@ -17,6 +17,7 @@ const Records: FC<Props> = (props) => {
   const {findTag} = useTags();
   const {records,onRemove} = props;
   useEffect(()=>{
+    //TODO
     console.log(records);
   },[records])
   const recently = (date: string) => {
@@ -43,7 +44,6 @@ const Records: FC<Props> = (props) => {
   };
   const touchEnd = (e: React.TouchEvent) => {
     const dom = (e.currentTarget as HTMLLIElement)
-    console.log(lastValue, moveValue);
 
     if(Math.abs(lastValue-moveValue)>0.1){
       if(lastValue>moveValue){

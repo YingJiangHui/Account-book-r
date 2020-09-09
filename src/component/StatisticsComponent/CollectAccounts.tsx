@@ -34,10 +34,6 @@ const Income = styled.div`
   }
 `;
 
-const zero = (num: number) => {
-  return num === 0 ? '0.00' : num;
-};
-
 const now = dayjs(new Date());
 
 type Props = {
