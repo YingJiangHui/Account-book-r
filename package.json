@@ -2,6 +2,7 @@
   "name": "morney-react-2",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://gitee.com/yingjianghui/accounts-book-website-r",
   "dependencies": {
     "@babel/core": "7.9.0",
     "@svgr/webpack": "4.3.3",
