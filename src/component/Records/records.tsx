@@ -69,9 +69,14 @@ position: absolute;
   align-items: center;
   right: -92px;
   top: 0;
-  background: #c62f2f;
+  background: #fa524f;
   color: white;
   height: 75px;width: 75px;
+  .icon{
+    fill:#fff;
+    height: 28px;
+    width: 28px;
+   }
 `
 const Amount = styled.div`
   min-width: 68px;

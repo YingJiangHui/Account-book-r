@@ -1,8 +1,11 @@
 import React from 'react';
 import cs from 'classnames';
+import styled from 'styled-components';
 const importAll = (requireContext: __WebpackModuleApi.RequireContext) => requireContext.keys().forEach(requireContext);
 try {importAll(require.context('icons', true, /\.svg$/));} catch (e) {console.log(e);}
 
+const Wrapper = styled.svg`
+`
 
 type Props = {
   name?: string
@@ -11,9 +14,9 @@ type Props = {
 const Icon = (props: Props) => {
   const {className, onClick,...rest} = props;
   return (
-    <svg onClick={onClick} className={cs('icon', className)}>
+    <Wrapper onClick={onClick} className={cs('icon', className)}>
       {rest.name ? <use xlinkHref={'#' + rest.name}></use> : ''}
-    </svg>
+    </Wrapper>
   );
 };
 export default Icon;

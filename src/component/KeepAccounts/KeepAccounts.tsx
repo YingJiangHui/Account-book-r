@@ -8,7 +8,6 @@ import PopUpInput from 'component/PopUp/PopUpInput';
 import SelectInfo from 'component/KeepAccounts/components/SelectInfo';
 import OpenNotePanel from 'component/KeepAccounts/components/OpenNotePanel';
 import {useTags} from 'hooks/useTags';
-import useRecords from 'hooks/useRecords';
 import PopUp from 'component/PopUp/popUpBoxComponent/popUpRootComponent/PopUp';
 import styled from 'styled-components';
 
@@ -43,9 +42,7 @@ const KeepAccounts: FC<Props> = memo((props) => {
   const [tagList, setTagList] = useState<TagItem[]>([]);
   const [visibleThis, setVisibleThis] = useState(false);
 
-  useEffect(() => {
-    setTagList(fetchTags(record.category));
-  }, [record.category,show, tags]);
+
 
   const [output, setOutput] = useState<string>('');
 
@@ -57,9 +54,9 @@ const KeepAccounts: FC<Props> = memo((props) => {
   }, [record]);
 
   const onSubmit = () => {
-    if (id)
+    if (id){
       ensure(record, id);
-    else{
+    } else{
       ensure(record);
       setTimeout(()=>setOutput('clear'),310)
     }
@@ -73,6 +70,11 @@ const KeepAccounts: FC<Props> = memo((props) => {
     if (defaultRecord)
       setRecord(defaultRecord);
   }, [defaultRecord]);
+
+  useEffect(() => {
+    if(show)
+    setTagList(fetchTags(record.category));
+  }, [record.category,show, tags]);
 
   return (
     <>

@@ -16,10 +16,6 @@ const Records: FC<Props> = (props) => {
   const {totalAmount} = useRecords();
   const {findTag} = useTags();
   const {records,onRemove} = props;
-  useEffect(()=>{
-    //TODO
-    console.log(records);
-  },[records])
   const recently = (date: string) => {
     const day = ['今天', '昨天', '前天'];
     const now = dayjs(new Date());
@@ -87,7 +83,7 @@ const Records: FC<Props> = (props) => {
               <li onTouchMove={(e: React.TouchEvent) => {touchMove(e);}}
                   onTouchStart={(e: React.TouchEvent) => touchStart(e)}
                   onTouchEnd={(e: React.TouchEvent) => touchEnd(e)}>
-                <DelRecord onClick={(e:React.MouseEvent)=>{e.preventDefault();onRemove(record.id) }}>DEL</DelRecord>
+                <DelRecord onClick={(e:React.MouseEvent)=>{e.preventDefault();onRemove(record.id) }}><Icon name={'remove'}/></DelRecord>
                 <IconWrapper>
                   <Icon name={findTag(record.tagIndex)?.icon || ''}
                         className={cn(record.category === '+' ? 'special' : '')}/>
