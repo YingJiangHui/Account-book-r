@@ -16,10 +16,7 @@ const NavStyle = styled.nav`
     display: flex;
     justify-content: center;
     >li{
-      border-right: 1px dashed rgba(0,0,0,0.1);
-      &:last-child{
-        border-right: 0px solid rgba(0,0,0,0.1);
-      }
+
       height: inherit;
       text-align: center;
       //width: 33.333%;
@@ -71,12 +68,12 @@ const Nav = () => {
             <span>统计</span>
           </NavLink>
         </li>
-        <li>
-          <NavLink to="/setting" activeClassName='selected'>
-            <Icon name="setting"/>
-            <span>设置</span>
-          </NavLink>
-        </li>
+        {/*<li>*/}
+          {/*<NavLink to="/setting" activeClassName='selected'>*/}
+            {/*<Icon name="setting"/>*/}
+            {/*<span>设置</span>*/}
+          {/*</NavLink>*/}
+        {/*</li>*/}
       </ul>
     </NavStyle>
   );

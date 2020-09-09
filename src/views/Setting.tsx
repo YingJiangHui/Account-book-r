@@ -7,6 +7,7 @@ function Setting() {
 
   return (
     <Layout>
+      正在努力开发中
     </Layout>
   );
 }
