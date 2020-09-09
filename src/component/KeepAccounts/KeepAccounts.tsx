@@ -20,7 +20,7 @@ type Props = {
   id?: number
   defaultRecord?: RecordItem
   isVisible: (value: boolean) => void
-  ensure: () => void
+  ensure: (record:RecordItem,id?:number) => void
   show: boolean
 }
 
@@ -35,13 +35,13 @@ let recordData: RecordItem = {
 
 const KeepAccounts: FC<Props> = memo((props) => {
   const {show, ensure, isVisible, defaultRecord, id} = props;
-  const {addRecord, editRecord} = useRecords();
   const {fetchTags, tags, updateTags, removeTag, editTag, findTag} = useTags();
   const [visibleRemark, setVisibleRemark] = useState(false);
   const [visibleAddTag, setVisibleAddTag] = useState(false);
   const [updateTagId, setUpdateTagId] = useState(-1);
   const [record, setRecord] = useState<RecordItem>(recordData);
   const [tagList, setTagList] = useState<TagItem[]>([]);
+  const [visibleThis, setVisibleThis] = useState(false);
 
   useEffect(() => {
     setTagList(fetchTags(record.category));
@@ -58,16 +58,14 @@ const KeepAccounts: FC<Props> = memo((props) => {
 
   const onSubmit = () => {
     if (id)
-      editRecord(record, id);
+      ensure(record, id);
     else{
+      ensure(record);
       setTimeout(()=>setOutput('clear'),310)
-      addRecord(record);
     }
     isVisible(false);
-    ensure();
   };
 
-  const [visibleThis, setVisibleThis] = useState(false);
   useEffect(() => {
     setVisibleThis(show);
   }, [show, defaultRecord]);
