@@ -12,9 +12,8 @@ import PopUpTagBox from '../component/PopUp/PopUpTagBox';
 import {useTags} from '../hooks/useTags';
 import 'style/animation.scss';
 import NotData from '../component/common/NotData';
-import monetaryUnit from 'lib/monetaryUnitFormat'
+import monetaryUnit from 'lib/monetaryUnitFormat';
 import useUpdate from '../hooks/useUpdate';
-
 
 
 const nowMonth = dayjs(new Date()).format('YYYY年MM月');
@@ -25,7 +24,7 @@ const Detail: FC = memo(() => {
   const [visibleTip, setVisibleTip] = useState(false);
   const [visibleTag, setVisibleTag] = useState(false);
   const [tagName, setTagName] = useState('全部类型');
-  const {filterRecordUsedMonth, recordList, fetchRecord, removeRecord,filterRecordUsedTag, totalAmount,editRecord,addRecord} = useRecords();
+  const {filterRecordUsedMonth, recordList, fetchRecord, removeRecord, filterRecordUsedTag, totalAmount, editRecord, addRecord} = useRecords();
   const [appearMonth, setAppearMonth] = useState(nowMonth);
   const [record, setRecord] = useState<RecordItem[]>([]);
   const [tagId, setTagId] = useState<number>(0);
@@ -45,44 +44,44 @@ const Detail: FC = memo(() => {
   }, [record]);
 
   const records = useCallback(() => {
-    const hash:{[k:string]:RecordItem[]} = {}
-    record.forEach(item=>{
-      const key = dayjs(item.createAt).format('YYYY-MM-DD')
-     if(key in hash){
-       hash[key] = [...hash[key],item]
-     } else{
-       hash[key] = [item]
-     }
-    })
-    return Object.entries(hash)
+    const hash: { [k: string]: RecordItem[] } = {};
+    record.forEach(item => {
+      const key = dayjs(item.createAt).format('YYYY-MM-DD');
+      if (key in hash) {
+        hash[key] = [...hash[key], item];
+      } else {
+        hash[key] = [item];
+      }
+    });
+    return Object.entries(hash);
   }, [record]);
 
   return (
     <>
-      <Tooltip onChange={(value:boolean)=>setVisibleTip(value)} value='记一笔' inProp={visibleTip}/>
+      <Tooltip onChange={(value: boolean) => setVisibleTip(value)} value='记一笔' inProp={visibleTip}/>
       <Layout>
         <Header>
           <button onClick={() => {setVisibleTag(true);}}>{tagName}</button>
           <ol>
             <li onClick={() => {setVisibleMonth(true);}}>{appearMonth}</li>
-            <li>总支出￥{monetaryUnit(totalAmount(record, '-'),true)}</li>
-            <li>总收入￥{monetaryUnit(totalAmount(record, '+'),true)}</li>
+            <li>总支出￥{monetaryUnit(totalAmount(record, '-'), true)}</li>
+            <li>总收入￥{monetaryUnit(totalAmount(record, '+'), true)}</li>
           </ol>
         </Header>
-          <Wrapper>
-          {recordGroup.length===0?<NotData text={'暂无记录...'}/>:recordGroup.map(([date,records])=>
-            <Records onRemove={(id:number)=>{removeRecord(id);}} records={records} key={date}/>
+        <Wrapper>
+          {recordGroup.length === 0 ? <NotData text={'暂无记录...'}/> : recordGroup.map(([date, records]) =>
+            <Records onRemove={(id: number) => {removeRecord(id);}} records={records} key={date}/>
           )}
         </Wrapper>
       </Layout>
       <OpenRecordButton onClick={() => setVisibleAccounts(true)}/>
 
       <KeepAccounts
-        ensure={(record:RecordItem,id?) => {
-          if(id){
-            editRecord(record,id)
-          }else{
-            addRecord(record)
+        ensure={(record: RecordItem, id?) => {
+          if (id) {
+            editRecord(record, id);
+          } else {
+            addRecord(record);
           }
           fetchRecord();
           setVisibleTip(true);

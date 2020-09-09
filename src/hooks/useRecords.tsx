@@ -124,6 +124,7 @@ const useRecords = () => {
     }
     return obj;
   };
+
   const sortRecord = (records?: RecordItem[]): RecordItem[] => {
     let newRecord = recordList;
     if (records)
