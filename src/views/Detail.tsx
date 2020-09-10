@@ -32,10 +32,10 @@ const Detail: FC = memo(() => {
 
   const [amount, setAmount] = useState({'+': 0, '-': 0});
 
-  useUpdate(() => {
-    const {'+': a, '-': b} = categoryRecords(records);
+  useEffect(() => {
+    const {'+': a, '-': b} = categoryRecords(recordList);
     setAmount({'+': getAmount(a), '-': getAmount(b)});
-  }, [records]);
+  }, [recordList]);
   useEffect(() => {
     console.log(records)
     setRecordList(records);

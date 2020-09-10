@@ -55,7 +55,6 @@ const useTags = ():TagAction => {
       '+':[],
       '-':[]
     }
-    console.log('fuck')
     tags.forEach((t)=>{
       hashMap[t.category].push(t)
     })

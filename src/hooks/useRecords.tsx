@@ -50,13 +50,10 @@ const dateMap: { [key: string]: string } = {
   'day': 'YYYY年MM月DD日',
   'month': 'YYYY年MM月',
 };
+
 const useRecords = (): RecordAction => {
   const [records, setRecords] = useState<RecordItem[]>(recordList);
 
-  useUpdate(() => {
-    window.localStorage.setItem('record', JSON.stringify(_sortRecord()));
-
-  }, [records]);
 
 
   const createRecord = (record: RecordItem) => {
@@ -76,6 +73,10 @@ const useRecords = (): RecordAction => {
   const findRecord = (id: number) => {
     return records.filter((r) => r.id === id)[0];
   };
+
+  useUpdate(() => {
+    window.localStorage.setItem('record', JSON.stringify(_sortRecord()));
+  }, [records]);
 
   const categoryRecords = (rs: RecordItem[]) => {
     return rs.reduce((obj: CategoryRecords, rs) => {
