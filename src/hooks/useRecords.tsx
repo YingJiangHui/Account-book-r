@@ -1,4 +1,4 @@
-import { useState} from 'react';
+import {useEffect, useState} from 'react';
 import dayjs from 'dayjs';
 import generator from 'lib/createId';
 import useUpdate from './useUpdate';
@@ -28,32 +28,41 @@ if (recordList.length === 0) {
   ];
 }
 
+type CategoryRecords = { '+': RecordItem[], '-': RecordItem[] }
 
 export interface RecordAction {
-  records:RecordItem[]
-  createRecord:(record:RecordItem)=>void
-  deleteRecord : (id: number) =>void
-  updateRecord : (id: number, record: RecordItem) =>void
-  findRecord:(id: number)=>RecordItem
-  getAmount:(rs: RecordItem[],category:Category)=>number
+  records: RecordItem[]
+  createRecord: (record: RecordItem) => void
+  deleteRecord: (id: number) => void
+  updateRecord: (id: number, record: RecordItem) => void
+  findRecord: (id: number) => RecordItem
+  getAmount: (rs: RecordItem[]) => number
+  filterDateRecord: (rs: RecordItem[], date: string, type: string) => RecordItem[]
+  categoryRecords: (rs: RecordItem[]) => CategoryRecords
+  computerAmount: (rs: RecordItem[],type:Options) => { [key: string]: number }
+  categoryComputerAmount:(rs:RecordItem[],type:Options)=>CategoryRecordAmount
 }
+type Options ='tag' | 'day' | 'month'
 
 const dateMap: { [key: string]: string } = {
   'day': 'YYYY-MM-DD',
-  'month': 'YYYY-MM'
+  'month': 'YYYY-MM',
 };
-const useRecords = ():RecordAction => {
+const useRecords = (): RecordAction => {
   const [records, setRecords] = useState<RecordItem[]>(recordList);
 
   useUpdate(() => {
     _sortRecord();
     window.localStorage.setItem('record', JSON.stringify(records));
+
   }, [records]);
+
+
 
   const createRecord = (record: RecordItem) => {
     if (!record.createAt)
       record.createAt = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
-    record.id = createId()
+    record.id = createId();
     setRecords((rs) => [...rs, record]);
   };
 
@@ -61,26 +70,62 @@ const useRecords = ():RecordAction => {
     setRecords((rs) => rs.filter((r) => r.id !== id));
   };
   const updateRecord = (id: number, record: RecordItem) => {
-    setRecords((rs) => rs.map(r => r.id === id ? {id,...record}: r));
+    setRecords((rs) => rs.map(r => r.id === id ? {id, ...record} : r));
   };
 
   const findRecord = (id: number) => {
     return records.filter((r) => r.id === id)[0];
   };
 
-  const getAmount = (rs: RecordItem[],categroy:Category) => {
-    return rs.reduce((sum, r) => categroy===r.category? sum + r.amount:sum, 0);
+  const categoryRecords = (rs: RecordItem[]) => {
+    return rs.reduce((obj: CategoryRecords, rs) => {
+      return {
+        '+': obj['+'].concat(rs.category === '+' ? [rs] : []),
+        '-': obj['-'].concat(rs.category === '-' ? [rs] : [])
+      };
+    }, {'+': [], '-': []});
   };
+
+  const getAmount = (rs: RecordItem[]) => {
+    return rs.reduce((sum, r) => sum + r.amount, 0);
+  };
+
+  const computerAmount = (rs: RecordItem[], type: Options) => {
+    let key = '';
+    type === 'tag' ? key = type : key = dateMap[type];
+    return rs.reduce((obj: { [key: string]: number }, r) =>
+        ({...obj, key: key in obj ? obj[key] + r.amount : r.amount})
+      , {});
+  };
+
+  const categoryComputerAmount = (rs: RecordItem[],type:Options)=>{
+    const {'+':a,'-':b} = categoryRecords(rs)
+    return {'+':computerAmount(a,type),'-':computerAmount(b,type)}
+  }
+
   const _sortRecord = () => {
     setRecords((rs) => rs.sort((a, b) => a.createAt < b.createAt ? -1 : 1));
   };
 
   const filterDateRecord = (rs: RecordItem[], date: string, type: string) => {
-    return rs.filter((r) => dayjs(r.createAt).format(dateMap[type]) === dayjs(date).format(dateMap[type]));
+    return rs.filter((r) =>
+      dayjs(r.createAt).format(dateMap[type]) === dayjs(date).format(dateMap[type]));
   };
-  const filterTagRecord = (rs:RecordItem[],tagID:number)=>{
-    return rs.filter((r)=>r.tagIndex===tagID)
-  }
-  return {createRecord,deleteRecord,updateRecord,findRecord,getAmount,records};
+  const filterTagRecord = (rs: RecordItem[], tagID: number) => {
+    return rs.filter((r) => r.tagIndex === tagID);
+  };
+
+  return {
+    createRecord,
+    deleteRecord,
+    updateRecord,
+    findRecord,
+    getAmount,
+    records,
+    filterDateRecord,
+    categoryRecords,
+    computerAmount,
+    categoryComputerAmount
+  };
 };
 export default useRecords;

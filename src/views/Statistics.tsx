@@ -1,29 +1,50 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import Layout from '../component/common/Layout';
 import CollectAccounts from '../component/StatisticsComponent/CollectAccounts';
 import AccountsRateOfTag from '../component/StatisticsComponent/AccountsRateOfTag';
-import useRecords from 'hooks/useRecords';
 import AccountsCompareChart from '../component/StatisticsComponent/AccountsCompareChart';
 import  dayjs from 'dayjs';
-const now = dayjs(new Date())
+import useRecords from 'hooks/useRecords';
+import useTag from 'hooks/useTags'
+import Context from 'contexts/context'
+import useUpdate from '../hooks/useUpdate';
+const now = dayjs(new Date());
+
+
 
 const Statistics = memo(()=> {
+  const recordAction = useRecords();
+  const tagAction = useTag()
+  const {getAmount,records,filterDateRecord,categoryRecords,categoryComputerAmount} = recordAction
 
   const [currentDate, setCurrentDate] = useState<dayjs.Dayjs>(now);
-  const {amountByTag,recordList} = useRecords();
-  const [record, setRecord] = useState<RecordItem[]>([]);
+  const [recordList, setRecordList] = useState<RecordItem[]>([]);
   const [amount,setAmount] = useState<{'+':number,'-':number}>({'+':0,'-':0})
+
+  useUpdate(()=>{
+    const rs = filterDateRecord(records,dayjs(currentDate).format('YYYY-MM-DD'),'month')
+    const obj = categoryRecords(rs)
+    const a = getAmount(obj['+'])
+    const b = getAmount(obj['-'])
+    setRecordList(rs);
+    setAmount({'+':a,'-':b})
+
+  },[currentDate])
+
+
 
   return (
     <Layout>
-      <CollectAccounts monthRecord={(record) => setRecord(record)}
+      <Context.Provider value={{...recordAction,...tagAction}}>
+
+      <CollectAccounts
                        onChange={(value) => {setCurrentDate(value);}}
-                       stream={(value) => setAmount(value)}/>
+                        value={amount}/>
 
-      <AccountsRateOfTag value={amountByTag(record,'tag')} totalAmount={amount}/>
-      <AccountsCompareChart startDate={currentDate} title={'每日对比'} unitTime='day' value={amountByTag(record,'day')}/>
-      <AccountsCompareChart startDate={currentDate} title={'每月对比'} unitTime='month' value={amountByTag(recordList,'month')}/>
-
+      <AccountsRateOfTag value={categoryComputerAmount(recordList,'tag')} totalAmount={amount}/>
+      <AccountsCompareChart startDate={currentDate} title={'每日对比'} unitTime='day' value={categoryComputerAmount(recordList,'day')}/>
+      <AccountsCompareChart startDate={currentDate} title={'每月对比'} unitTime='month' value={categoryComputerAmount(records,'month')}/>
+      </Context.Provider>
     </Layout>
   );
 })

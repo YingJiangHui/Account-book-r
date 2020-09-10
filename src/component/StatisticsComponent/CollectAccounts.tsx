@@ -1,10 +1,10 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
 import PopUpMonthBox from 'component/PopUp/PopUpMonthBox';
-import useRecords from 'hooks/useRecords';
 import dayjs from 'dayjs';
 import monetaryUnit from 'lib/monetaryUnitFormat'
+import useUpdate from '../../hooks/useUpdate';
 const Wrapper = styled.section`
   min-height: 220px;
   background: #fff;
@@ -37,33 +37,26 @@ const Income = styled.div`
 const now = dayjs(new Date());
 
 type Props = {
-  onChange: (value:dayjs.Dayjs) => void
-  stream:({}:{'+':number,'-':number})=>void
-  monthRecord:(record:RecordItem[])=>void
+  value:{'+':number,'-':number}
+  onChange:(month: dayjs.Dayjs)=>void
 }
 
-const CollectAccounts: FC<Props> = ({onChange,stream,monthRecord}) => {
+const CollectAccounts: FC<Props> = ({value,onChange}) => {
+
   const [visible, setVisible] = useState(false);
   const [month, setMonth] = useState(now);
-  const {totalAmount, filterRecordUsedMonth} = useRecords();
-  const record = filterRecordUsedMonth(month.format('YYYY年MM月'));
-  const outgoings = totalAmount(record, '-');
-  const income = totalAmount(record, '+');
-  useEffect(()=>{
-    stream({'-':outgoings,'+':income})
-    monthRecord(record)
-  },[outgoings,income])
+
   return (
     <>
       <Wrapper>
         <button onClick={() => {setVisible(true);}}>{month.format('YYYY年MM月')}</button>
         <Income>
           <p>共支出</p>
-          <p>￥{monetaryUnit(parseFloat(outgoings.toFixed(2)),false)}</p>
+          <p>￥{monetaryUnit(parseFloat(value['-'].toFixed(2)),false)}</p>
         </Income>
-        <p className={'outgoings'}>共收入￥{monetaryUnit(income,false)}</p>
+        <p className={'outgoings'}>共收入￥{monetaryUnit(value['+'],false)}</p>
       </Wrapper>
-      <PopUpMonthBox show={visible} close={() => setVisible(false)} onChange={(value) => {
+      <PopUpMonthBox show={visible} close={() => setVisible(false)} onChange={(value: dayjs.Dayjs) => {
         setVisible(false);
         setMonth(value);
         onChange(value);

@@ -18,7 +18,7 @@ const Container = styled.div`
   }
 `;
 type Props = {
-  value: CategoryRecord
+  value: CategoryRecordAmount
   totalAmount: { '+': number; '-': number }
 }
 const AccountsRateOfTag: FC<Props> = ({value, totalAmount}) => {

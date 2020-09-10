@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {FC, memo, useEffect} from 'react';
 import React from 'react';
-import useUpdate from '../../../hooks/useUpdate';
+import useUpdate from 'hooks/useUpdate';
 
 const Wrapper = styled.section`
     margin-top: 20px;

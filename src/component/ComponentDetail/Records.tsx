@@ -1,21 +1,23 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
 import Icon from '../common/Icon';
 import dayjs from 'dayjs';
-import {useTags} from 'hooks/useTags';
 import cn from 'classnames';
-import useRecords from 'hooks/useRecords';
 import {Wrapper, Amount, Do, IconWrapper, Info, Main, DelRecord} from 'component/Records/style';
 import {NavLink} from 'react-router-dom';
 import monetaryUnit from '../../lib/monetaryUnitFormat';
-
+import Context from 'contexts/context'
+import useUpdate from '../../hooks/useUpdate';
 type Props = {
-  records: RecordItem[],
   onRemove:(id:number)=>void
 }
 const Records: FC<Props> = (props) => {
-  const {totalAmount} = useRecords();
-  const {findTag} = useTags();
-  const {records,onRemove} = props;
+  const {findTagUseId,categoryRecords,getAmount,records} = useContext(Context);
+  const [amount,setAmount] = useState<{'+':number,'-':number}>({'+':0,'-':0})
+  const {onRemove} = props;
+  useUpdate(()=>{
+    const obj = categoryRecords(records)
+    setAmount({'+':getAmount(obj['+']),'-':getAmount(obj['-'])})
+  },[records])
   const recently = (date: string) => {
     const day = ['今天', '昨天', '前天'];
     const now = dayjs(new Date());
@@ -72,8 +74,8 @@ const Records: FC<Props> = (props) => {
       <header>
         <div className="date">{dayjs(records[0].createAt).format('MM月DD日')} {recently(records[0].createAt)}</div>
         <ol>
-          <li><span>支</span> {monetaryUnit(totalAmount(records, '-'), true)}</li>
-          <li><span>收</span> {monetaryUnit(totalAmount(records, '+'), true)}</li>
+          <li><span>支</span> {monetaryUnit(amount['-'], true)}</li>
+          <li><span>收</span> {monetaryUnit(amount['+'], true)}</li>
         </ol>
       </header>
       <Main>
@@ -85,12 +87,12 @@ const Records: FC<Props> = (props) => {
                   onTouchEnd={(e: React.TouchEvent) => touchEnd(e)}>
                 <DelRecord onClick={(e:React.MouseEvent)=>{e.preventDefault();onRemove(record.id) }}><Icon name={'remove'}/></DelRecord>
                 <IconWrapper>
-                  <Icon name={findTag(record.tagIndex)?.icon || ''}
+                  <Icon name={findTagUseId(record.tagIndex)?.icon || ''}
                         className={cn(record.category === '+' ? 'special' : '')}/>
                 </IconWrapper>
                 <Info className='info'>
                   <Do>
-                    <li>{findTag(record.tagIndex)?.text}</li>
+                    <li>{findTagUseId(record.tagIndex)?.text}</li>
                     <li className='done'>
                       {dayjs(record.createAt).format('HH:mm')} {record.note ? '| ' + record.note : ''}
                     </li>

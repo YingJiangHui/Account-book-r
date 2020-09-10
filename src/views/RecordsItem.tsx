@@ -1,9 +1,7 @@
 import React, {FC, memo, useState} from 'react';
 import Layout from '../component/common/Layout';
 import {useParams, useHistory} from "react-router-dom";
-import useRecords from 'hooks/useRecords';
 import Icon from '../component/common/Icon';
-import {useTags} from '../hooks/useTags';
 import dayjs from 'dayjs';
 import KeepAccounts from 'component/KeepAccounts/KeepAccounts';
 import Tooltip from 'component/PopUp/Tooltip';
@@ -12,9 +10,16 @@ import cn from 'classnames';
 import AlertSelectBox from '../component/PopUp/AlertSelectBox';
 import useUpdate from '../hooks/useUpdate';
 
+import useTags from 'hooks/useTags';
+import useRecords from 'hooks/useRecords';
+import Context from 'contexts/context'
+
+
 const RecordsItem: FC = memo(() => {
-  const {findRecord, fetchRecord, removeRecord} = useRecords();
-  const {findTag} = useTags();
+  const recordAction = useRecords();
+  const {findRecord, deleteRecord}=recordAction
+  const tagAction = useTags();
+  const {findTagUseId} = tagAction
   let {id} = useParams();
   id = parseInt(id);
   const recordItem = findRecord(parseInt(id));
@@ -24,7 +29,7 @@ const RecordsItem: FC = memo(() => {
   useUpdate(() => {
     if (recordItem) {
       setRecord(recordItem);
-      setTag(findTag(recordItem.tagIndex)!);
+      setTag(findTagUseId(recordItem.tagIndex)!);
     }
   }, [recordItem]);
   const [visibleTip, setVisibleTip] = useState(false);
@@ -33,6 +38,7 @@ const RecordsItem: FC = memo(() => {
   const [tipText, setTipText] = useState('');
   return (
     <>
+      <Context.Provider value={{...recordAction,...tagAction}}>
       <Layout>
         <Wrapper>
           <View>
@@ -61,7 +67,7 @@ const RecordsItem: FC = memo(() => {
           ensure={() => {
             setTipText('删一笔');
             setVisibleTip(true);
-            removeRecord(id);
+            deleteRecord(id);
             setVisibleAlert(false);
             setTimeout(()=>{
               history.goBack();
@@ -72,13 +78,13 @@ const RecordsItem: FC = memo(() => {
         id={id}
         defaultRecord={record}
         ensure={() => {
-          fetchRecord();
           setTipText('改一笔');
           setVisibleTip(true);
         }}
         isVisible={(value: boolean) => {setVisibleAccounts(value);}}
         show={visibleAccounts}
       />
+      </Context.Provider>
     </>
   );
 });

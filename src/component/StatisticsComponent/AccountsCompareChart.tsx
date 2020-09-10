@@ -18,7 +18,7 @@ const Container = styled.div`
 `
 type Props = {
   unitTime:OpUnitType
-  value: CategoryRecord
+  value: CategoryRecordAmount
   title:string
   startDate:dayjs.Dayjs
 }

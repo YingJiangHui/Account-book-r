@@ -16,4 +16,4 @@ type RecordItem = {
   createAt: string
 }
 
-type CategoryRecord={'+':{[key:string]:number},'-':{[key:string]:number}}
+type CategoryRecordAmount={'+':{[key:string]:number},'-':{[key:string]:number}}

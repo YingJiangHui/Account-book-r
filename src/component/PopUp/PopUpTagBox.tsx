@@ -1,10 +1,9 @@
 import PopUpNoSure from 'component/PopUp/popUpBoxComponent/PopUpNoSure';
-import React, {FC, memo, useEffect, useState} from 'react';
+import React, {FC, memo, useContext, useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {useTags} from 'hooks/useTags';
 import theme from '../../theme';
 import cn from 'classnames';
-
+import Context from 'contexts/context'
 const Container = styled.main`
   max-height: 500px;
   overflow: auto;
@@ -41,14 +40,9 @@ type Props = {
   value: TagItem[]
 }
 const PopUpTagBox: FC<Props> = memo(({close, show, value, onChange}) => {
-  const {fetchTags} = useTags();
-  const [income, setIncome] = useState<TagItem[]>([]);
-  const [disburse, setDisburse] = useState<TagItem[]>([]);
+  const {categoryTags} = useContext(Context)
   const [currentTag, setCurrentTag] = useState(0);
-  useEffect(() => {
-    setDisburse(fetchTags('-', value));
-    setIncome(fetchTags('+', value));
-  }, [value]);
+
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     setVisible(show);
@@ -66,7 +60,7 @@ const PopUpTagBox: FC<Props> = memo(({close, show, value, onChange}) => {
         </ol>
         <p>支出</p>
         <ol>
-          {income.map((tag: TagItem) => <li
+          {categoryTags['-'].map((tag: TagItem) => <li
             key={tag.id}
             className={cn(currentTag === tag.id ? 'selected' : '')}
             onClick={(e) => {
@@ -77,7 +71,7 @@ const PopUpTagBox: FC<Props> = memo(({close, show, value, onChange}) => {
 
         <p>收入</p>
         <ol>
-          {disburse.map((tag: TagItem) => <li
+          {categoryTags['+'].map((tag: TagItem) => <li
             key={tag.id}
             className={cn(currentTag === tag.id ? 'selected' : '')}
             onClick={(e) => {

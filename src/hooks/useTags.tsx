@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import generator from 'lib/createId';
 import useUpdate from './useUpdate';
 
@@ -30,6 +30,10 @@ if (tagList.length === 0) {
     {id: createId(), icon: 'refund', text: '退款', category: '+'},
   ];
 }
+const hashMap:{[k:string]:TagItem[]} = {
+  '+':[],
+  '-':[]
+}
 export interface TagAction {
   findTagUseText:(text:string, category:Category)=>TagItem
   findTagUseId:(id:number)=>TagItem
@@ -37,14 +41,26 @@ export interface TagAction {
   deleteTag:(id: number)=>void
   updateTag :(id: number, text: string)=>void
   createTags: (name: string, category: Category)=>void
+  categoryTags:  typeof hashMap
 }
 
+
 const useTags = ():TagAction => {
-  const [tags, setTags] = React.useState<TagItem[]>(tagList);
+
+  const [tags, setTags] = useState<TagItem[]>(tagList);
+  const [categoryTags,setCategoryTags] = useState<typeof hashMap>({'+':[],'-':[]})
+
+  useEffect(()=>{
+    tags.forEach((t)=>{
+      hashMap[t.category].push(t)
+    })
+    setCategoryTags(hashMap)
+  },[])
 
   useUpdate(() => {
     window.localStorage.setItem('tags', JSON.stringify(tags));
   }, [tags]);
+
 
 
   const findTagUseText = (text:string, category:Category)=>{
@@ -65,7 +81,7 @@ const useTags = ():TagAction => {
     setTags((tags)=>tags.map(tag => tag.id === id ? {...tag, text} : tag));
   };
 
-  return {tags,deleteTag, updateTag, createTags,findTagUseId: findTagUseId,findTagUseText: findTagUseText};
+  return {tags,deleteTag, updateTag, createTags,findTagUseId: findTagUseId,findTagUseText,categoryTags};
 };
 
 export default useTags;

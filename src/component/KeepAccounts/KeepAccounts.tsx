@@ -1,4 +1,4 @@
-import React, {FC, memo, useCallback, useEffect, useState} from 'react';
+import React, {FC, memo, useCallback, useContext, useEffect, useState} from 'react';
 import 'style/index.scss';
 import Close from 'component/KeepAccounts/components/Close';
 import Pad from 'component/KeepAccounts/components/Pad';
@@ -7,10 +7,10 @@ import Tags from 'component/KeepAccounts/components/Tags';
 import PopUpInput from 'component/PopUp/PopUpInput';
 import SelectInfo from 'component/KeepAccounts/components/SelectInfo';
 import OpenNotePanel from 'component/KeepAccounts/components/OpenNotePanel';
-import {useTags} from 'hooks/useTags';
 import PopUp from 'component/PopUp/popUpBoxComponent/popUpRootComponent/PopUp';
 import styled from 'styled-components';
-
+import Context from 'contexts/context'
+import useUpdate from '../../hooks/useUpdate';
 const Options = styled.div`
   padding: 16px 16px 0 16px;
 `;
@@ -33,17 +33,14 @@ let recordData: RecordItem = {
 };
 
 const KeepAccounts: FC<Props> = memo((props) => {
+  const {tags,deleteTag,updateTag,findTagUseId,createTags} = useContext(Context)
   const {show, ensure, isVisible, defaultRecord, id} = props;
-  const {fetchTags, tags, updateTags, removeTag, editTag, findTag} = useTags();
   const [visibleRemark, setVisibleRemark] = useState(false);
   const [visibleAddTag, setVisibleAddTag] = useState(false);
   const [updateTagId, setUpdateTagId] = useState(-1);
   const [record, setRecord] = useState<RecordItem>(recordData);
   const [tagList, setTagList] = useState<TagItem[]>([]);
   const [visibleThis, setVisibleThis] = useState(false);
-
-
-
   const [output, setOutput] = useState<string>('');
 
   const onChange = useCallback((value: Partial<typeof record>) => {
@@ -66,15 +63,16 @@ const KeepAccounts: FC<Props> = memo((props) => {
   useEffect(() => {
     setVisibleThis(show);
   }, [show, defaultRecord]);
+
   useEffect(() => {
     if (defaultRecord)
       setRecord(defaultRecord);
   }, [defaultRecord]);
 
-  useEffect(() => {
+  useUpdate(() => {
     if(show)
-    setTagList(fetchTags(record.category));
-  }, [record.category,show, tags]);
+    setTagList(tags);
+  }, [tags]);
 
   return (
     <>
@@ -96,7 +94,7 @@ const KeepAccounts: FC<Props> = memo((props) => {
             }}
             value={output}/>
           <Tags
-            onRemoveTag={(id: number) => {removeTag(id);}}
+            onRemoveTag={(id: number) => {deleteTag(id);}}
             value={tagList}
             onClick={(id: number | undefined) => {
               props.isVisible(false);
@@ -140,7 +138,7 @@ const KeepAccounts: FC<Props> = memo((props) => {
         title='请填写类别名'
         placeholder='不能重复添加类型名'
         maxLen={4}
-        onChange={(value) => {updateTags(value, record.category);}}
+        onChange={(value) => {createTags(value, record.category);}}
         close={() => {
           setVisibleAddTag(false);
           props.isVisible(true);
@@ -152,12 +150,12 @@ const KeepAccounts: FC<Props> = memo((props) => {
         title='请填写类别名'
         placeholder='不能重复添加类型名'
         maxLen={4}
-        onChange={(value) => {editTag(updateTagId, value);}}
+        onChange={(value) => {updateTag(updateTagId, value);}}
         close={() => {
           setUpdateTagId(-1);
           props.isVisible(true);
         }}
-        value={findTag(updateTagId)?.text || ""}
+        value={findTagUseId(updateTagId)?.text || ""}
       />
     </>
   );

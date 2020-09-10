@@ -1,15 +1,13 @@
-import React, {FC, memo, useCallback, useState} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import Layout from '../component/common/Layout';
 import OpenRecordButton from '../component/ComponentDetail/OpenRecordButton';
 import KeepAccounts from 'component/KeepAccounts/KeepAccounts';
 import Records from 'component/ComponentDetail/Records';
 import {Header, Wrapper} from 'component/ComponentDetail/style';
-import useRecords from 'hooks/useRecords';
 import Tooltip from '../component/PopUp/Tooltip';
 import dayjs from 'dayjs';
 import PopUpMonthBox from '../component/PopUp/PopUpMonthBox';
 import PopUpTagBox from '../component/PopUp/PopUpTagBox';
-import useTags from '../hooks/useTags';
 import 'style/animation.scss';
 import NotData from '../component/common/NotData';
 import monetaryUnit from 'lib/monetaryUnitFormat';
@@ -21,7 +19,7 @@ const Detail: FC = memo(() => {
   const recordAction = useRecords();
   const tagAction= useTags();
   const {tags,deleteTag, updateTag, createTags,findTagUseId,findTagUseText} = tagAction
-  const {createRecord,deleteRecord,updateRecord,findRecord,getAmount,records} = recordAction
+  const {createRecord,deleteRecord,updateRecord,findRecord,getAmount,records,categoryRecords} = recordAction
 
   const [visibleAccounts, setVisibleAccounts] = useState<boolean>(false);
   const [visibleMonth, setVisibleMonth] = useState(false);
@@ -33,6 +31,14 @@ const Detail: FC = memo(() => {
   const [recordList, setRecordList] = useState<RecordItem[]>([]);
   const [tagId, setTagId] = useState<number>(0);
   const [recordGroup, setRecordGroup] = useState([]);
+
+  const [amount,setAmount] = useState({'+':0,'-':0})
+  useUpdate(()=>{
+    const {'+':a,'-':b} = categoryRecords(records)
+    setAmount({'+':getAmount(a),'-':getAmount(b)})
+  },[records])
+
+
 
   return (
     <>

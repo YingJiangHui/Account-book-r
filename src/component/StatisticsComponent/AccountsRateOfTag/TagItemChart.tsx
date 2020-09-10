@@ -1,11 +1,10 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import Icon from '../../common/Icon';
 import theme from '../../../theme';
 import cs from 'classnames';
-import {useTags} from 'hooks/useTags';
 import monetaryUnit from '../../../lib/monetaryUnitFormat';
-
+import Context from 'contexts/context'
 const Wrapper = styled.div`
   background: #ffffff;
   display: flex;
@@ -76,10 +75,10 @@ type Props = {
 
 const TagItemChart: FC<Props> = ({value, totalAmount, index}) => {
   const indexTag = parseInt(index);
-  const {findTag} = useTags();
+  const {findTagUseId} = useContext(Context);
   const [rate, setRate] = useState('');
   const [tag, setTag] = useState<TagItem>({} as TagItem);
-  const tmpTag = findTag(indexTag);
+  const tmpTag = findTagUseId(indexTag);
 
   useEffect(() => {
     if (tmpTag) {
