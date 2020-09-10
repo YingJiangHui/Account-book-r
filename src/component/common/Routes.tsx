@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import routeData from 'route/route';
 import NotFound from 'views/NotFound';
 import 'style/animation.scss';
+import Context from 'contexts/context';
+import useTags from 'hooks/useTags'
+import useRecord from 'hooks/useRecords'
 
 interface IRouterItem {
   component?: React.ComponentType;
@@ -11,12 +14,13 @@ interface IRouterItem {
 }
 
 
-class Routes extends React.Component<any> {
-  render() {
-    const {location} = this.props;
-    return (
+const Routes = () => {
+  const recordAction = useRecord()
+  const tagAction = useTags()
 
-      <Switch location={location}>
+  return (
+    <Context.Provider value={{...tagAction,...recordAction}}>
+      <Switch>
         {routeData.map(({path, component, exact}: IRouterItem) => (
           <Route key={path} path={path} component={component} exact={exact}/>
         ))}
@@ -26,20 +30,9 @@ class Routes extends React.Component<any> {
         <Route path={'*'} component={NotFound}/>
 
       </Switch>
-      //
-      // <TransitionGroup mode={'in-out'} style={{height:'100%'}}>
-      //   <CSSTransition
-      //     classNames={'fade'}
-      //     appear={true}
-      //     key={location.pathname}
-      //     timeout={100}
-      //     unmountOnExit={true}
-      //   >
-      //
-      //   </CSSTransition>
-      // </TransitionGroup>
-    );
-  }
-}
+    </Context.Provider>
+  );
+
+};
 
 export default withRouter(Routes);

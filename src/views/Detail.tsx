@@ -1,4 +1,4 @@
-import React, {FC, memo, useEffect, useState} from 'react';
+import React, {FC, memo, useContext, useEffect, useState} from 'react';
 import Layout from '../component/common/Layout';
 import OpenRecordButton from '../component/ComponentDetail/OpenRecordButton';
 import KeepAccounts from 'component/KeepAccounts/KeepAccounts';
@@ -16,10 +16,8 @@ import Context from 'contexts/context'
 
 const nowMonth = dayjs(new Date()).format('YYYY年MM月');
 const Detail: FC = memo(() => {
-  const recordAction = useRecords();
-  const tagAction = useTags();
-  const {tags, deleteTag, updateTag, createTags, findTagUseId, findTagUseText} = tagAction;
-  const {createRecord, deleteRecord, updateRecord, findRecord, getAmount, records, categoryRecords, filterDateRecord, filterTagRecord} = recordAction;
+
+  const {tags, findTagUseText,createRecord, deleteRecord, updateRecord, getAmount, records, categoryRecords, filterDateRecord, filterTagRecord} = useContext(Context)
 
   const [visibleAccounts, setVisibleAccounts] = useState<boolean>(false);
   const [visibleMonth, setVisibleMonth] = useState(false);

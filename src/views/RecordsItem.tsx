@@ -1,4 +1,4 @@
-import React, {FC, memo, useEffect, useState} from 'react';
+import React, {FC, memo, useContext, useEffect, useState} from 'react';
 import Layout from '../component/common/Layout';
 import {useParams, useHistory} from "react-router-dom";
 import Icon from '../component/common/Icon';
@@ -8,18 +8,12 @@ import Tooltip from 'component/PopUp/Tooltip';
 import {Amount, Control, Info, TagIcon, View, Wrapper} from '../component/ComponentRecordItem/style';
 import cn from 'classnames';
 import AlertSelectBox from '../component/PopUp/AlertSelectBox';
-import useUpdate from '../hooks/useUpdate';
 
-import useTags from 'hooks/useTags';
-import useRecords from 'hooks/useRecords';
 import Context from 'contexts/context'
 
 
 const RecordsItem: FC = memo(() => {
-  const recordAction = useRecords();
-  const {findRecord, deleteRecord}=recordAction
-  const tagAction = useTags();
-  const {findTagUseId} = tagAction
+  const {findRecord, deleteRecord,findTagUseId}=useContext(Context)
   let {id} = useParams();
   id = parseInt(id);
   const recordItem = findRecord(parseInt(id));
@@ -39,7 +33,6 @@ const RecordsItem: FC = memo(() => {
   const [tipText, setTipText] = useState('');
   return (
     <>
-      <Context.Provider value={{...recordAction,...tagAction}}>
       <Layout>
         <Wrapper>
           <View>
@@ -85,7 +78,6 @@ const RecordsItem: FC = memo(() => {
         isVisible={(value: boolean) => {setVisibleAccounts(value);}}
         show={visibleAccounts}
       />
-      </Context.Provider>
     </>
   );
 });

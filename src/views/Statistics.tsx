@@ -1,20 +1,16 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, {memo, useContext, useEffect, useState} from 'react';
 import Layout from '../component/common/Layout';
 import CollectAccounts from '../component/StatisticsComponent/CollectAccounts';
 import AccountsRateOfTag from '../component/StatisticsComponent/AccountsRateOfTag';
 import AccountsCompareChart from '../component/StatisticsComponent/AccountsCompareChart';
 import  dayjs from 'dayjs';
-import useRecords from 'hooks/useRecords';
-import useTag from 'hooks/useTags'
 import Context from 'contexts/context'
 const now = dayjs(new Date());
 
 
 
 const Statistics = memo(()=> {
-  const recordAction = useRecords();
-  const tagAction = useTag()
-  const {getAmount,records,filterDateRecord,categoryRecords,computerAmount} = recordAction
+  const {getAmount,records,filterDateRecord,categoryRecords,computerAmount} = useContext(Context)
 
   const [currentDate, setCurrentDate] = useState<dayjs.Dayjs>(now);
   const [recordList, setRecordList] = useState<RecordItem[]>([]);
@@ -31,7 +27,6 @@ const Statistics = memo(()=> {
 
   return (
     <Layout>
-      <Context.Provider value={{...recordAction,...tagAction}}>
 
       <CollectAccounts onChange={(value) => {setCurrentDate(value);}} value={amount}/>
 
@@ -39,7 +34,6 @@ const Statistics = memo(()=> {
 
       <AccountsCompareChart startDate={currentDate} title={'每日对比'} unitTime='day' value={computerAmount(recordList,'day')}/>
       <AccountsCompareChart startDate={currentDate} title={'每月对比'} unitTime='month' value={computerAmount(records,'month')}/>
-      </Context.Provider>
     </Layout>
   );
 })

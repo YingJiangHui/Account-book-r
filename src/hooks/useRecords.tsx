@@ -100,7 +100,6 @@ const useRecords = (): RecordAction => {
 
   const computerAmount = (rs: RecordItem[], type: Options) => {
     const {'+': a, '-': b} = categoryRecords(rs);
-
     return {'+': categoryComputerAmount(a, type), '-': categoryComputerAmount(b, type)};
   };
 
