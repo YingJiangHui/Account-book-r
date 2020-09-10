@@ -14,7 +14,7 @@ import 'style/animation.scss';
 import NotData from '../component/common/NotData';
 import monetaryUnit from 'lib/monetaryUnitFormat';
 import useUpdate from '../hooks/useUpdate';
-import RecordContext from 'contexts/context'
+import Context from 'contexts/context'
 
 const nowMonth = dayjs(new Date()).format('YYYY年MM月');
 const Detail: FC = memo(() => {
@@ -32,10 +32,7 @@ const Detail: FC = memo(() => {
   const [appearMonth, setAppearMonth] = useState(nowMonth);
   const [recordList, setRecordList] = useState<RecordItem[]>([]);
   const [tagId, setTagId] = useState<number>(0);
-  const [recordGroup, setRecordGroup] = useState<any[]>([]);
-
-
-
+  const [recordGroup, setRecordGroup] = useState([]);
 
   return (
     <>
@@ -87,7 +84,7 @@ const Detail: FC = memo(() => {
           else
             setTagId(0);
         }}/>
-      </RecordContext.Provider>
+      </Context.Provider>
     </>
   );
 
