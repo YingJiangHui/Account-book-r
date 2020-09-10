@@ -30,10 +30,7 @@ if (tagList.length === 0) {
     {id: createId(), icon: 'refund', text: '退款', category: '+'},
   ];
 }
-const hashMap:{[k:string]:TagItem[]} = {
-  '+':[],
-  '-':[]
-}
+
 export interface TagAction {
   findTagUseText:(text:string, category:Category)=>TagItem
   findTagUseId:(id:number)=>TagItem
@@ -44,18 +41,26 @@ export interface TagAction {
   categoryTags:  typeof hashMap
 }
 
-
+let hashMap:{[k:string]:TagItem[]} = {
+  '+':[],
+  '-':[]
+}
 const useTags = ():TagAction => {
 
   const [tags, setTags] = useState<TagItem[]>(tagList);
   const [categoryTags,setCategoryTags] = useState<typeof hashMap>({'+':[],'-':[]})
 
   useEffect(()=>{
+    hashMap={
+      '+':[],
+      '-':[]
+    }
+    console.log('fuck')
     tags.forEach((t)=>{
       hashMap[t.category].push(t)
     })
     setCategoryTags(hashMap)
-  },[])
+  },[tags])
 
   useUpdate(() => {
     window.localStorage.setItem('tags', JSON.stringify(tags));

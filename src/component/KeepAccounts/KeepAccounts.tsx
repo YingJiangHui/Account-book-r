@@ -33,13 +33,12 @@ let recordData: RecordItem = {
 };
 
 const KeepAccounts: FC<Props> = memo((props) => {
-  const {tags,deleteTag,updateTag,findTagUseId,createTags} = useContext(Context)
+  const {categoryTags,deleteTag,updateTag,findTagUseId,createTags} = useContext(Context)
   const {show, ensure, isVisible, defaultRecord, id} = props;
   const [visibleRemark, setVisibleRemark] = useState(false);
   const [visibleAddTag, setVisibleAddTag] = useState(false);
   const [updateTagId, setUpdateTagId] = useState(-1);
   const [record, setRecord] = useState<RecordItem>(recordData);
-  const [tagList, setTagList] = useState<TagItem[]>([]);
   const [visibleThis, setVisibleThis] = useState(false);
   const [output, setOutput] = useState<string>('');
 
@@ -69,10 +68,6 @@ const KeepAccounts: FC<Props> = memo((props) => {
       setRecord(defaultRecord);
   }, [defaultRecord]);
 
-  useUpdate(() => {
-    if(show)
-    setTagList(tags);
-  }, [tags]);
 
   return (
     <>
@@ -95,7 +90,7 @@ const KeepAccounts: FC<Props> = memo((props) => {
             value={output}/>
           <Tags
             onRemoveTag={(id: number) => {deleteTag(id);}}
-            value={tagList}
+            value={categoryTags[record.category]}
             onClick={(id: number | undefined) => {
               props.isVisible(false);
               id ? setUpdateTagId(id) : setVisibleAddTag(true);
