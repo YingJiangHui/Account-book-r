@@ -26,17 +26,19 @@ const AccountsRateOfTag: FC<Props> = ({value, totalAmount}) => {
   const [amountList, setAmountList] = useState<xxx>();
   const [amount, setAmount] = useState<{ '+': number; '-': number }>({'+': 0, '-': 0});
   const [category, setCategory] = useState<Category>('-');
-
   const group = () => {
     const tagItemChart = [];
 
     for (let key in amountList) {
       tagItemChart.push(<TagItemChart key={key} index={key} value={amountList[key]} totalAmount={amount}/>);
     }
+
     return tagItemChart;
   };
   const recordList = group()
+
   useEffect(() => {
+    console.log(value);
     setAmountList(value[category]);
     setAmount(totalAmount);
   }, [value,category]);

@@ -17,9 +17,9 @@ import Context from 'contexts/context'
 const nowMonth = dayjs(new Date()).format('YYYY年MM月');
 const Detail: FC = memo(() => {
   const recordAction = useRecords();
-  const tagAction= useTags();
-  const {tags,deleteTag, updateTag, createTags,findTagUseId,findTagUseText} = tagAction
-  const {createRecord,deleteRecord,updateRecord,findRecord,getAmount,records,categoryRecords} = recordAction
+  const tagAction = useTags();
+  const {tags, deleteTag, updateTag, createTags, findTagUseId, findTagUseText} = tagAction;
+  const {createRecord, deleteRecord, updateRecord, findRecord, getAmount, records, categoryRecords, filterDateRecord, filterTagRecord} = recordAction;
 
   const [visibleAccounts, setVisibleAccounts] = useState<boolean>(false);
   const [visibleMonth, setVisibleMonth] = useState(false);
@@ -30,16 +30,38 @@ const Detail: FC = memo(() => {
   const [appearMonth, setAppearMonth] = useState(nowMonth);
   const [recordList, setRecordList] = useState<RecordItem[]>([]);
   const [tagId, setTagId] = useState<number>(0);
-  const [recordGroup, setRecordGroup] = useState([]);
+  const [recordGroup, setRecordGroup] = useState<any[][]>([]);
 
-  const [amount,setAmount] = useState({'+':0,'-':0})
-  useUpdate(()=>{
-    const {'+':a,'-':b} = categoryRecords(records)
-    setAmount({'+':getAmount(a),'-':getAmount(b)})
-  },[records])
+  const [amount, setAmount] = useState({'+': 0, '-': 0});
+
+  useUpdate(() => {
+    const {'+': a, '-': b} = categoryRecords(records);
+    setAmount({'+': getAmount(a), '-': getAmount(b)});
+  }, [records]);
+  useEffect(() => {
+    console.log(records)
+    setRecordList(records);
+  }, [records]);
+  useUpdate(() => {
+    let  rs = filterDateRecord(records, appearMonth,'month')
+    if (tagId) {
+      rs  =filterTagRecord(rs, tagId)
+    }
+    setRecordList(()=>rs);
+  }, [tagId,appearMonth]);
+  useUpdate(() => {
 
 
+  }, [appearMonth]);
 
+  useEffect(()=>{
+    setRecordGroup(Object.entries(
+      recordList.reduce((obj: { [key: string]: RecordItem[] }, rs) => {
+        const day = dayjs(rs.createAt).format('YYYY-MM-DD');
+        return {...obj, [day]: (day in obj ? obj[day].concat([rs]) : [rs])};
+      }, {})
+    ))
+  },[recordList])
   return (
     <>
       <Tooltip onChange={(value: boolean) => setVisibleTip(value)} value='记一笔' inProp={visibleTip}/>

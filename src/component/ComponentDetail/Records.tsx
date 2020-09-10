@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect, useState} from 'react';
+import React, {FC, useContext, useState} from 'react';
 import Icon from '../common/Icon';
 import dayjs from 'dayjs';
 import cn from 'classnames';
@@ -9,11 +9,12 @@ import Context from 'contexts/context'
 import useUpdate from '../../hooks/useUpdate';
 type Props = {
   onRemove:(id:number)=>void
+  records:RecordItem[]
 }
 const Records: FC<Props> = (props) => {
-  const {findTagUseId,categoryRecords,getAmount,records} = useContext(Context);
+  const {findTagUseId,categoryRecords,getAmount} = useContext(Context);
   const [amount,setAmount] = useState<{'+':number,'-':number}>({'+':0,'-':0})
-  const {onRemove} = props;
+  const {onRemove,records} = props;
   useUpdate(()=>{
     const obj = categoryRecords(records)
     setAmount({'+':getAmount(obj['+']),'-':getAmount(obj['-'])})

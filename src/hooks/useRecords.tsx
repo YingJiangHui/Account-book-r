@@ -39,24 +39,24 @@ export interface RecordAction {
   getAmount: (rs: RecordItem[]) => number
   filterDateRecord: (rs: RecordItem[], date: string, type: string) => RecordItem[]
   categoryRecords: (rs: RecordItem[]) => CategoryRecords
-  computerAmount: (rs: RecordItem[],type:Options) => { [key: string]: number }
-  categoryComputerAmount:(rs:RecordItem[],type:Options)=>CategoryRecordAmount
+  categoryComputerAmount: (rs: RecordItem[], type: Options) => { [key: string]: number }
+  computerAmount: (rs: RecordItem[], type: Options) => CategoryRecordAmount
+  filterTagRecord: (rs: RecordItem[], tagID: number) => RecordItem[]
 }
-type Options ='tag' | 'day' | 'month'
+
+type Options = 'tag' | 'day' | 'month'
 
 const dateMap: { [key: string]: string } = {
-  'day': 'YYYY-MM-DD',
-  'month': 'YYYY-MM',
+  'day': 'YYYY年MM月DD日',
+  'month': 'YYYY年MM月',
 };
 const useRecords = (): RecordAction => {
   const [records, setRecords] = useState<RecordItem[]>(recordList);
 
   useUpdate(() => {
-    _sortRecord();
-    window.localStorage.setItem('record', JSON.stringify(records));
+    window.localStorage.setItem('record', JSON.stringify(_sortRecord()));
 
   }, [records]);
-
 
 
   const createRecord = (record: RecordItem) => {
@@ -90,26 +90,27 @@ const useRecords = (): RecordAction => {
     return rs.reduce((sum, r) => sum + r.amount, 0);
   };
 
-  const computerAmount = (rs: RecordItem[], type: Options) => {
-    let key = '';
-    type === 'tag' ? key = type : key = dateMap[type];
-    return rs.reduce((obj: { [key: string]: number }, r) =>
-        ({...obj, key: key in obj ? obj[key] + r.amount : r.amount})
-      , {});
+  const categoryComputerAmount = (rs: RecordItem[], type: Options) => {
+
+      return rs.reduce((obj: { [key: string]: number }, r) => {
+        const key = ((type==='tag')?r.tagIndex.toString(): dayjs(r.createAt).format(dateMap[type]))
+        return {...obj, [key]: key in obj ? obj[key] + r.amount : r.amount};
+      }, {});
   };
 
-  const categoryComputerAmount = (rs: RecordItem[],type:Options)=>{
-    const {'+':a,'-':b} = categoryRecords(rs)
-    return {'+':computerAmount(a,type),'-':computerAmount(b,type)}
-  }
+  const computerAmount = (rs: RecordItem[], type: Options) => {
+    const {'+': a, '-': b} = categoryRecords(rs);
+
+    return {'+': categoryComputerAmount(a, type), '-': categoryComputerAmount(b, type)};
+  };
 
   const _sortRecord = () => {
-    setRecords((rs) => rs.sort((a, b) => a.createAt < b.createAt ? -1 : 1));
+    return records.sort((a, b) => a.createAt > b.createAt ? -1 : 1);
   };
 
   const filterDateRecord = (rs: RecordItem[], date: string, type: string) => {
     return rs.filter((r) =>
-      dayjs(r.createAt).format(dateMap[type]) === dayjs(date).format(dateMap[type]));
+      dayjs(r.createAt).format(dateMap[type]) === date);
   };
   const filterTagRecord = (rs: RecordItem[], tagID: number) => {
     return rs.filter((r) => r.tagIndex === tagID);
@@ -125,7 +126,8 @@ const useRecords = (): RecordAction => {
     filterDateRecord,
     categoryRecords,
     computerAmount,
-    categoryComputerAmount
+    categoryComputerAmount,
+    filterTagRecord
   };
 };
 export default useRecords;

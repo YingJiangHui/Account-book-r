@@ -1,4 +1,4 @@
-import React, {FC, memo, useState} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import Layout from '../component/common/Layout';
 import {useParams, useHistory} from "react-router-dom";
 import Icon from '../component/common/Icon';
@@ -26,9 +26,10 @@ const RecordsItem: FC = memo(() => {
   const [record, setRecord] = useState<RecordItem>(recordItem as RecordItem);
   const [tag, setTag] = useState<TagItem>({} as TagItem);
   const [visibleAlert, setVisibleAlert] = useState(false);
-  useUpdate(() => {
+  useEffect(() => {
     if (recordItem) {
       setRecord(recordItem);
+      console.log(findTagUseId(recordItem.tagIndex))
       setTag(findTagUseId(recordItem.tagIndex)!);
     }
   }, [recordItem]);
