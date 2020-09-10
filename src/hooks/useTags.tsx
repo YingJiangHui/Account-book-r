@@ -31,8 +31,8 @@ if (tagList.length === 0) {
   ];
 }
 export interface TagAction {
-  findUseText:(text:string,category:Category)=>TagItem
-  findUseId:(id:number)=>TagItem
+  findTagUseText:(text:string, category:Category)=>TagItem
+  findTagUseId:(id:number)=>TagItem
   tags:TagItem[],
   deleteTag:(id: number)=>void
   updateTag :(id: number, text: string)=>void
@@ -47,11 +47,11 @@ const useTags = ():TagAction => {
   }, [tags]);
 
 
-  const findUseText = (text:string,category:Category)=>{
+  const findTagUseText = (text:string, category:Category)=>{
     return tags.filter((ts)=>ts.text===text&&ts.category===category)[0]
   }
 
-  const findUseId = (id: number) => {
+  const findTagUseId = (id: number) => {
     return tags.filter(tag => id === tag.id)[0]
   };
 
@@ -65,7 +65,7 @@ const useTags = ():TagAction => {
     setTags((tags)=>tags.map(tag => tag.id === id ? {...tag, text} : tag));
   };
 
-  return {tags,deleteTag, updateTag, createTags,findUseId,findUseText};
+  return {tags,deleteTag, updateTag, createTags,findTagUseId: findTagUseId,findTagUseText: findTagUseText};
 };
 
 export default useTags;
