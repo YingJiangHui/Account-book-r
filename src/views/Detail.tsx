@@ -9,16 +9,20 @@ import Tooltip from '../component/PopUp/Tooltip';
 import dayjs from 'dayjs';
 import PopUpMonthBox from '../component/PopUp/PopUpMonthBox';
 import PopUpTagBox from '../component/PopUp/PopUpTagBox';
-import {useTags} from '../hooks/useTags';
+import useTags from '../hooks/useTags';
 import 'style/animation.scss';
 import NotData from '../component/common/NotData';
 import monetaryUnit from 'lib/monetaryUnitFormat';
 import useUpdate from '../hooks/useUpdate';
-
+import RecordContext from 'contexts/context'
 
 const nowMonth = dayjs(new Date()).format('YYYY年MM月');
 const Detail: FC = memo(() => {
-  const {tags, findId} = useTags();
+  const recordAction = useRecords();
+  const tagAction= useTags();
+  const {tags,deleteTag, updateTag, createTags,findTagUseId,findTagUseText} = tagAction
+  const {createRecord,deleteRecord,updateRecord,findRecord,getAmount,records} = recordAction
+
   const [visibleAccounts, setVisibleAccounts] = useState<boolean>(false);
   const [visibleMonth, setVisibleMonth] = useState(false);
   const [visibleTip, setVisibleTip] = useState(false);
@@ -26,35 +30,12 @@ const Detail: FC = memo(() => {
   const [tagName, setTagName] = useState('全部类型');
   const {filterRecordUsedMonth, recordList, fetchRecord, removeRecord, filterRecordUsedTag, totalAmount, editRecord, addRecord} = useRecords();
   const [appearMonth, setAppearMonth] = useState(nowMonth);
-  const [record, setRecord] = useState<RecordItem[]>([]);
+  const [recordList, setRecordList] = useState<RecordItem[]>([]);
   const [tagId, setTagId] = useState<number>(0);
   const [recordGroup, setRecordGroup] = useState<any[]>([]);
 
-  useUpdate(() => {
-    const newRecords = filterRecordUsedMonth(appearMonth);
-    setRecord(() => newRecords);
-    // 0表示显示全部
-    if (tagId !== 0) {
-      setRecord(() => filterRecordUsedTag(tagId, newRecords));
-    }
-  }, [recordList, appearMonth, tagId]);
 
-  useUpdate(() => {
-    setRecordGroup(records());
-  }, [record]);
 
-  const records = useCallback(() => {
-    const hash: { [k: string]: RecordItem[] } = {};
-    record.forEach(item => {
-      const key = dayjs(item.createAt).format('YYYY-MM-DD');
-      if (key in hash) {
-        hash[key] = [...hash[key], item];
-      } else {
-        hash[key] = [item];
-      }
-    });
-    return Object.entries(hash);
-  }, [record]);
 
   return (
     <>
@@ -83,7 +64,6 @@ const Detail: FC = memo(() => {
           } else {
             addRecord(record);
           }
-          fetchRecord();
           setVisibleTip(true);
         }}
         isVisible={(value: boolean) => {setVisibleAccounts(value);}}
@@ -103,10 +83,11 @@ const Detail: FC = memo(() => {
           setTagName(value);
           setVisibleTag(false);
           if (category)
-            setTagId(findId(value, category)!.id);
+            setTagId(findTagUseText(value, category)!.id);
           else
             setTagId(0);
         }}/>
+      </RecordContext.Provider>
     </>
   );
 
