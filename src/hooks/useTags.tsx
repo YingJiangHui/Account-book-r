@@ -30,41 +30,42 @@ if (tagList.length === 0) {
     {id: createId(), icon: 'refund', text: '退款', category: '+'},
   ];
 }
-const useTags = () => {
-  const [tags, setTags] = React.useState<TagItem[]>([]);
+export interface TagAction {
+  findUseText:(text:string,category:Category)=>TagItem
+  findUseId:(id:number)=>TagItem
+  tags:TagItem[],
+  deleteTag:(id: number)=>void
+  updateTag :(id: number, text: string)=>void
+  createTags: (name: string, category: Category)=>void
+}
 
-  React.useEffect(() => {
-    setTags(tagList);
-  }, []);
+const useTags = ():TagAction => {
+  const [tags, setTags] = React.useState<TagItem[]>(tagList);
 
   useUpdate(() => {
     window.localStorage.setItem('tags', JSON.stringify(tags));
   }, [tags]);
 
-  const findId = (text: string, category: Category):TagItem|undefined => {
-    return tags.find(tag => tag.text === text && tag.category === category);
+
+  const findUseText = (text:string,category:Category)=>{
+    return tags.filter((ts)=>ts.text===text&&ts.category===category)[0]
+  }
+
+  const findUseId = (id: number) => {
+    return tags.filter(tag => id === tag.id)[0]
   };
 
-  const findTag = (id: number) => tags.find(tag => id === tag.id);
-
-  const fetchTags =(category: Category, tagList?: TagItem[]) => {
-    if (tagList) {
-      return tagList.filter((tag) => category === tag.category);
-    }
-    return tags.filter((tag) => category === tag.category);
-  };
-  const updateTags = (name: string, category: Category) => {
+  const createTags = (name: string, category: Category) => {
     setTags((tags)=>[...tags, {id: createId(), icon: 'accounts', text: name, category}]);
   };
-  const removeTag = (id: number) => {
+  const deleteTag = (id: number) => {
     setTags((tags)=>tags.filter(item => item.id !== id));
   };
-  const editTag = (id: number, text: string) => {
+  const updateTag = (id: number, text: string) => {
     setTags((tags)=>tags.map(tag => tag.id === id ? {...tag, text} : tag));
   };
-  return {tags, fetchTags, setTags, findId,removeTag, editTag, findTag, updateTags};
+
+  return {tags,deleteTag, updateTag, createTags,findUseId,findUseText};
 };
 
-export {
-  useTags
-};
+export default useTags;
