@@ -43,12 +43,8 @@ const Category: FC<Props> = ({value, onChange}) => {
   },[value])
   return (
     <Wrapper>
-        {
-          categoryList.map(category =>
-          <button className={cs(category===selected?styleMap[selected]:'')}
-                  key={category}
-                  onClick={()=>{onChange(category);}}
-          >{categoryMap[category]}</button>
+        {categoryList.map(category =>
+          <button className={cs(category===selected?styleMap[selected]:'')} key={category} onClick={()=>{onChange(category);}}>{categoryMap[category]}</button>
         )}
     </Wrapper>
   );
