@@ -67,7 +67,7 @@ type Props = {
 const nowDate = dayjs(new Date());
 
 const SelectInfo: FC<Props> = memo((props) => {
-  const {onChangeCategory, defaultDate} = props;
+  const {onChangeCategory, defaultDate,onChangeDate} = props;
   const [date, setDate] = useState(nowDate.format('YYYY-MM-DDTHH:mm'));
   const [formatDate,setFormatDate] = useState(nowDate.format('YYYY年MM月DD日 HH:mm:ss'))
   const [category, setCatecory] = useState('-');
@@ -81,8 +81,8 @@ const SelectInfo: FC<Props> = memo((props) => {
     setCatecory(props.category);
   }, [props.category]);
   useEffect(() => {
-    props.onChangeDate(date);
-  }, [date]);
+    onChangeDate(date);
+  }, [date, onChangeDate]);
   useEffect(() => {
   }, []);
   useEffect(()=>{

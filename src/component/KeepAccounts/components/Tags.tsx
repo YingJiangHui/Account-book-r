@@ -81,11 +81,11 @@ const Tags: FC<Props> = memo((props) => {
   };
   useEffect(() => {
     onChange(index);
-  }, [index]);
+  }, [index,onChange]);
   useEffect(() => {
     setIndex(defaultIndex);
     count = 0;
-  }, []);
+  }, [defaultIndex]);
 
   useEffect(() => {
     setTags(value);
@@ -104,7 +104,7 @@ const Tags: FC<Props> = memo((props) => {
         setState(false);
       }
     }
-  }, [tags]);
+  }, tags);
 
 
   let timer = -1;

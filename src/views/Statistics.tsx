@@ -23,7 +23,7 @@ const Statistics = memo(()=> {
     const b = getAmount(obj['-'])
     setRecordList(rs);
     setAmount({'+':a,'-':b})
-  },[currentDate])
+  },[currentDate,filterDateRecord,getAmount,categoryRecords,records])
 
   return (
     <Layout>

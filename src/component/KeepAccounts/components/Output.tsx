@@ -75,7 +75,7 @@ const Output: FC<Props> =memo( (props) => {
         }
         break;
     }
-  }, [props.value]);
+  }, props.value);
 
   return (
     <Wrapper>

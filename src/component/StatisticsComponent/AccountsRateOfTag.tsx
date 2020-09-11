@@ -38,10 +38,9 @@ const AccountsRateOfTag: FC<Props> = ({value, totalAmount}) => {
   const recordList = group()
 
   useEffect(() => {
-    console.log(value);
     setAmountList(value[category]);
     setAmount(totalAmount);
-  }, [value,category]);
+  }, [value,category,totalAmount]);
   return (
     <Wrapper>
       <Container>

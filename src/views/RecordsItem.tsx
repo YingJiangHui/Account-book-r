@@ -23,10 +23,9 @@ const RecordsItem: FC = memo(() => {
   useEffect(() => {
     if (recordItem) {
       setRecord(recordItem);
-      console.log(findTagUseId(recordItem.tagIndex))
       setTag(findTagUseId(recordItem.tagIndex)!);
     }
-  }, [recordItem]);
+  }, [recordItem,findTagUseId]);
   const [visibleTip, setVisibleTip] = useState(false);
   const [visibleAccounts, setVisibleAccounts] = useState(false);
   const history = useHistory();

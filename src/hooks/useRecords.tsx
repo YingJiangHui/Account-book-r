@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import dayjs from 'dayjs';
 import generator from 'lib/createId';
 import useUpdate from './useUpdate';
@@ -76,7 +76,7 @@ const useRecords = (): RecordAction => {
 
   useUpdate(() => {
     window.localStorage.setItem('record', JSON.stringify(_sortRecord()));
-  }, [records]);
+  }, records);
 
   const categoryRecords = (rs: RecordItem[]) => {
     return rs.reduce((obj: CategoryRecords, rs) => {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import generator from 'lib/createId';
 import useUpdate from './useUpdate';
 
@@ -63,7 +63,7 @@ const useTags = ():TagAction => {
 
   useUpdate(() => {
     window.localStorage.setItem('tags', JSON.stringify(tags));
-  }, [tags]);
+  }, tags);
 
 
 
@@ -85,7 +85,7 @@ const useTags = ():TagAction => {
     setTags((tags)=>tags.map(tag => tag.id === id ? {...tag, text} : tag));
   };
 
-  return {tags,deleteTag, updateTag, createTags,findTagUseId: findTagUseId,findTagUseText,categoryTags};
+  return {tags,deleteTag, updateTag, createTags, findTagUseId,findTagUseText,categoryTags};
 };
 
 export default useTags;

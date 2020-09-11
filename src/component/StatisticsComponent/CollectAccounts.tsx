@@ -4,7 +4,6 @@ import theme from '../../theme';
 import PopUpMonthBox from 'component/PopUp/PopUpMonthBox';
 import dayjs from 'dayjs';
 import monetaryUnit from 'lib/monetaryUnitFormat'
-import useUpdate from '../../hooks/useUpdate';
 const Wrapper = styled.section`
   min-height: 220px;
   background: #fff;

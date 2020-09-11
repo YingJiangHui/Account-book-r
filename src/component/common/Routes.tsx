@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import routeData from 'route/route';
 import NotFound from 'views/NotFound';

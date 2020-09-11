@@ -6,7 +6,6 @@ import {Wrapper, Amount, Do, IconWrapper, Info, Main, DelRecord} from 'component
 import {NavLink} from 'react-router-dom';
 import monetaryUnit from '../../lib/monetaryUnitFormat';
 import Context from 'contexts/context';
-import useUpdate from '../../hooks/useUpdate';
 
 type Props = {
   onRemove: (id: number) => void
@@ -16,10 +15,12 @@ const Records: FC<Props> = (props) => {
   const {findTagUseId, categoryRecords, getAmount} = useContext(Context);
   const [amount, setAmount] = useState<{ '+': number, '-': number }>({'+': 0, '-': 0});
   const {onRemove, records} = props;
+
   useEffect(() => {
     const obj = categoryRecords(records);
     setAmount({'+': getAmount(obj['+']), '-': getAmount(obj['-'])});
-  }, [records]);
+    }, [records,getAmount,categoryRecords]);
+
   const recently = (date: string) => {
     const day = ['今天', '昨天', '前天'];
     const now = dayjs(new Date());
@@ -30,6 +31,7 @@ const Records: FC<Props> = (props) => {
     }
   };
 
+  //moveDelete
   let startValue = 0;
   let moveValue = 0;
   const touchStart = (e: React.TouchEvent) => {

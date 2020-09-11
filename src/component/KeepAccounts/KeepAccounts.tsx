@@ -10,7 +10,6 @@ import OpenNotePanel from 'component/KeepAccounts/components/OpenNotePanel';
 import PopUp from 'component/PopUp/popUpBoxComponent/popUpRootComponent/PopUp';
 import styled from 'styled-components';
 import Context from 'contexts/context'
-import useUpdate from '../../hooks/useUpdate';
 const Options = styled.div`
   padding: 16px 16px 0 16px;
 `;

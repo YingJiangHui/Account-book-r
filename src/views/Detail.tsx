@@ -35,22 +35,19 @@ const Detail: FC = memo(() => {
   useEffect(() => {
     const {'+': a, '-': b} = categoryRecords(recordList);
     setAmount({'+': getAmount(a), '-': getAmount(b)});
-  }, [recordList]);
+  }, [recordList,categoryRecords,getAmount]);
+
   useEffect(() => {
-    console.log(records)
     setRecordList(records);
   }, [records]);
-  useUpdate(() => {
+  useEffect(() => {
     let  rs = filterDateRecord(records, appearMonth,'month')
     if (tagId) {
       rs  =filterTagRecord(rs, tagId)
     }
     setRecordList(()=>rs);
-  }, [tagId,appearMonth]);
-  useUpdate(() => {
+  }, [tagId,appearMonth,filterDateRecord,filterTagRecord,records]);
 
-
-  }, [appearMonth]);
 
   useEffect(()=>{
     setRecordGroup(Object.entries(
