@@ -1,12 +1,11 @@
-import {FC, memo, useEffect, useState} from 'react';
+import {FC, memo, useContext, useEffect, useState} from 'react';
 import Icon from 'component/common/Icon';
 import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
 import PopOptionBox from '../../PopUp/PopOptionBox';
-import useUpdate from 'hooks/useUpdate';
 import AlertSelectBox from '../../PopUp/AlertSelectBox';
-
+import Context from 'contexts/context';
 const Wrapper = styled.section`
   .view{
     padding-bottom: 10px;
@@ -64,47 +63,32 @@ type Props = {
   onChange: (value: number) => void,
   className: string,
   onClick: (id?: number) => void,
-  value: TagItem[]
+  value: Category
   index: number
 }
-let count = 0;
 
 const Tags: FC<Props> = memo((props) => {
-  const {value, index: defaultIndex, className,onChange} = props;
-  const [tags, setTags] = useState<TagItem[]>([]);
-  const [index, setIndex] = useState(1);
-  //month控制Tags组件被卸载后index不发生变化
-  const [state, setState] = useState(false);
+  const {value, index: defaultIndex,onChange} = props;
+  const [index, setIndex] = useState(defaultIndex);
+  const {categoryTags} = useContext(Context)
+  const [tags,setTags] = useState<TagItem[]>([])
 
-  const toggle = (i: number) => {
-    setIndex(i);
-  };
+  useEffect(()=>{
+    const ts = categoryTags[value]
+    setTags(ts)
+    setIndex(ts[0].id)
+  },[value])
+
   useEffect(() => {
     onChange(index);
-  }, [index,onChange]);
+  }, [index]);
+
   useEffect(() => {
     setIndex(defaultIndex);
-    count = 0;
-  }, [defaultIndex]);
+  }, []);
 
-  useEffect(() => {
-    setTags(value);
-  }, [value]);
 
-  //className变化表示切换了收入支出index可变化
-  useEffect(() => {
-    setState(true);
-  }, [className]);
-//只有监听tags变化才能拿到最新的tags，className则不行它会拿到原来的tags值
-  useUpdate(() => {
-    count++;
-    if (count > 1) {
-      if (state) {
-        setIndex(tags[0]?.id);
-        setState(false);
-      }
-    }
-  }, tags);
+
 
 
   let timer = -1;
@@ -132,9 +116,9 @@ const Tags: FC<Props> = memo((props) => {
                     clearTimeout(timer);
                   }
                 }
-                onClick={(e) => {
-                  toggle(item.id);
-                }}
+                onClick={(e) =>
+                  setIndex(item.id)
+                }
                 className={index === item.id ? props.className + '-selected' : ''}
                 key={item.id}>
 

@@ -32,7 +32,7 @@ let recordData: RecordItem = {
 };
 
 const KeepAccounts: FC<Props> = memo((props) => {
-  const {categoryTags,deleteTag,updateTag,findTagUseId,createTags} = useContext(Context)
+  const {deleteTag,updateTag,findTagUseId,createTags} = useContext(Context)
   const {show, ensure, isVisible, defaultRecord, id} = props;
   const [visibleRemark, setVisibleRemark] = useState(false);
   const [visibleAddTag, setVisibleAddTag] = useState(false);
@@ -60,7 +60,7 @@ const KeepAccounts: FC<Props> = memo((props) => {
 
   useEffect(() => {
     setVisibleThis(show);
-  }, [show, defaultRecord]);
+  }, [show]);
 
   useEffect(() => {
     if (defaultRecord)
@@ -89,7 +89,7 @@ const KeepAccounts: FC<Props> = memo((props) => {
             value={output}/>
           <Tags
             onRemoveTag={(id: number) => {deleteTag(id);}}
-            value={categoryTags[record.category]}
+            value={record.category}
             onClick={(id: number | undefined) => {
               props.isVisible(false);
               id ? setUpdateTagId(id) : setVisibleAddTag(true);

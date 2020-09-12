@@ -60,7 +60,7 @@ const useRecords = (): RecordAction => {
     if (!record.createAt)
       record.createAt = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
     record.id = createId();
-    setRecords((rs) => [...rs, record]);
+    setRecords((rs) => _sortRecord([...rs, record]));
   };
 
   const deleteRecord = (id: number) => {
@@ -75,7 +75,7 @@ const useRecords = (): RecordAction => {
   };
 
   useUpdate(() => {
-    window.localStorage.setItem('record', JSON.stringify(_sortRecord()));
+    window.localStorage.setItem('record', JSON.stringify(records));
   }, records);
 
   const categoryRecords = (rs: RecordItem[]) => {
@@ -104,8 +104,8 @@ const useRecords = (): RecordAction => {
     return {'+': categoryComputerAmount(a, type), '-': categoryComputerAmount(b, type)};
   };
 
-  const _sortRecord = () => {
-    return records.sort((a, b) => a.createAt > b.createAt ? -1 : 1);
+  const _sortRecord = (rs:RecordItem[]) => {
+    return rs.sort((a, b) => a.createAt > b.createAt ? -1 : 1);
   };
 
   const filterDateRecord = (rs: RecordItem[], date: string, type: string) => {

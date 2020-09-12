@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import {FC, memo, useEffect} from 'react';
 import React from 'react';
-import useUpdate from 'hooks/useUpdate';
 
 const Wrapper = styled.section`
     margin-top: 20px;
@@ -35,7 +34,7 @@ const Output: FC<Props> =memo( (props) => {
     setOutput(defaultValue)
   },[defaultValue])
 
-  useUpdate(() => {
+  useEffect(() => {
     props.onChange(parseFloat(output));
     switch (props.value) {
       case '0':
@@ -75,7 +74,7 @@ const Output: FC<Props> =memo( (props) => {
         }
         break;
     }
-  }, props.value);
+  }, [props.value]);
 
   return (
     <Wrapper>

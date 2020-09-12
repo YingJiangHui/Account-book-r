@@ -67,9 +67,9 @@ type Props = {
 const nowDate = dayjs(new Date());
 
 const SelectInfo: FC<Props> = memo((props) => {
-  const {onChangeCategory, defaultDate,onChangeDate} = props;
+  const {onChangeCategory, defaultDate, onChangeDate} = props;
   const [date, setDate] = useState(nowDate.format('YYYY-MM-DDTHH:mm'));
-  const [formatDate,setFormatDate] = useState(nowDate.format('YYYY年MM月DD日 HH:mm:ss'))
+  const [formatDate, setFormatDate] = useState(nowDate.format('YYYY年MM月DD日 HH:mm:ss'));
   const [category, setCatecory] = useState('-');
   const [hintVisible, setHintVisible] = useState(false);
   const refDate = useRef<HTMLInputElement>(null);
@@ -80,25 +80,18 @@ const SelectInfo: FC<Props> = memo((props) => {
   useEffect(() => {
     setCatecory(props.category);
   }, [props.category]);
-  useEffect(() => {
-    onChangeDate(date);
-  }, [date, onChangeDate]);
-  useEffect(() => {
-  }, []);
-  useEffect(()=>{
-  })
 
   return (
     <>
       <Wrapper>
         <Category value={category} onChange={(value) => onChangeCategory(value)}/>
-        <input onClick={()=>{refDate.current?.click()}} readOnly={true} type="text" value={formatDate}/>
+        <input onClick={() => {refDate.current?.click();}} readOnly={true} type="text" value={formatDate}/>
         <input
           ref={refDate}
           type="dateTime-local"
           value={date}
           onChange={(e) => {
-            if(!e.target.value)
+            if (!e.target.value)
               return;
             const now = new Date();
             const date = e.target.value + dayjs(now).format(':ss');
@@ -108,7 +101,8 @@ const SelectInfo: FC<Props> = memo((props) => {
             } else {
               setDate(date);
             }
-            setFormatDate(dayjs(date).format('YYYY年MM月DD日 HH:mm:ss'))
+            onChangeDate(date);
+            setFormatDate(dayjs(date).format('YYYY年MM月DD日 HH:mm:ss'));
           }}/>
       </Wrapper>
       <HintBox show={hintVisible} onChange={(value: boolean) => {setHintVisible(value);}} text={'不能设置时间为将来'}/>
