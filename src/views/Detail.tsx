@@ -19,7 +19,7 @@ import Context from 'contexts/context';
 const nowMonth = dayjs(new Date()).format('YYYY年MM月');
 const Detail: FC = memo(() => {
 
-  const {tags, findTagUseText, createRecord, deleteRecord, updateRecord, getAmount, records, categoryRecords, filterDateRecord, filterTagRecord} = useContext(Context);
+  const {tags, findTagUseText, createRecord, deleteRecord, getAmount, records, categoryRecords, filterDateRecord, filterTagRecord} = useContext(Context);
 
   const [visibleAccounts, setVisibleAccounts] = useState<boolean>(false);
   const [visibleMonth, setVisibleMonth] = useState(false);

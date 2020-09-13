@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-if(document.body.clientWidth>500){
+if(document.body.clientWidth>=500){
   const cover = document.createElement('div')
   const img = document.createElement('img')
   cover.style.position='fixed'

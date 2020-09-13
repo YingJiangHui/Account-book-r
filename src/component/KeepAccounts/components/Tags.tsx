@@ -77,7 +77,7 @@ const Tags: FC<Props> = memo((props) => {
     const ts = categoryTags[value]
     setTags(ts)
     setIndex(ts[0].id)
-  },[value])
+  },[value,categoryTags])
 
   useEffect(() => {
     onChange(index);
