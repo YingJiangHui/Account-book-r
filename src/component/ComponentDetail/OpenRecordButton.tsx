@@ -5,7 +5,7 @@ import theme from 'theme';
 
 const RecordButton = styled.div`
    box-shadow: 0 0 4px rgba(0,0,0,0.33);
-   position: fixed;
+   position: absolute;
    right: 8%;
    bottom: 20%;
    background: #fff;
