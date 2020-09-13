@@ -13,14 +13,13 @@ import NotData from '../component/common/NotData';
 import monetaryUnit from 'lib/monetaryUnitFormat';
 
 
-
 import Context from 'contexts/context';
 
 
 const nowMonth = dayjs(new Date()).format('YYYY年MM月');
 const Detail: FC = memo(() => {
 
-  const {tags, findTagUseText,createRecord, deleteRecord, updateRecord, getAmount, records, categoryRecords, filterDateRecord, filterTagRecord} = useContext(Context)
+  const {tags, findTagUseText, createRecord, deleteRecord, updateRecord, getAmount, records, categoryRecords, filterDateRecord, filterTagRecord} = useContext(Context);
 
   const [visibleAccounts, setVisibleAccounts] = useState<boolean>(false);
   const [visibleMonth, setVisibleMonth] = useState(false);
@@ -38,78 +37,74 @@ const Detail: FC = memo(() => {
   useEffect(() => {
     const {'+': a, '-': b} = categoryRecords(recordList);
     setAmount({'+': getAmount(a), '-': getAmount(b)});
-  }, [recordList,categoryRecords,getAmount]);
+  }, [recordList, categoryRecords, getAmount]);
 
   useEffect(() => {
     setRecordList(records);
   }, [records]);
   useEffect(() => {
-    let  rs = filterDateRecord(records, appearMonth,'month')
+    let rs = filterDateRecord(records, appearMonth, 'month');
     if (tagId) {
-      rs  =filterTagRecord(rs, tagId)
+      rs = filterTagRecord(rs, tagId);
     }
-    setRecordList(()=>rs);
-  }, [tagId,appearMonth,filterDateRecord,filterTagRecord,records]);
+    setRecordList(() => rs);
+  }, [tagId, appearMonth, filterDateRecord, filterTagRecord, records]);
 
 
-  useEffect(()=>{
+  useEffect(() => {
     setRecordGroup(Object.entries(
       recordList.reduce((obj: { [key: string]: RecordItem[] }, rs) => {
         const day = dayjs(rs.createAt).format('YYYY-MM-DD');
         return {...obj, [day]: (day in obj ? obj[day].concat([rs]) : [rs])};
       }, {})
-    ))
-  },[recordList])
+    ));
+  }, [recordList]);
   return (
     <>
-        <Tooltip onChange={(value: boolean) => setVisibleTip(value)} value='记一笔' inProp={visibleTip}/>
-        <Layout>
-          <Header>
-            <button onClick={() => {setVisibleTag(true);}}>{tagName}</button>
-            <ol>
-              <li onClick={() => {setVisibleMonth(true);}}>{appearMonth}</li>
-              <li>总支出￥{monetaryUnit(amount['-'], true)}</li>
-              <li>总收入￥{monetaryUnit(amount['+'], true)}</li>
-            </ol>
-          </Header>
-          <Wrapper>
-            {recordGroup.length === 0 ? <NotData text={'暂无记录...'}/> : recordGroup.map(([date, records]) =>
-              <Records onRemove={(id: number) => {deleteRecord(id);}} key={date} records={records}/>
-            )}
-          </Wrapper>
-        </Layout>
-        <OpenRecordButton onClick={() => setVisibleAccounts(true)}/>
+      <Tooltip onChange={(value: boolean) => setVisibleTip(value)} value='记一笔' inProp={visibleTip}/>
+      <Layout>
+        <Header>
+          <button onClick={() => {setVisibleTag(true);}}>{tagName}</button>
+          <ol>
+            <li onClick={() => {setVisibleMonth(true);}}>{appearMonth}</li>
+            <li>总支出￥{monetaryUnit(amount['-'], true)}</li>
+            <li>总收入￥{monetaryUnit(amount['+'], true)}</li>
+          </ol>
+        </Header>
+        <Wrapper>
+          {recordGroup.length === 0 ? <NotData text={'暂无记录...'}/> : recordGroup.map(([date, records]) =>
+            <Records onRemove={(id: number) => {deleteRecord(id);}} key={date} records={records}/>
+          )}
+        </Wrapper>
+      </Layout>
+      <OpenRecordButton onClick={() => setVisibleAccounts(true)}/>
 
-        <KeepAccounts
-          ensure={(record: RecordItem, id?) => {
-            if (id) {
-              updateRecord(id, record);
-            } else {
-              createRecord(record);
-            }
-            setVisibleTip(true);
-          }}
-          isVisible={(value: boolean) => {setVisibleAccounts(value);}}
-          show={visibleAccounts}
-        />
-        <PopUpMonthBox
-          show={visibleMonth}
-          close={() => setVisibleMonth(false)}
-          onChange={(value: dayjs.Dayjs) => {
-            setAppearMonth(value.format('YYYY年MM月'));
-            setVisibleMonth(false);
-          }}
-        />
-        <PopUpTagBox
-          value={tags} show={visibleTag} close={() => setVisibleTag(false)}
-          onChange={(value: string, category: Category | undefined) => {
-            setTagName(value);
-            setVisibleTag(false);
-            if (category)
-              setTagId(findTagUseText(value, category)!.id);
-            else
-              setTagId(0);
-          }}/>
+      <KeepAccounts
+        ensure={(record: RecordItem) => {
+          createRecord(record);
+          setVisibleTip(true);
+        }}
+        isVisible={(value: boolean) => {setVisibleAccounts(value);}}
+        show={visibleAccounts}
+      />
+      <PopUpMonthBox
+        show={visibleMonth}
+        close={() => setVisibleMonth(false)}
+        onChange={(value: dayjs.Dayjs) => {
+          setAppearMonth(value.format('YYYY年MM月'));
+          setVisibleMonth(false);
+        }}
+      />
+      <PopUpTagBox
+        value={tags} show={visibleTag} close={() => setVisibleTag(false)}
+        onChange={(value: string, category: Category | undefined) => {
+          setTagName(value);
+          setVisibleTag(false);
+          if (category)
+            setTagId(findTagUseText(value, category)!.id);
+          else
+            setTagId(0);
+        }}/>
     </>
   );
 

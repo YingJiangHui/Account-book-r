@@ -67,6 +67,7 @@ const useRecords = (): RecordAction => {
     setRecords((rs) => rs.filter((r) => r.id !== id));
   };
   const updateRecord = (id: number, record: RecordItem) => {
+    console.log('fuck');
     setRecords((rs) => rs.map(r => r.id === id ? {id, ...record} : r));
   };
 

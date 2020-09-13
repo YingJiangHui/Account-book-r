@@ -13,7 +13,7 @@ import Context from 'contexts/context'
 
 
 const RecordsItem: FC = memo(() => {
-  const {findRecord, deleteRecord,findTagUseId}=useContext(Context)
+  const {findRecord, deleteRecord,findTagUseId,updateRecord}=useContext(Context)
   let {id} = useParams();
   id = parseInt(id);
   const recordItem = findRecord(parseInt(id));
@@ -70,7 +70,9 @@ const RecordsItem: FC = memo(() => {
       <KeepAccounts
         id={id}
         defaultRecord={record}
-        ensure={() => {
+        ensure={(record: RecordItem, id?) => {
+          if (id)
+            updateRecord(id, record);
           setTipText('改一笔');
           setVisibleTip(true);
         }}
