@@ -11,6 +11,7 @@ type Props = {
   onRemove: (id: number) => void
   records: RecordItem[]
 }
+
 const Records: FC<Props> = (props) => {
   const {findTagUseId, categoryRecords, getAmount} = useContext(Context);
   const [amount, setAmount] = useState<{ '+': number, '-': number }>({'+': 0, '-': 0});
@@ -36,6 +37,7 @@ const Records: FC<Props> = (props) => {
   let moveValue = 0;
   const touchStart = (e: React.TouchEvent) => {
     const dom = (e.currentTarget as HTMLLIElement);
+    dom.style.transition = ''
     const left = parseFloat(dom.style.left || '0');
     if (left !== 0) {
       startValue = e.targetTouches[0].clientX - left;
@@ -43,10 +45,12 @@ const Records: FC<Props> = (props) => {
       startValue = e.targetTouches[0].clientX;
     }
   };
-  const stack: number[] = [];
+  let stack: number[] = [];
 
   const touchEnd = (e: React.TouchEvent) => {
     const dom = (e.currentTarget as HTMLLIElement);
+    dom.style.transition = 'left 0.2s'
+
     if (!(Math.abs(stack[stack.length - 2] - stack[stack.length - 1]) === 0)) {
       moveValue= stack[stack.length - 1] < stack[stack.length - 2] ? -75 : 0;
     } else {
@@ -55,9 +59,9 @@ const Records: FC<Props> = (props) => {
   stack.length = 0;
   dom.style.left = `${moveValue}px`;
 };
-let timer = -1;
-const touchMove = (e: React.TouchEvent) => {
 
+
+const touchMove = (e: React.TouchEvent) => {
   moveValue = e.targetTouches[0].clientX - startValue;
   const dom = (e.currentTarget as HTMLLIElement);
   if (moveValue > 0) {
@@ -66,8 +70,10 @@ const touchMove = (e: React.TouchEvent) => {
   if (moveValue <= -75) {
     moveValue = -75;
   }
-  clearTimeout(timer);
-  stack.push(moveValue);
+
+  if(stack.length<2||!(stack[stack.length-1]===stack[stack.length-2])){
+    stack = [stack[stack.length-1]].concat([moveValue])
+  }
   dom.style.left = `${moveValue}px`;
 };
 

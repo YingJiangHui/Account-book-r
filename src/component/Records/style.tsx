@@ -52,7 +52,6 @@ const Main = styled.main`
         }
       }
       >li{
-      transition: .05s;
         position: relative;
         left: 0;
          //TODO

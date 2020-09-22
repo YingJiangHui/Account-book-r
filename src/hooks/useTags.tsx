@@ -21,7 +21,6 @@ if (tagList.length === 0) {
     {id: createId(), icon: 'pet', text: '宠物', category: '-'},
     {id: createId(), icon: 'rests', text: '其他', category: '-'},
     {id: createId(), icon: 'travel', text: '旅行', category: '-'},
-
     {id: createId(), icon: 'salary', text: '薪水', category: '+'},
     {id: createId(), icon: 'transfer', text: '转账', category: '+'},
     {id: createId(), icon: 'moneyManagement', text: '理财', category: '+'},
@@ -50,7 +49,10 @@ let hashMap: { [k: string]: TagItem[] } = {
 };
 const useTags = (): TagAction => {
 
-  const [tags, setTags] = useState<TagItem[]>(tagList);
+  const [tags, setTags] = useState<TagItem[]>([]);
+  useEffect(()=>{
+    setTags(tagList)
+  },[])
   const [categoryTags, setCategoryTags] = useState<typeof hashMap>({'+': [], '-': []});
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import dayjs from 'dayjs';
 import generator from 'lib/createId';
 import useUpdate from './useUpdate';
@@ -52,22 +52,25 @@ const dateMap: { [key: string]: string } = {
 };
 
 const useRecords = (): RecordAction => {
-  const [records, setRecords] = useState<RecordItem[]>(recordList);
-
+  const [records, setRecords] = useState<RecordItem[]>([]);
+  useEffect(()=>{
+    setRecords(recordList)
+  },[])
 
 
   const createRecord = (record: RecordItem) => {
     if (!record.createAt)
       record.createAt = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
     record.id = createId();
-    setRecords((rs) => _sortRecord([...rs, record]));
+    // setRecords((rs) => _sortRecord([...rs, record]));
+    setRecords((rs) => [...rs, record]);
+
   };
 
   const deleteRecord = (id: number) => {
     setRecords((rs) => rs.filter((r) => r.id !== id));
   };
   const updateRecord = (id: number, record: RecordItem) => {
-    console.log('fuck');
     setRecords((rs) => rs.map(r => r.id === id ? {id, ...record} : r));
   };
 
@@ -76,7 +79,7 @@ const useRecords = (): RecordAction => {
   };
 
   useUpdate(() => {
-    window.localStorage.setItem('record', JSON.stringify(records));
+    window.localStorage.setItem('record', JSON.stringify(_sortRecord(records)));
   }, records);
 
   const categoryRecords = (rs: RecordItem[]) => {

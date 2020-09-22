@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   border-radius: 16px;
   padding: 0 16px;
   margin: 4vw;
-  height: 92vw;
+  height: 50%;
 `;
 const View = styled.div`
  display: flex;
@@ -66,6 +66,10 @@ const Control = styled.div`
     border: none;
     width: 50%;
     height: 100%;
+    &:first-child{
+      color: #e01817;
+      border-right: 1px solid rgba(0,0,0,0.1);
+    }
   }
 `;
 
