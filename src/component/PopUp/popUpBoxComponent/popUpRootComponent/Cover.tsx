@@ -1,5 +1,7 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import styled from 'styled-components';
+import {CSSTransition} from 'react-transition-group';
+import 'style/animation.scss';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -14,12 +16,16 @@ const Wrapper = styled.div`
 type Props={
   className?:string
   onChange?:()=>void
+  show?:boolean
 }
-const Cover:FC<Props> =({className,children,onChange})=>{
+const Cover:FC<Props> =({className,children,onChange,show})=>{
   return(
+    <CSSTransition classNames='fade' className='popUp' timeout={300} unmountOnExit={true} in={show}>
     <Wrapper className={className} onClick={onChange}>
       {children}
     </Wrapper>
+    </CSSTransition>
+
   )
 }
 
