@@ -11,7 +11,7 @@ const Container = styled.div`
   width: 100vw;
   background: #fff;
   border-radius: 12px 12px 0 0 ;
-  z-index: 98;
+  z-index: 9;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -24,20 +24,22 @@ type Props = {
 
 const PopUp: FC<Props> = ({show, children, style, className}) => {
   const [visible, setVisible] = useState(false);
-  const [_visible,_setVisible] = useState();
+  // const [_visible,_setVisible] = useState();
   useEffect(() => {
     setVisible(show);
-    _setVisible(true);
+    // _setVisible(true);
   }, [show]);
   return (
-    <CSSTransition classNames='fade' className='popUp' timeout={300} unmountOnExit={true} in={visible&&_visible}>
+    <>
+      <Cover show={visible}/>
+      <CSSTransition classNames='popUp' className='popUp' timeout={300} unmountOnExit={true} in={visible}>
       <Wrapper>
-        <Cover/>
           <Container className={cn(className)} style={style}>
             {children}
           </Container>
       </Wrapper>
     </CSSTransition>
+    </>
   );
 };
 
