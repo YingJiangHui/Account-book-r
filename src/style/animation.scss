@@ -1,19 +1,19 @@
 .popUp-enter{
+  z-index: 9;
   transform: translateY(100%);
 }
 .popUp-enter-active{
-
   transform: translateY(0);
-  transition: transform 500ms;
+  transition: transform 300ms;
 }
 
 .popUp-exit{
+  z-index: 9;
   transform: translateY(0);
 }
 .popUp-exit-active{
-
   transform: translateY(100%);
-  transition: transform 500ms;
+  transition: transform 300ms;
 }
 
 .popUp{
@@ -23,8 +23,6 @@
   left: 0;
   bottom:0;
 }
-
-
 
 
 

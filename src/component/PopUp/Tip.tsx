@@ -5,6 +5,7 @@ type Props = {
   inProp: boolean
   onChange:(value:boolean)=>void
 }
+
 const Tip: FC<Props> =memo( ({inProp,onChange,children}) => {
   const [visible,setVisible] = useState(false)
   useEffect(()=>{
