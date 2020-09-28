@@ -67,7 +67,6 @@ const KeepAccounts: FC<Props> = memo((props) => {
       setRecord(defaultRecord);
   }, [defaultRecord]);
 
-
   return (
     <>
       <PopUp show={visibleThis}>
@@ -101,7 +100,7 @@ const KeepAccounts: FC<Props> = memo((props) => {
 
           <OpenNotePanel
             onClick={() => {
-              props.isVisible(false);
+              // props.isVisible(false);
               setVisibleRemark(true);
             }}
           >{record.note ? <><span>修改</span>：{record.note}</> : <span>添加备注</span>}</OpenNotePanel>

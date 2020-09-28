@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   border-radius: 16px;
   padding: 0 16px;
   margin: 4vw;
-  height: 50%;
+  height: 60%;
 `;
 const View = styled.div`
  display: flex;
@@ -59,8 +59,8 @@ const Info = styled.ol`
   }
 `;
 const Control = styled.div`
-
-    height:15%;
+    
+      height:15%;
   >button{
     background: transparent;
     border: none;
