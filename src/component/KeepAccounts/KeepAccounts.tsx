@@ -10,7 +10,6 @@ import OpenNotePanel from 'component/KeepAccounts/components/OpenNotePanel';
 import PopUp from 'component/PopUp/popUpBoxComponent/popUpRootComponent/PopUp';
 import styled from 'styled-components';
 import Context from 'contexts/context'
-import dayjs from 'dayjs';
 const Options = styled.div`
   padding: 16px 16px 0 16px;
 `;
@@ -27,7 +26,7 @@ let recordData: RecordItem = {
   tagIndex: 1,
   amount: 0,
   note: '',
-  createAt: dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss')
+  createAt: ''
 };
 
 const KeepAccounts: FC<Props> = memo((props) => {

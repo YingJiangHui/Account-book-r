@@ -68,13 +68,15 @@ type Props = {
 const SelectInfo: FC<Props> = memo((props) => {
   const {onChangeCategory, defaultDate, onChangeDate} = props;
   const [date, setDate] = useState('');
-  const [formatDate, setFormatDate] = useState(dayjs(defaultDate).format('YYYY年MM月DD日 HH:mm:ss'));
+  const [formatDate, setFormatDate] = useState(dayjs(new Date()).format('YYYY年MM月DD日 HH:mm'));
   const [category, setCatecory] = useState('-');
   const [hintVisible, setHintVisible] = useState(false);
   const refDate = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    if (defaultDate)
-      setDate(dayjs(defaultDate).format('YYYY-MM-DDTHH:mm'));
+    if (defaultDate){
+      setDate(dayjs(defaultDate).format('YYYY-MM-DDTHH:mm:ss'));
+      setFormatDate(dayjs(defaultDate).format('YYYY年MM月DD HH:mm'))
+    }
   }, [defaultDate]);
   useEffect(() => {
     setCatecory(props.category);
@@ -101,7 +103,7 @@ const SelectInfo: FC<Props> = memo((props) => {
               setDate(date);
             }
             onChangeDate(date);
-            setFormatDate(dayjs(date).format('YYYY年MM月DD日 HH:mm:ss'));
+            setFormatDate(dayjs(date).format('YYYY年MM月DD日 HH:mm'));
           }}/>
       </Wrapper>
       <HintBox show={hintVisible} onChange={(value: boolean) => {setHintVisible(value);}} text={'不能设置时间为将来'}/>
