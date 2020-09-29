@@ -62,8 +62,7 @@ const useRecords = (): RecordAction => {
     if (!record.createAt)
       record.createAt = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
     record.id = createId();
-    // setRecords((rs) => _sortRecord([...rs, record]));
-    setRecords((rs) => [...rs, record]);
+    setRecords((rs) => _sortRecord([...rs, record]));
 
   };
 
@@ -79,7 +78,7 @@ const useRecords = (): RecordAction => {
   };
 
   useUpdate(() => {
-    window.localStorage.setItem('record', JSON.stringify(_sortRecord(records)));
+    window.localStorage.setItem('record', JSON.stringify(records));
   }, records);
 
   const categoryRecords = (rs: RecordItem[]) => {
