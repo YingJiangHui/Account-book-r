@@ -4,8 +4,10 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from 'theme';
 import PopOptionBox from '../../PopUp/PopOptionBox';
-import AlertSelectBox from '../../PopUp/AlertSelectBox';
+import AlertSelectBox from '../../PopUp/alertSelectBox/AlertSelectBox';
 import Context from 'contexts/context';
+import PortalComponent from 'component/PopUp/PortalComponent';
+
 const Wrapper = styled.section`
   .view{
     padding-bottom: 10px;
@@ -68,16 +70,16 @@ type Props = {
 }
 
 const Tags: FC<Props> = memo((props) => {
-  const {value, index: defaultIndex,onChange} = props;
+  const {value, index: defaultIndex, onChange} = props;
   const [index, setIndex] = useState(defaultIndex);
-  const {categoryTags} = useContext(Context)
-  const [tags,setTags] = useState<TagItem[]>([])
+  const {categoryTags} = useContext(Context);
+  const [tags, setTags] = useState<TagItem[]>([]);
 
-  useEffect(()=>{
-    const ts = categoryTags[value]
-    setTags(ts)
-    setIndex(ts[0].id)
-  },[value,categoryTags])
+  useEffect(() => {
+    const ts = categoryTags[value];
+    setTags(ts);
+    setIndex(ts[0].id);
+  }, [value, categoryTags]);
 
   useEffect(() => {
     onChange(index);
@@ -86,10 +88,6 @@ const Tags: FC<Props> = memo((props) => {
   useEffect(() => {
     setIndex(defaultIndex);
   }, []);
-
-
-
-
 
   let timer = -1;
   const [visiblePop, setVisiblePop] = React.useState(-1);
@@ -126,9 +124,10 @@ const Tags: FC<Props> = memo((props) => {
 
 
                 {
-                  visiblePop === item.id ? <PopOptionBox x={() => {
+                  visiblePop === item.id ? <PopOptionBox edit={() => {
                     props.onClick(item.id);
-                  }} y={() => {
+                  }} delete={() => {
+                    console.log(item.id);
                     setDelTagBoxVisible(item.id);
                   }}/> : ''
                 }
@@ -139,16 +138,17 @@ const Tags: FC<Props> = memo((props) => {
         </div>
 
       </Wrapper>
-
-      <AlertSelectBox
-        beforeTip={'删除成功'}
-        show={delTagBoxVisible > 0}
-        ensure={() => {
-          props.onRemoveTag(delTagBoxVisible);
-          setDelTagBoxVisible(0);
-        }
-        } cancel={() => setDelTagBoxVisible(0)
-      } value={'删除后无法恢复，是否删除'}/>
+      <PortalComponent>
+        <AlertSelectBox
+          beforeTip={'删除成功'}
+          show={delTagBoxVisible > 0}
+          ensure={() => {
+            props.onRemoveTag(delTagBoxVisible);
+            setDelTagBoxVisible(0);
+          }}
+          cancel={() => {setDelTagBoxVisible(0);}}
+          value={'删除后无法恢复，是否删除'}/>
+      </PortalComponent>
     </>
   );
 });
