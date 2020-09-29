@@ -51,9 +51,6 @@ const AlertSelectBox: FC<Props> = memo(({value, children, ensure, cancel, show, 
   useEffect(() => {
     setVisible(show);
     }, [show]);
-  useEffect(()=>{
-    console.log(hintVisible)
-  },[hintVisible])
   return (
     <>
       <Cover show={visible}/>

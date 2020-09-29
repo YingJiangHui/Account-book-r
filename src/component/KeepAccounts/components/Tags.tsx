@@ -127,7 +127,6 @@ const Tags: FC<Props> = memo((props) => {
                   visiblePop === item.id ? <PopOptionBox edit={() => {
                     props.onClick(item.id);
                   }} delete={() => {
-                    console.log(item.id);
                     setDelTagBoxVisible(item.id);
                   }}/> : ''
                 }
