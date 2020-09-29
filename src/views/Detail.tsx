@@ -61,7 +61,6 @@ const Detail: FC = memo(() => {
   }, [recordList]);
   return (
     <>
-      <Tooltip onChange={(value: boolean) => setVisibleTip(value)} value='记一笔' inProp={visibleTip}/>
       <Layout>
         <Header>
           <button onClick={() => {setVisibleTag(true);}}>{tagName}</button>
@@ -105,6 +104,7 @@ const Detail: FC = memo(() => {
           else
             setTagId(0);
         }}/>
+      <Tooltip onChange={(value: boolean) => setVisibleTip(value)} value='记一笔' inProp={visibleTip}/>
     </>
   );
 

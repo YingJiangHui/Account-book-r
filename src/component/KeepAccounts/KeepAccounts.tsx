@@ -52,7 +52,7 @@ const KeepAccounts: FC<Props> = memo((props) => {
       ensure(record, id);
     } else{
       ensure(record);
-      setTimeout(()=>setOutput('clear'),310)
+      setOutput('clear')
     }
     isVisible(false);
   };

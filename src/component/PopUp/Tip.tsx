@@ -16,7 +16,7 @@ const Tip: FC<Props> =memo( ({inProp,onChange,children}) => {
     return ()=>{
       clearTimeout(timer)
     }
-  },[inProp,onChange])
+  },[inProp])
   return (
     <div>
       <CSSTransition unmountOnExit={true} classNames={'fade'} className={'fade'}  in={visible} timeout={250}>
