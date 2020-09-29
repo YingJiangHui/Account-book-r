@@ -53,15 +53,15 @@ const Wrapper = styled.div`
 `;
 
 type Props = {
-  x:()=>void,
-  y:()=>void,
+  edit:()=>void,
+  delete:()=>void,
 }
 const PopOptionBox: FC<Props> = (props) => {
   return (
     <Wrapper>
       <ol >
-        <li onClick={props.x}>编辑</li>
-        <li onClick={props.y}>删除</li>
+        <li onClick={props.edit}>编辑</li>
+        <li onClick={props.delete}>删除</li>
       </ol>
     </Wrapper>
   );
