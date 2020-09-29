@@ -64,12 +64,11 @@ type Props = {
   onChangeDate: (value: string) => void
   defaultDate?: string
 }
-const nowDate = dayjs(new Date());
 
 const SelectInfo: FC<Props> = memo((props) => {
   const {onChangeCategory, defaultDate, onChangeDate} = props;
-  const [date, setDate] = useState(nowDate.format('YYYY-MM-DDTHH:mm'));
-  const [formatDate, setFormatDate] = useState(nowDate.format('YYYY年MM月DD日 HH:mm:ss'));
+  const [date, setDate] = useState('');
+  const [formatDate, setFormatDate] = useState(dayjs(defaultDate).format('YYYY年MM月DD日 HH:mm:ss'));
   const [category, setCatecory] = useState('-');
   const [hintVisible, setHintVisible] = useState(false);
   const refDate = useRef<HTMLInputElement>(null);
