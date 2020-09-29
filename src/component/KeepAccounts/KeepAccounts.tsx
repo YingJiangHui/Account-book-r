@@ -10,10 +10,10 @@ import OpenNotePanel from 'component/KeepAccounts/components/OpenNotePanel';
 import PopUp from 'component/PopUp/popUpBoxComponent/popUpRootComponent/PopUp';
 import styled from 'styled-components';
 import Context from 'contexts/context'
+import dayjs from 'dayjs';
 const Options = styled.div`
   padding: 16px 16px 0 16px;
 `;
-
 type Props = {
   id?: number
   defaultRecord?: RecordItem
@@ -21,14 +21,13 @@ type Props = {
   ensure: (record:RecordItem,id?:number) => void
   show: boolean
 }
-
 let recordData: RecordItem = {
   id: 0,
   category: '-',
   tagIndex: 1,
   amount: 0,
   note: '',
-  createAt: ''
+  createAt: dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss')
 };
 
 const KeepAccounts: FC<Props> = memo((props) => {
@@ -100,7 +99,7 @@ const KeepAccounts: FC<Props> = memo((props) => {
 
           <OpenNotePanel
             onClick={() => {
-              // props.isVisible(false);
+              props.isVisible(false);
               setVisibleRemark(true);
             }}
           >{record.note ? <><span>修改</span>：{record.note}</> : <span>添加备注</span>}</OpenNotePanel>
