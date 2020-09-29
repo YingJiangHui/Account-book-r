@@ -1,5 +1,5 @@
 .popUp-enter{
-  z-index: 9;
+  z-index: 8;
   transform: translateY(100%);
 }
 .popUp-enter-active{
@@ -8,7 +8,7 @@
 }
 
 .popUp-exit{
-  z-index: 9;
+  z-index: 8;
   transform: translateY(0);
 }
 .popUp-exit-active{
@@ -29,37 +29,20 @@
 
 
 
-.fade-enter {
+.fade{
+  z-index: 8;
+}
+.fade-enter{
   opacity: 0;
 }
-.fade-enter-active {
-  opacity: 1;
-}
-
 .fade-exit {
   opacity: 1;
 }
-.fade-exit-active {
+.fade-exit-active{
   opacity: 0;
+  transition: opacity 250ms;
 }
-.fade-exit-active,
 .fade-enter-active{
-  transition: opacity 300ms ease-in;
-}
-
-.xxx-enter{
-  transform: translateX(100%);
-}
-.xxx-exit{
-  transform: translateX(0);
-}
-.xxx-enter-active{
-  transform: translateX(0);
-}
-.xxx-exit-active{
-  transform: translateX(-100%);
-}
-.xxx-enter-active,
-.xxx-exit-active{
-  transition: transform 500ms;
+  opacity: 1;
+  transition: opacity 250ms;
 }
