@@ -1,4 +1,4 @@
-import React, {FC, memo, useEffect, useRef, useState} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import Cover from '../popUpBoxComponent/popUpRootComponent/Cover';
 import {CSSTransition} from 'react-transition-group';

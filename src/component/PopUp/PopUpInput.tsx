@@ -49,7 +49,7 @@ const PopUpInput: FC<Props> = memo((props) => {
     if(props.show)
       setTimeout(()=>{
         inputEl.current?.focus();
-      },350)
+      },260)
     else
       inputEl.current?.blur();
   },[props.show])

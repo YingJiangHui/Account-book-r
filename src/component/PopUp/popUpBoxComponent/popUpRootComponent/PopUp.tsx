@@ -32,7 +32,7 @@ const PopUp: FC<Props> = ({show, children, style, className}) => {
   return (
     <>
       <Cover show={visible}/>
-      <CSSTransition classNames='popUp' className='popUp' timeout={300} unmountOnExit={true} in={visible}>
+      <CSSTransition classNames='popUp' className='popUp' timeout={250} unmountOnExit={true} in={visible}>
       <Wrapper>
           <Container className={cn(className)} style={style}>
             {children}

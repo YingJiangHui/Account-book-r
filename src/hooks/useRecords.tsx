@@ -25,6 +25,8 @@ if (recordList.length === 0) {
     , {id: createId(), "category": "-", tagIndex: 4, amount: 100, note: "", createAt: "2020-08-10T17:00:29"}
     , {id: createId(), "category": "-", tagIndex: 8, amount: 1666, note: "", createAt: "2020-07-16T17:00:58"}
     , {id: createId(), "category": "-", tagIndex: 6, amount: 200, note: "", createAt: "2020-08-16T17:00:45"}
+    , {id: createId(), "category": "-", tagIndex: 8, amount: 1666, note: "", createAt: "2020-10-4T17:00:58"}
+    , {id: createId(), "category": "-", tagIndex: 6, amount: 200, note: "", createAt: "2020-10-5T17:00:45"}
   ];
 }
 

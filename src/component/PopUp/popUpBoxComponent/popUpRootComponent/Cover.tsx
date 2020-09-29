@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import styled from 'styled-components';
 import {CSSTransition} from 'react-transition-group';
 import 'style/animation.scss';
@@ -20,7 +20,7 @@ type Props={
 }
 const Cover:FC<Props> =({className,children,onChange,show})=>{
   return(
-    <CSSTransition classNames='fade' className='popUp' timeout={300} unmountOnExit={true} in={show}>
+    <CSSTransition classNames='fade' className='popUp' timeout={250} unmountOnExit={true} in={show}>
     <Wrapper className={className} onClick={onChange}>
       {children}
     </Wrapper>

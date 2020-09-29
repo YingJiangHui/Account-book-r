@@ -4,7 +4,7 @@
 }
 .popUp-enter-active{
   transform: translateY(0);
-  transition: transform 300ms;
+  transition: transform 250ms;
 }
 
 .popUp-exit{
@@ -13,7 +13,7 @@
 }
 .popUp-exit-active{
   transform: translateY(100%);
-  transition: transform 300ms;
+  transition: transform 250ms;
 }
 
 .popUp{
