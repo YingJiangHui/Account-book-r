@@ -7,7 +7,7 @@ import KeepAccounts from 'component/KeepAccounts/KeepAccounts';
 import Tooltip from 'component/PopUp/Tooltip';
 import {Amount, Control, Info, TagIcon, View, Wrapper} from '../component/ComponentRecordItem/style';
 import cn from 'classnames';
-import AlertSelectBox from '../component/PopUp/AlertSelectBox';
+import AlertSelectBox from '../component/PopUp/alertSelectBox/AlertSelectBox';
 
 import Context from 'contexts/context'
 
