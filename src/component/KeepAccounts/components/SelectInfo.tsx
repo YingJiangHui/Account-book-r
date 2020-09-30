@@ -33,15 +33,13 @@ const Wrapper = styled.section`
     }
   }
   >input[type=text]{
-      flex-grow: 1;
       text-align: end;
       font-family: inherit;
       transition: .3s;
       background: transparent;
-      margin-left: 24px;
+      margin-left: auto;
       color: #b2b2b2;
       padding: 0 10px;
-      font-size: 14px;
       border-color: transparent;
       border-style: solid;
       border-bottom-color: rgba(0,0,0,0.1);
@@ -53,6 +51,8 @@ const Wrapper = styled.section`
 
   }
   >input[type=datetime-local]{
+      position: absolute;
+      left: 0;
       width: 0;
       visibility: hidden;
     }
@@ -73,9 +73,9 @@ const SelectInfo: FC<Props> = memo((props) => {
   const [hintVisible, setHintVisible] = useState(false);
   const refDate = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    if (defaultDate){
+    if (defaultDate) {
       setDate(dayjs(defaultDate).format('YYYY-MM-DDTHH:mm:ss'));
-      setFormatDate(dayjs(defaultDate).format('YYYY年MM月DD HH:mm'))
+      setFormatDate(dayjs(defaultDate).format('YYYY年MM月DD HH:mm'));
     }
   }, [defaultDate]);
   useEffect(() => {
@@ -86,7 +86,9 @@ const SelectInfo: FC<Props> = memo((props) => {
     <>
       <Wrapper>
         <Category value={category} onChange={(value) => onChangeCategory(value)}/>
-        <input onClick={() => {refDate.current?.click();}} readOnly={true} type="text" value={formatDate}/>
+        <input onClick={() => {
+          refDate.current?.click();
+        }} readOnly={true} type="text" value={formatDate}/>
         <input
           ref={refDate}
           type="dateTime-local"
