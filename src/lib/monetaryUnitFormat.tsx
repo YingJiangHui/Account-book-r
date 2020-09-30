@@ -1,5 +1,5 @@
 const monetaryUnit=(amount:number,unit:boolean)=>{
-
+  if(!amount)return '0.00'
   let strAmount = amount.toString()
   let decimals = (strAmount.split('.')[1]||'')
   const interge = strAmount.split('.')[0]
