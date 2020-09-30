@@ -65,14 +65,13 @@ const useRecords = (): RecordAction => {
       record.createAt = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
     record.id = createId();
     setRecords((rs) => _sortRecord([...rs, record]));
-
   };
 
   const deleteRecord = (id: number) => {
     setRecords((rs) => rs.filter((r) => r.id !== id));
   };
   const updateRecord = (id: number, record: RecordItem) => {
-    setRecords((rs) => rs.map(r => r.id === id ? {id, ...record} : r));
+    setRecords((rs) => _sortRecord(rs.map(r => r.id === id ? {id, ...record} : r)));
   };
 
   const findRecord = (id: number) => {
