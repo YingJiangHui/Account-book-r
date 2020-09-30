@@ -30,7 +30,7 @@ type Props={
 const Header:FC<Props> =({showBackBtn})=>{
   const history = useHistory()
   return(
-    <HeaderStyle>{showBackBtn?<Icon name={'left'} onClick={()=>{history.goBack()}}/>:''} <span>轻记账</span></HeaderStyle>
+    <HeaderStyle>{showBackBtn?<Icon name={'left'} onClick={()=>{history.goBack()}}/>:''} <span style={{fontWeight:'bold'}}>小本本</span></HeaderStyle>
   )
 }
 
