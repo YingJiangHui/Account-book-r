@@ -70,7 +70,7 @@ position: absolute;
   top: 0;
   background: #fa524f;
   color: white;
-  height: 75px;width: 75px;
+  height: 100%;width: 75px;
   .icon{
     fill:#fff;
     height: 28px;

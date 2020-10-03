@@ -4,9 +4,8 @@ import theme from '../../theme';
 const Wrapper = styled.div`
   background: #fff;
   border-radius: 16px;
-  padding: 0 16px;
+  padding: 1em 1em 0 1em;
   margin: 4vw;
-  height: 60%;
 `;
 const View = styled.div`
  display: flex;
@@ -14,7 +13,6 @@ const View = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 85%;
   padding: 12px;
   border-bottom: 1px solid rgba(0,0,0,0.1);
 `;
@@ -22,8 +20,7 @@ const TagIcon = styled.div`
   display: flex;
   align-items: center;
   >span{
-    text-align: center;
-    min-width: 82px;
+    margin-left: 1em;
   }
   .icon{
     background: ${theme.themeColor};
@@ -40,6 +37,7 @@ const TagIcon = styled.div`
   }
 `;
 const Amount = styled.div`
+  padding: 0.4em;
   font-size: 48px;
 `;
 
@@ -53,15 +51,14 @@ const Info = styled.ol`
     >span{
     display: inline-block;
     color: ${theme.tingeFontColor};
-    width: 64px;
+    min-width: 64px;
     margin-right: 32px;
     }
   }
 `;
 const Control = styled.div`
-    
-      height:15%;
   >button{
+    padding: 1.5em;
     background: transparent;
     border: none;
     width: 50%;

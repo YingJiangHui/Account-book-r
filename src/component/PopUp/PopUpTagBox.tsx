@@ -4,9 +4,7 @@ import styled from 'styled-components';
 import theme from '../../theme';
 import cn from 'classnames';
 import Context from 'contexts/context'
-const Container = styled.main`
-  max-height: 500px;
-  overflow: auto;
+const Inner = styled.div`
   padding:  16px;
   display: flex;
   flex-direction: column;
@@ -31,6 +29,11 @@ const Container = styled.main`
       text-align: center;
     }
   }
+`
+const Container = styled.main`
+  max-height: 500px;
+   overflow: auto;
+
 `;
 
 type Props = {
@@ -50,6 +53,7 @@ const PopUpTagBox: FC<Props> = memo(({close, show, value, onChange}) => {
   return (
     <PopUpNoSure close={close} show={visible} title='选择类型'>
       <Container>
+        <Inner>
         <ol>
           <li
             className={cn(currentTag === 0 ? 'selected' : '')} onClick={() => {
@@ -79,7 +83,7 @@ const PopUpTagBox: FC<Props> = memo(({close, show, value, onChange}) => {
               onChange((e.currentTarget as HTMLLIElement).textContent || '', tag.category);
             }}>{tag.text}</li>)}
         </ol>
-
+        </Inner>
       </Container>
     </PopUpNoSure>
   );

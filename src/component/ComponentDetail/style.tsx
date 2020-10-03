@@ -3,7 +3,7 @@ import theme from '../../theme';
 
 const Wrapper = styled.div`
     padding: 10px;
-`
+`;
 const Header = styled.header`
   background: ${theme.themeColor};
   color: #fff;
@@ -24,6 +24,7 @@ const Header = styled.header`
      min-width: 78px;
     color: rgba(255,255,255,0.8);
     &:nth-child(1){
+    height: 1em;
     color: #fafafa;
       width: 90px;
       position: relative;
@@ -56,6 +57,6 @@ const Header = styled.header`
       }  
     }
   }
-`
+`;
 
-export {Wrapper,Header}
+export {Wrapper, Header};

@@ -7,7 +7,7 @@ const theme = {
   ,special:{
     themeColor: 'rgb(238, 185, 57)'
     ,tingeColor:'rgb(247, 215, 154)'
-    ,tingeColorOpacity:'rgb(238, 185, 57 , .2)'
+    ,tingeColorOpacity:'rgb(238, 185, 57 , 0.1)'
   }
 
 };
