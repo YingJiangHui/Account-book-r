@@ -30,15 +30,16 @@ const Control = styled.ol`
 type Props = {
   title: string,
   show:boolean,
-  close:()=>void
+  close:()=>void,
+  isVisible:(value:boolean)=>void
 }
-const PopUpNoSure: FC<Props> = ({title,children,show,close}) => {
+const PopUpNoSure: FC<Props> = ({title,children,show,close,isVisible}) => {
   const [visible, setVisible] = useState(false);
   useEffect(()=>{
     setVisible(show)
   },[show])
   return (
-      <PopUp show={visible} style={{background:'#fafafa'}}>
+      <PopUp isVisible={(value:boolean)=>{isVisible(value)}} show={visible} style={{background:'#fafafa'}}>
         <div>
           <Control>
             <li onClick={close}><Icon name='close'/></li>

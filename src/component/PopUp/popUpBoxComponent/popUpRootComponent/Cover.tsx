@@ -14,14 +14,14 @@ const Wrapper = styled.div`
 `;
 
 type Props={
+  onClick?:()=>void
   className?:string
-  onChange?:()=>void
   show?:boolean
 }
-const Cover:FC<Props> =({className,children,onChange,show})=>{
+const Cover:FC<Props> =({className,children,show,onClick})=>{
   return(
     <CSSTransition classNames='fade' className='popUp' timeout={250} unmountOnExit={true} in={show}>
-    <Wrapper className={className} onClick={onChange}>
+    <Wrapper className={className} onClick={onClick}>
       {children}
     </Wrapper>
     </CSSTransition>

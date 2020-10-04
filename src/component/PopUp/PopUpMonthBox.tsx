@@ -51,7 +51,7 @@ const onClick = (month:number)=>{
 }
 
   return (
-    <PopUpNoSure close={close} show={visible} title='选择月份'>
+    <PopUpNoSure isVisible={(value:boolean)=>{setVisible(value)}} close={close} show={visible} title='选择月份'>
       <Container>
         <p>{now.format('YYYY年')}</p>
         <ol>

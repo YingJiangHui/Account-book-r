@@ -30,9 +30,10 @@ type Props = {
   maxLen: number,
   title: string,
   close: () => void
+  isVisible:(value:boolean)=>void
 }
 const PopUpInput: FC<Props> = memo((props) => {
-  const {close} = props;
+  const {close,isVisible} = props;
   const [output, setOutput] = React.useState('');
   const inputEl = useRef<HTMLInputElement>(null);
 
@@ -61,7 +62,7 @@ const PopUpInput: FC<Props> = memo((props) => {
 
   return (
     <PopUpHasSure close={close} title={props.title} show={props.show} onEnsure={onEnsure}
-                  disable={output.length === 0}>
+                  disable={output.length === 0} isVisible={(value:boolean)=>{isVisible(value)}}>
       <Container>
         <input ref={inputEl} onChange={onChange} value={output} type="text" placeholder={props.placeholder}/>
         <p>{output.length}/{props.maxLen}</p>

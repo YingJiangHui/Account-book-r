@@ -35,14 +35,15 @@ type Props = {
   onEnsure:()=>void
   disable:boolean
   close:()=>void
+  isVisible:(value:boolean)=>void
 }
-const PopUpHasSure:FC <Props> = ({show,title,onEnsure,disable,children,close})=>{
+const PopUpHasSure:FC <Props> = ({show,title,onEnsure,disable,children,close,isVisible})=>{
   const [visible,setVisible] = useState(false)
   useEffect(()=>{
     setVisible(show)
   },[show])
   return (
-    <PopUp show={visible}>
+    <PopUp show={visible} isVisible={(value:boolean)=>{isVisible(value)}}>
       <Control>
         <li onClick={close}><Icon name='left'/></li>
         <li>{title}</li>

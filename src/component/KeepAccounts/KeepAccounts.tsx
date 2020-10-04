@@ -9,7 +9,8 @@ import SelectInfo from 'component/KeepAccounts/components/SelectInfo';
 import OpenNotePanel from 'component/KeepAccounts/components/OpenNotePanel';
 import PopUp from 'component/PopUp/popUpBoxComponent/popUpRootComponent/PopUp';
 import styled from 'styled-components';
-import Context from 'contexts/context'
+import Context from 'contexts/context';
+
 const Options = styled.div`
   padding: 16px 16px 0 16px;
 `;
@@ -17,7 +18,7 @@ type Props = {
   id?: number
   defaultRecord?: RecordItem
   isVisible: (value: boolean) => void
-  ensure: (record:RecordItem,id?:number) => void
+  ensure: (record: RecordItem, id?: number) => void
   show: boolean
 }
 let recordData: RecordItem = {
@@ -30,7 +31,7 @@ let recordData: RecordItem = {
 };
 
 const KeepAccounts: FC<Props> = memo((props) => {
-  const {deleteTag,updateTag,findTagUseId,createTags} = useContext(Context)
+  const {deleteTag, updateTag, findTagUseId, createTags} = useContext(Context);
   const {show, ensure, isVisible, defaultRecord, id} = props;
   const [visibleRemark, setVisibleRemark] = useState(false);
   const [visibleAddTag, setVisibleAddTag] = useState(false);
@@ -47,11 +48,11 @@ const KeepAccounts: FC<Props> = memo((props) => {
   }, [record]);
 
   const onSubmit = () => {
-    if (id){
+    if (id) {
       ensure(record, id);
-    } else{
+    } else {
       ensure(record);
-      setOutput('clear')
+      setOutput('clear');
     }
     isVisible(false);
   };
@@ -67,7 +68,7 @@ const KeepAccounts: FC<Props> = memo((props) => {
 
   return (
     <>
-      <PopUp show={visibleThis}>
+      <PopUp show={visibleThis} isVisible={(value: boolean) => {isVisible(value);}}>
         <Options>
           <Close onClick={() => isVisible(false)}/>
           <SelectInfo
@@ -113,6 +114,12 @@ const KeepAccounts: FC<Props> = memo((props) => {
       </PopUp>
 
       <PopUpInput
+        isVisible={(value: boolean) => {
+          if (!value) {
+            props.isVisible(true);
+          }
+          setVisibleRemark(value);
+        }}
         close={() => {
           setVisibleRemark(false);
           props.isVisible(true);
@@ -125,6 +132,12 @@ const KeepAccounts: FC<Props> = memo((props) => {
         value={record.note}
       />
       <PopUpInput
+        isVisible={(value: boolean) => {
+          setVisibleAddTag(value);
+          if (!value) {
+            props.isVisible(true);
+          }
+        }}
         show={visibleAddTag}
         title='请填写类别名'
         placeholder='不能重复添加类型名'
@@ -137,6 +150,12 @@ const KeepAccounts: FC<Props> = memo((props) => {
         value=''
       />
       <PopUpInput
+        isVisible={(value: boolean) => {
+          if (!value) {
+            setUpdateTagId(-1);
+            props.isVisible(true);
+          }
+        }}
         show={updateTagId > 0}
         title='请填写类别名'
         placeholder='不能重复添加类型名'

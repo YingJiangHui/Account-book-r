@@ -51,7 +51,7 @@ const PopUpTagBox: FC<Props> = memo(({close, show, value, onChange}) => {
     setVisible(show);
   }, [show]);
   return (
-    <PopUpNoSure close={close} show={visible} title='选择类型'>
+    <PopUpNoSure isVisible={(value:boolean)=>{setVisible(value)}} close={close} show={visible} title='选择类型'>
       <Container>
         <Inner>
         <ol>
