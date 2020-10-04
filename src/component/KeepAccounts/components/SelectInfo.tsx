@@ -32,8 +32,8 @@ const Wrapper = styled.section`
       }
     }
   }
-  >input[type=text]{
-      text-align: end;
+  >input[type=datetime-local]{
+   text-align: end;
       font-family: inherit;
       transition: .3s;
       background: transparent;
@@ -47,14 +47,6 @@ const Wrapper = styled.section`
       &:focus{
       border-bottom-color: ${theme.themeColor};
       color: ${theme.themeColor};
-  }
-
-  }
-  >input[type=datetime-local]{
-      position: absolute;
-      left: 0;
-      width: 0;
-      visibility: hidden;
     }
 `;
 
@@ -66,16 +58,15 @@ type Props = {
 }
 
 const SelectInfo: FC<Props> = memo((props) => {
+  const currentDate = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ss');
   const {onChangeCategory, defaultDate, onChangeDate} = props;
-  const [date, setDate] = useState('');
-  const [formatDate, setFormatDate] = useState(dayjs(new Date()).format('YYYY年MM月DD日 HH:mm'));
+  const [date, setDate] = useState(currentDate);
   const [category, setCatecory] = useState('-');
   const [hintVisible, setHintVisible] = useState(false);
   const refDate = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (defaultDate) {
       setDate(dayjs(defaultDate).format('YYYY-MM-DDTHH:mm:ss'));
-      setFormatDate(dayjs(defaultDate).format('YYYY年MM月DD HH:mm'));
     }
   }, [defaultDate]);
   useEffect(() => {
@@ -86,26 +77,23 @@ const SelectInfo: FC<Props> = memo((props) => {
     <>
       <Wrapper>
         <Category value={category} onChange={(value) => onChangeCategory(value)}/>
-        <input onClick={() => {
-          refDate.current?.click();
-        }} readOnly={true} type="text" value={formatDate}/>
         <input
           ref={refDate}
           type="dateTime-local"
           value={date}
+          onClick={()=>{refDate.current?.click()}}
           onChange={(e) => {
             if (!e.target.value)
               return;
-            const now = new Date();
+            const now = dayjs(new Date()).format('YYYY-MM-DDT-HH:mm:ss');
             const date = e.target.value + dayjs(now).format(':ss');
-            if (dayjs(date).format('YYYY-MM-DDT-HH:mm:ss') > dayjs(now).format('YYYY-MM-DDT-HH:mm:ss')) {
+            if (dayjs(date).format('YYYY-MM-DDT-HH:mm:ss') > now) {
               setHintVisible(true);
               setDate((d) => d);
             } else {
               setDate(date);
+              onChangeDate(date);
             }
-            onChangeDate(date);
-            setFormatDate(dayjs(date).format('YYYY年MM月DD日 HH:mm'));
           }}/>
       </Wrapper>
       <HintBox show={hintVisible} onChange={(value: boolean) => {setHintVisible(value);}} text={'不能设置时间为将来'}/>
