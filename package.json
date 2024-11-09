@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "http://yingjianghui.gitee.io/accounts-book-website-r/",
   "engines": {
-    "node": ">16.20.0 <17"
+    "node": ">=16.20.0 <19"
   },
   "dependencies": {
     "@babel/core": "7.9.0",
