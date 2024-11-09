@@ -83,7 +83,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider node scripts/build.js",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
@@ -104,6 +104,7 @@
   "devDependencies": {
     "@types/styled-components": "^5.1.2",
     "@types/webpack-env": "^1.15.2",
+    "cross-env": "^7.0.3",
     "styled-components": "^5.1.1",
     "svg-sprite-loader": "^5.0.0",
     "svgo-loader": "^2.2.1",
